@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project 
+    xmlns="http://maven.apache.org/POM/4.0.0" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <modelVersion>4.0.0</modelVersion>
     <groupId>epcc-ps</groupId>
     <artifactId>predator-prey-model</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -15,18 +15,14 @@
             <name>Shaohan Yin</name>
             <email>shaohan.yin at gmail.com</email>
             <roles>
-                <role>
-                    Developer
-                </role>
+                <role>Developer</role>
             </roles>
         </developer>
         <developer>
             <id>JasonCao666</id>
             <name>Jiahao Cao</name>
             <roles>
-                <role>
-                    Developer
-                </role>
+                <role>Developer</role>
             </roles>
         </developer>
     </developers>
@@ -34,6 +30,9 @@
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Plugins Version -->
+        <plugin.coveralls.version>4.3.0</plugin.coveralls.version>
+        <plugin.cobertura.version>2.7</plugin.cobertura.version>
     </properties>
 
     <modules>
@@ -42,4 +41,37 @@
         <module>client</module>
     </modules>
 
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.eluder.coveralls</groupId>
+                    <artifactId>coveralls-maven-plugin</artifactId>
+                    <version>${plugin.coveralls.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>cobertura-maven-plugin</artifactId>
+                    <version>${plugin.cobertura.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <configuration>
+                    <format>xml</format>
+                    <maxmem>256m</maxmem>
+                    <!-- aggregated reports for multi-module projects -->
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
 </project>
