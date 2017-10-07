@@ -1,6 +1,7 @@
 Predator-Prey Model
 ===================
 
+[![Build Status](https://travis-ci.org/Yiiinsh/predator-prey-model.svg?branch=master)](https://travis-ci.org/Yiiinsh/predator-prey-model)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Implementation of a two-dimensional predator-prey model with spatial diffusion.

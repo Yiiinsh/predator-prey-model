@@ -1,0 +1,24 @@
+language: java
+jdk: 
+  - openjdk8
+notifications:
+  email:
+    recipients:
+      - shaohan.yin@gmail.com
+    on_success: always
+    on_failure: always
+
+before_install:
+
+before_script:
+  - echo $MAVEN_OPTS
+
+after_success:
+
+branches:
+  only:
+    - master
+
+env:
+  global:
+    - "MAVEN_OPTS='-Xms1024m -Xmx2048m'"
