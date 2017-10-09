@@ -11,5 +11,11 @@
 
     <artifactId>common</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-configuration2</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
