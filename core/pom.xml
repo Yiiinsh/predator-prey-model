@@ -11,5 +11,12 @@
 
     <artifactId>core</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>epcc-ps</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>

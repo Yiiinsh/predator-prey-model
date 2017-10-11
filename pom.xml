@@ -50,6 +50,27 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Project Related -->
+            <dependency>
+                <groupId>epcc-ps</groupId>
+                <artifactId>common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>epcc-ps</groupId>
+                <artifactId>core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>epcc-ps.client</groupId>
+                <artifactId>web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>epcc-ps.client</groupId>
+                <artifactId>shell</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <!-- Dependencies -->
             <dependency>
                 <groupId>org.apache.commons</groupId>

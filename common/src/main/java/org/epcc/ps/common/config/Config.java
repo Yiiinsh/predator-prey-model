@@ -1,4 +1,4 @@
-package org.epcc.ps.config;
+package org.epcc.ps.common.config;
 
 import org.apache.commons.configuration2.Configuration;
 

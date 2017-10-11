@@ -1,4 +1,4 @@
-package org.epcc.ps.exception;
+package org.epcc.ps.common.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

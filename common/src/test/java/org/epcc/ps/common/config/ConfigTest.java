@@ -1,6 +1,6 @@
-package org.epcc.ps.config;
+package org.epcc.ps.common.config;
 
-import org.epcc.ps.AbstractTest;
+import org.epcc.ps.common.AbstractTest;
 import org.junit.Assert;
 import org.junit.Test;
 
