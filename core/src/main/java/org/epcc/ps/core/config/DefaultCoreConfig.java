@@ -7,6 +7,8 @@ import org.epcc.ps.common.config.Config;
  * Created on 10/10/2017
  */
 public class DefaultCoreConfig implements CoreConfig {
+    private final static String KEY_LANDSCAPE_LENGTH_LIMIT = "landscape.length.limit";
+    private final static String KEY_LANDSCAPE_WIDTH_LIMIT = "landscape.width.limit";
     private final static String KEY_PUMA_BIRTH_RATE = "puma.birth_rate";
     private final static String KEY_PUMA_PREDATION_RATE = "puma.predation_rate";
     private final static String KEY_PUMA_MORTALITY_RATE = "puma.mortality_rate";
@@ -15,6 +17,16 @@ public class DefaultCoreConfig implements CoreConfig {
     private final static String KEY_HARE_DIFFUSION_RATE = "hare.diffusion_rate";
 
     private Config config = Config.DEFAULT;
+
+    @Override
+    public int getLandscapeLengthLimit() {
+        return config.getInt(KEY_LANDSCAPE_LENGTH_LIMIT);
+    }
+
+    @Override
+    public int getLandscapeWidthLimit() {
+        return config.getInt(KEY_LANDSCAPE_WIDTH_LIMIT);
+    }
 
     @Override
     public double getPumaBirthRate() {

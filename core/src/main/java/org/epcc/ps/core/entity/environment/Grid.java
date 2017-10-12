@@ -13,19 +13,25 @@ import java.util.Map;
 public class Grid {
     private Terrain terrain;
     private Map<Species, Creature> creatures;
+    private int landNeighborCnt;
 
-    Grid(Terrain terrain) {
+    public Grid(Terrain terrain) {
         this.terrain = terrain;
         creatures = new HashMap<>();
+        landNeighborCnt = 0;
     }
 
-    Grid(Terrain terrain, Map<Species, Creature> creatures) {
+    public Grid(Terrain terrain, Map<Species, Creature> creatures) {
         this.terrain = terrain;
         this.creatures = creatures;
+        landNeighborCnt = 0;
     }
 
-    // TODO : algorithm implementation & grid update
-
+    public Grid(Terrain terrain, Map<Species, Creature> creatures, int landNeighborCnt) {
+        this.terrain = terrain;
+        this.creatures = creatures;
+        this.landNeighborCnt = landNeighborCnt;
+    }
 
     public Terrain getTerrain() {
         return terrain;
@@ -37,6 +43,14 @@ public class Grid {
 
     public void updateCreatures(Map<Species, Creature> newCreatures) {
         this.creatures = newCreatures;
+    }
+
+    public int getLandNeighborCnt() {
+        return landNeighborCnt;
+    }
+
+    public void setLandNeighborCnt(int landNeighborCnt) {
+        this.landNeighborCnt = landNeighborCnt;
     }
 
     @Override

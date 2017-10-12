@@ -26,4 +26,8 @@ public class GridFactory {
     public Grid create(Terrain terrain, Map<Species, Creature> creatures) {
         return new Grid(terrain, creatures);
     }
+
+    public Grid create(Terrain terrain, Map<Species, Creature> creatures, int landNeighborCnt) {
+        return new Grid(terrain, creatures, landNeighborCnt);
+    }
 }
