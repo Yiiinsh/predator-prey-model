@@ -32,6 +32,7 @@
         <!-- Plugins Version -->
         <plugin.coveralls.version>4.3.0</plugin.coveralls.version>
         <plugin.cobertura.version>2.7</plugin.cobertura.version>
+        <plugin.maven.compiler.version>3.7.0</plugin.maven.compiler.version>
         <!-- Dependencies Version -->
         <commons-configuration2.version>2.1.1</commons-configuration2.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
@@ -166,6 +167,7 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                 </configuration>
+                <version>${plugin.maven.compiler.version}</version>
             </plugin>
             <plugin>
                 <groupId>org.eluder.coveralls</groupId>
