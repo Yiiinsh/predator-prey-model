@@ -89,10 +89,10 @@ public class LandscapeTest extends AbstractTest {
     }
 
     private Grid createGridWithWater() {
-        return GridFactory.getInstance().create(Terrain.WATER);
+        return GridFactory.create(Terrain.WATER);
     }
 
     private Grid createGridWithLand() {
-        return GridFactory.getInstance().create(Terrain.LAND);
+        return GridFactory.create(Terrain.LAND);
     }
 }

@@ -14,7 +14,7 @@ import org.pecc.ps.core.AbstractTest;
 public class GridFactoryTest extends AbstractTest {
     @Test
     public void testGridCreate() {
-        Grid grid = GridFactory.getInstance().create(Terrain.LAND);
+        Grid grid = GridFactory.create(Terrain.LAND);
         Assert.assertEquals(grid.getTerrain(), Terrain.LAND);
     }
 }

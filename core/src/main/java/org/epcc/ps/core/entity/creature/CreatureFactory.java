@@ -5,16 +5,10 @@ package org.epcc.ps.core.entity.creature;
  * Created on 12/10/2017
  */
 public class CreatureFactory {
-    private static CreatureFactory instance = new CreatureFactory();
-
     private CreatureFactory() {
     }
 
-    public static CreatureFactory getInstance() {
-        return instance;
-    }
-
-    public Creature create(Species species) {
+    public static Creature create(Species species) {
         Creature creature;
         switch (species) {
             case PUMA:

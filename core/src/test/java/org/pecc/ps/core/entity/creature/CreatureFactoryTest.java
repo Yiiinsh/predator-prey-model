@@ -13,9 +13,9 @@ import org.pecc.ps.core.AbstractTest;
 public class CreatureFactoryTest extends AbstractTest {
     @Test
     public void testFactoryCreate() {
-        Assert.assertTrue(CreatureFactory.getInstance().create(Species.HARE)
+        Assert.assertTrue(CreatureFactory.create(Species.HARE)
                 .getName().equals(Species.HARE.getSpeciesName()));
-        Assert.assertTrue(CreatureFactory.getInstance().create(Species.PUMA)
+        Assert.assertTrue(CreatureFactory.create(Species.PUMA)
                 .getName().equals(Species.PUMA.getSpeciesName()));
     }
 }

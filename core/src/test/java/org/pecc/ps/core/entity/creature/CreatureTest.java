@@ -18,7 +18,7 @@ public class CreatureTest extends AbstractTest {
 
     @Test
     public void testCreatureMembers() {
-        Creature puma = CreatureFactory.getInstance().create(Species.PUMA);
+        Creature puma = CreatureFactory.create(Species.PUMA);
         Assert.assertEquals(puma.getName(), Species.PUMA.getSpeciesName());
         Assert.assertEquals(puma.getBirthRate(), config.getPumaBirthRate(), 0);
         Assert.assertEquals(puma.getDiffusionRate(), config.getPumaDiffusionRate(), 0);
@@ -26,7 +26,7 @@ public class CreatureTest extends AbstractTest {
         Assert.assertEquals(puma.getMortalityRate(), config.getPumaMortalityRate(), 0);
         Assert.assertEquals(puma.getDensity(), 0.0, 0);
 
-        Creature hare = CreatureFactory.getInstance().create(Species.HARE);
+        Creature hare = CreatureFactory.create(Species.HARE);
         Assert.assertEquals(hare.getName(), Species.HARE.getSpeciesName());
         Assert.assertEquals(hare.getBirthRate(), config.getHareBirthRate(), 0);
         Assert.assertEquals(hare.getDiffusionRate(), config.getHareDiffutionRate(), 0);
