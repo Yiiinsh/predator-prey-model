@@ -1,101 +1,110 @@
 package org.pecc.ps.core.algorithm;
 
 import org.epcc.ps.core.algorithm.CoreAlgorithm;
-import org.epcc.ps.core.algorithm.implement.CoreAlgorithmImpl;
+import org.epcc.ps.core.algorithm.impl.CoreAlgorithmImpl;
+import org.epcc.ps.core.entity.creature.Creature;
+import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.Terrain;
 import org.epcc.ps.core.util.GridUtil;
-import org.epcc.ps.core.util.implement.GridUtilImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.pecc.ps.core.AbstractTest;
+
+import static org.pecc.ps.core.util.TestGridUtil.createGridWithLand;
+import static org.pecc.ps.core.util.TestGridUtil.createGridWithWater;
 
 /**
  * @author jiahao.cao
  * Created on 10/13/2017
  */
-
 public class AlgorithmTest extends AbstractTest {
-	private CoreAlgorithm ca=new CoreAlgorithmImpl();
-	private GridUtil gridutil=new GridUtilImpl();
+	private CoreAlgorithm coreAlgorithm = new CoreAlgorithmImpl();
+
 	@Test
-	public void testGrid()
+	public void testSingleIterationAlgorithm()
 	{
-		int land[][]=new int[3][3];
-    	land[0][0]=1;
-		land[0][1]=1;
-		land[0][2]=1;
-		land[1][0]=1;
-		land[1][1]=0;
-		land[1][2]=1;
-		land[2][0]=1;
-		land[2][1]=1;
-		land[2][2]=0;
-		
-		Grid[][] grid=gridutil.generateGridWithHaloBoundary(3, 3, land);	
-		int hnum=9;
-		int pnum=1;
-		for(int i=0;i<grid[0].length;i++)
-		{
-			for(int j=0;j<grid.length;j++)
-			{
-				if(grid[i][j].getTerrain()==Terrain.LAND){
-				grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],hnum,Species.HARE);
-				grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],pnum,Species.PUMA);
-				hnum--;
-				pnum++;
-				}
-				else if(grid[i][j].getTerrain()==Terrain.WATER)
-				{
-					grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],0,Species.HARE);
-					grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],0,Species.PUMA);
-					continue;
+		Grid grids[][]={
+				{createGridWithLand(),createGridWithLand(),createGridWithLand()},
+				{createGridWithLand(),createGridWithWater(),createGridWithLand()},
+				{createGridWithLand(),createGridWithLand(),createGridWithWater()}
+		};
+		Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
+
+		int hareNum=9;
+		int pumaNum=1;
+		for(int i = 0; i < grids.length; i++) {
+			for(int j = 0; j < grids[0].length; j++) {
+				switch (grids[i][j].getTerrain()) {
+					case LAND:
+						initGridWithCreate(grids[i][j], Species.HARE, hareNum);
+						initGridWithCreate(grids[i][j], Species.PUMA, pumaNum);
+						--hareNum;
+						++pumaNum;
+						break;
+					case WATER:
+						initGridWithCreate(grids[i][j], Species.HARE, 0);
+						initGridWithCreate(grids[i][j], Species.PUMA, 0);
+						break;
+					default:
+						initGridWithCreate(grids[i][j], Species.HARE, 0);
+						initGridWithCreate(grids[i][j], Species.PUMA, 0);
 				}
 			}
 		}
-		
-		for(int i=1;i<grid[0].length-1;i++)
-		{
-			for(int j=1;j<grid.length-1;j++)
-			{
-				grid[i][j].setLandNeighborCnt(gridutil.getNeighborCntWithType(i,j,grid,grid[i][j].getTerrain()));
+
+		for(int i = 0; i <grids.length ; ++i) {
+			for(int j = 0; j < grids[0].length ; ++j) {
+				grids[i][j].setLandNeighborCnt(GridUtil.getNeighborCntWithType(
+						i + 1, j + 1,
+						gridsWithHaloBoundary, Terrain.LAND
+				));
 			}
 		}
 		
 		double newHareDensity,newPumaDensity;
-		for(int i=1;i<grid[0].length-1;i++)
-		{
-			for(int j=1;j<grid.length-1;j++)
-			{
-				newHareDensity=ca.getHaresNum(grid[i][j].getCreatures().get(Species.HARE).getDensity(), 
-						grid[i][j-1].getCreatures().get(Species.HARE).getDensity(), 
-						grid[i][j+1].getCreatures().get(Species.HARE).getDensity(), 
-						grid[i-1][j].getCreatures().get(Species.HARE).getDensity(), 
-						grid[i+1][j].getCreatures().get(Species.HARE).getDensity(),
-						grid[i][j].getCreatures().get(Species.HARE).getBirthRate(),
-						grid[i][j].getCreatures().get(Species.PUMA).getPredationRate(), 
-						grid[i][j].getCreatures().get(Species.PUMA).getDensity(),
-						grid[i][j].getCreatures().get(Species.HARE).getDiffusionRate(), 
-						0.4, 
-						grid[i][j].getLandNeighborCnt());
-				
-				newPumaDensity=ca.getPumaNum(grid[i][j].getCreatures().get(Species.PUMA).getDensity(), 
-						grid[i][j-1].getCreatures().get(Species.PUMA).getDensity(),
-						grid[i][j+1].getCreatures().get(Species.PUMA).getDensity(),
-						grid[i-1][j].getCreatures().get(Species.PUMA).getDensity(), 
-						grid[i+1][j].getCreatures().get(Species.PUMA).getDensity(), 
-						grid[i][j].getCreatures().get(Species.PUMA).getBirthRate(), 
-						grid[i][j].getCreatures().get(Species.HARE).getDensity(), 
-						grid[i][j].getCreatures().get(Species.PUMA).getMortalityRate(), 
-						grid[i][j].getCreatures().get(Species.PUMA).getDiffusionRate(), 
+		gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
+		for(int i = 0; i < grids.length; ++i) {
+			for(int j = 0; j < grids[0].length; ++j) {
+				newHareDensity= coreAlgorithm.getHaresNum(
+						gridsWithHaloBoundary[i + 1][j + 1].getCreatures().get(Species.HARE).getDensity(),
+						gridsWithHaloBoundary[i + 1][j].getDensity(Species.HARE),
+						gridsWithHaloBoundary[i + 1][j + 2].getDensity(Species.HARE),
+						gridsWithHaloBoundary[i][j + 1].getDensity(Species.HARE),
+						gridsWithHaloBoundary[i + 2][j + 1].getDensity(Species.HARE),
+						Species.HARE.getBirthRate(),
+						Species.PUMA.getPredationRate(),
+						gridsWithHaloBoundary[i + 1][j + 1].getDensity(Species.PUMA),
+						Species.HARE.getDiffusionRate(),
 						0.4,
-						grid[i][j].getLandNeighborCnt());
-				grid[i][j].getCreatures().get(Species.HARE).updateDensity(newHareDensity);
-				grid[i][j].getCreatures().get(Species.PUMA).updateDensity(newPumaDensity);	
+						gridsWithHaloBoundary[i + 1][j + 1].getLandNeighborCnt());
+				
+				newPumaDensity= coreAlgorithm.getPumaNum(
+						gridsWithHaloBoundary[i + 1][j + 1].getDensity(Species.PUMA),
+						gridsWithHaloBoundary[i + 1][j].getDensity(Species.PUMA),
+						gridsWithHaloBoundary[i + 1][j + 2].getDensity(Species.PUMA),
+						gridsWithHaloBoundary[i][j + 1].getDensity(Species.PUMA),
+						gridsWithHaloBoundary[i + 2][j + 1].getDensity(Species.PUMA),
+						Species.PUMA.getBirthRate(),
+						gridsWithHaloBoundary[i + 1][j + 1].getDensity(Species.HARE),
+						Species.PUMA.getMortalityRate(),
+						Species.PUMA.getDiffusionRate(),
+						0.4,
+						gridsWithHaloBoundary[i + 1][j + 1].getLandNeighborCnt());
+
+				grids[i][j].getCreatures().get(Species.HARE).updateDensity(newHareDensity);
+				grids[i][j].getCreatures().get(Species.PUMA).updateDensity(newPumaDensity);
 			}
-		}	
-		Assert.assertEquals(grid[1][1].getCreatures().get(Species.HARE).getDensity(), 8.824,0);
-		Assert.assertEquals(grid[1][1].getCreatures().get(Species.PUMA).getDensity(), 1.368,0);
+		}
+
+		Assert.assertEquals(grids[0][0].getCreatures().get(Species.HARE).getDensity(), 8.824,0);
+		Assert.assertEquals(grids[0][0].getCreatures().get(Species.PUMA).getDensity(), 1.368,0);
+	}
+
+	private void initGridWithCreate(Grid grid, Species species, double density) {
+		Creature creature = CreatureFactory.create(species);
+		creature.updateDensity(density);
+		grid.getCreatures().put(species, creature);
 	}
 }

@@ -37,6 +37,13 @@ public class Grid {
         return terrain;
     }
 
+    public double getDensity(Species species) {
+        if (creatures.containsKey(species)) {
+            return creatures.get(species).getDensity();
+        }
+        return 0;
+    }
+
     public Map<Species, Creature> getCreatures() {
         return creatures;
     }

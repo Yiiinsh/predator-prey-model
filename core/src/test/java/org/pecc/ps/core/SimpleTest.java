@@ -2,18 +2,6 @@ package org.pecc.ps.core;
 
 
 
-import org.epcc.ps.core.algorithm.CoreAlgorithm;
-import org.epcc.ps.core.algorithm.implement.CoreAlgorithmImpl;
-import org.epcc.ps.core.config.CoreConfig;
-import org.epcc.ps.core.config.DefaultCoreConfig;
-import org.epcc.ps.core.entity.creature.Creature;
-import org.epcc.ps.core.entity.creature.CreatureFactory;
-import org.epcc.ps.core.entity.creature.Species;
-import org.epcc.ps.core.entity.environment.Grid;
-import org.epcc.ps.core.entity.environment.GridFactory;
-import org.epcc.ps.core.entity.environment.Landscape;
-import org.epcc.ps.core.entity.environment.LandscapeFactory;
-import org.epcc.ps.core.entity.environment.Terrain;
 import org.junit.Assert;
 import org.junit.Test;
 

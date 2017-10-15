@@ -1,12 +1,13 @@
 package org.pecc.ps.core.entity.environment;
 
 import org.epcc.ps.core.entity.environment.Grid;
-import org.epcc.ps.core.entity.environment.GridFactory;
 import org.epcc.ps.core.entity.environment.Landscape;
-import org.epcc.ps.core.entity.environment.Terrain;
 import org.junit.Assert;
 import org.junit.Test;
 import org.pecc.ps.core.AbstractTest;
+
+import static org.pecc.ps.core.util.TestGridUtil.createGridWithLand;
+import static org.pecc.ps.core.util.TestGridUtil.createGridWithWater;
 
 /**
  * @author shaohan.yin
@@ -86,13 +87,5 @@ public class LandscapeTest extends AbstractTest {
             }
         }
 
-    }
-
-    private Grid createGridWithWater() {
-        return GridFactory.create(Terrain.WATER);
-    }
-
-    private Grid createGridWithLand() {
-        return GridFactory.create(Terrain.LAND);
     }
 }

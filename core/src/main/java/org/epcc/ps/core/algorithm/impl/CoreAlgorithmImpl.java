@@ -1,4 +1,4 @@
-package org.epcc.ps.core.algorithm.implement;  
+package org.epcc.ps.core.algorithm.impl;
 
 import org.epcc.ps.core.algorithm.CoreAlgorithm;
 
@@ -18,14 +18,13 @@ public class CoreAlgorithmImpl implements CoreAlgorithm{
 		    double hareBirthRate, double pumaPredationRate, double currentPumaNum, 
 		    double hareDifussionRate, double intervalTime, int dryLandNum){
 		
-			double newHareNum;
+			double newHareNum, neighborHareNum;
+			neighborHareNum = currentHareNumInLeftGrid + currentHareNumInRightGrid
+					+ currentHareNumInAboveGrid + currentHareNumInFollowingGrid;
 			newHareNum = currentHareNum 
-					     + intervalTime * ( hareBirthRate * currentHareNum 
+					     + intervalTime * ( hareBirthRate * currentHareNum
 					     - pumaPredationRate * currentHareNum * currentPumaNum 
-					     + hareDifussionRate 
-					     * ((currentHareNumInLeftGrid + currentHareNumInRightGrid 
-					     + currentHareNumInAboveGrid + currentHareNumInFollowingGrid) 
-					     - dryLandNum * currentHareNum));
+					     + hareDifussionRate * (neighborHareNum - dryLandNum * currentHareNum));
 			return newHareNum;	
 	}
 	
@@ -41,13 +40,13 @@ public class CoreAlgorithmImpl implements CoreAlgorithm{
 		    double pumaDeathRate, double pumaDifussionRate, 
 		    double intervalTime, int dryLandNum) {
 		
-		    double newPumaNum;
-		    newPumaNum = currentPumaNum + intervalTime 
-		    		         * ( pumaBirthRate * currentHareNum * currentPumaNum 
-		    		         - pumaDeathRate * currentPumaNum + pumaDifussionRate 
-		    		         * ((currentPumaNumInLeftGrid + currentPumaNumInRightGrid 
-		    		         + currentPumaNumInAboveGrid + currentPumaNumInFollowingGrid) 
-		    		         - dryLandNum * currentPumaNum));
+		    double newPumaNum, neighborPumaNum;
+		    neighborPumaNum = currentPumaNumInLeftGrid + currentPumaNumInRightGrid
+					+ currentPumaNumInAboveGrid + currentPumaNumInFollowingGrid;
+		    newPumaNum = currentPumaNum
+					+ intervalTime * ( pumaBirthRate * currentHareNum * currentPumaNum
+					- pumaDeathRate * currentPumaNum
+					+ pumaDifussionRate * (neighborPumaNum - dryLandNum * currentPumaNum));
 		    return newPumaNum;
 	}	
 }
