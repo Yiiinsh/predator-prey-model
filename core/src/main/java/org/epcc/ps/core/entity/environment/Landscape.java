@@ -5,7 +5,7 @@ import com.google.common.base.Preconditions;
 import org.epcc.ps.core.config.CoreConfig;
 import org.epcc.ps.core.config.DefaultCoreConfig;
 import org.epcc.ps.core.util.GridUtil;
-import org.epcc.ps.core.util.implement.GridUtilImplement;
+import org.epcc.ps.core.util.implement.GridUtilImpl;
 
 /**
  * @author shaohan.yin
@@ -15,7 +15,7 @@ public class Landscape {
     private final static int EXTRA_BORDER = 2;
 
     private CoreConfig config = new DefaultCoreConfig();
-    private GridUtil gridutil=new GridUtilImplement();
+    private GridUtil gridutil=new GridUtilImpl();
     private int length;
     private int width;
     private Grid grids[][];

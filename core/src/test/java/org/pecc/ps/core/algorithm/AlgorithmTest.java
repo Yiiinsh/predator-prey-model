@@ -1,25 +1,24 @@
 package org.pecc.ps.core.algorithm;
 
 import org.epcc.ps.core.algorithm.CoreAlgorithm;
-import org.epcc.ps.core.algorithm.implement.CoreAlgorithmImp;
+import org.epcc.ps.core.algorithm.implement.CoreAlgorithmImpl;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.Terrain;
 import org.epcc.ps.core.util.GridUtil;
-import org.epcc.ps.core.util.implement.GridUtilImplement;
+import org.epcc.ps.core.util.implement.GridUtilImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.pecc.ps.core.AbstractTest;
-
 
 /**
  * @author jiahao.cao
  * Created on 10/13/2017
  */
 
-public class Algorithm extends AbstractTest {
-	private CoreAlgorithm ca=new CoreAlgorithmImp();
-	private GridUtil gridutil=new GridUtilImplement();
+public class AlgorithmTest extends AbstractTest {
+	private CoreAlgorithm ca=new CoreAlgorithmImpl();
+	private GridUtil gridutil=new GridUtilImpl();
 	@Test
 	public void testGrid()
 	{
@@ -42,18 +41,19 @@ public class Algorithm extends AbstractTest {
 			for(int j=0;j<grid.length;j++)
 			{
 				if(grid[i][j].getTerrain()==Terrain.LAND){
-				grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],hnum,pnum);
+				grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],hnum,Species.HARE);
+				grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],pnum,Species.PUMA);
 				hnum--;
 				pnum++;
 				}
 				else if(grid[i][j].getTerrain()==Terrain.WATER)
 				{
-					grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],0,0);
+					grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],0,Species.HARE);
+					grid[i][j]=gridutil.setGridCreatureNum(grid[i][j],0,Species.PUMA);
 					continue;
 				}
 			}
 		}
-		
 		
 		for(int i=1;i<grid[0].length-1;i++)
 		{
@@ -62,8 +62,6 @@ public class Algorithm extends AbstractTest {
 				grid[i][j].setLandNeighborCnt(gridutil.getNeighborCntWithType(i,j,grid,grid[i][j].getTerrain()));
 			}
 		}
-		
-		
 		
 		double newHareDensity,newPumaDensity;
 		for(int i=1;i<grid[0].length-1;i++)
@@ -94,18 +92,10 @@ public class Algorithm extends AbstractTest {
 						0.4,
 						grid[i][j].getLandNeighborCnt());
 				grid[i][j].getCreatures().get(Species.HARE).updateDensity(newHareDensity);
-				grid[i][j].getCreatures().get(Species.PUMA).updateDensity(newPumaDensity);
-				
+				grid[i][j].getCreatures().get(Species.PUMA).updateDensity(newPumaDensity);	
 			}
-		}
-		
+		}	
 		Assert.assertEquals(grid[1][1].getCreatures().get(Species.HARE).getDensity(), 8.824,0);
 		Assert.assertEquals(grid[1][1].getCreatures().get(Species.PUMA).getDensity(), 1.368,0);
 	}
-	
-	
-	
-	
-	
-
 }

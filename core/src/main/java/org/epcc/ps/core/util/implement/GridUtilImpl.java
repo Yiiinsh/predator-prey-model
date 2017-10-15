@@ -13,13 +13,12 @@ import org.epcc.ps.core.util.GridUtil;
  * @author jiahao.cao
  * Created on 14/10/2017
  */
-public class GridUtilImplement implements GridUtil{
+public class GridUtilImpl implements GridUtil{
 	
 	private final static int EXTRA_BORDER = 2;
-	
-	
+		
 	/***
-	 * Initialize grid
+	 * Initialize grid with halo
 	 * 
 	 * */	
 	public Grid[][] generateGridWithHaloBoundary(int length, int width, int land[][]) {
@@ -57,19 +56,15 @@ public class GridUtilImplement implements GridUtil{
         return grid;
     }
 	
-	
 	/***
 	 * Set grid's density number of each creature
 	 * 
 	 * */
-	public Grid setGridCreatureNum(Grid grid,double hareDensity,double pumaDensity)
+	public Grid setGridCreatureNum(Grid grid,double hareDensity,Species specie)
 	{
-		Creature hare= CreatureFactory.getInstance().create(Species.HARE);
-		hare.updateDensity(hareDensity);
-		Creature puma=CreatureFactory.getInstance().create(Species.PUMA);
-		puma.updateDensity(pumaDensity);
-		grid.getCreatures().put(Species.HARE, hare);
-		grid.getCreatures().put(Species.PUMA, puma);
+		Creature creature= CreatureFactory.getInstance().create(specie);
+		creature.updateDensity(hareDensity);;
+		grid.getCreatures().put(specie, creature);
 		return grid;
 	}
 	
@@ -77,15 +72,12 @@ public class GridUtilImplement implements GridUtil{
 	 * Get grid's dry land number 
 	 * 
 	 * */
-	public int getNeighborCntWithType(int x, int y, Grid[][] gridsWithHaloBoundary, Terrain terrain) {
+	public int getNeighborCntWithType(int currentGridX, int currentGridY, Grid[][] gridsWithHaloBoundary, Terrain terrain) {
         int result = 0;
-
-        result += gridsWithHaloBoundary[x - 1][y].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[x + 1][y].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[x][y - 1].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[x][y + 1].getTerrain().equals(terrain) ? 1 : 0;
-
+        result += gridsWithHaloBoundary[currentGridX - 1][currentGridY].getTerrain().equals(terrain) ? 1 : 0;
+        result += gridsWithHaloBoundary[currentGridX + 1][currentGridY].getTerrain().equals(terrain) ? 1 : 0;
+        result += gridsWithHaloBoundary[currentGridX][currentGridY - 1].getTerrain().equals(terrain) ? 1 : 0;
+        result += gridsWithHaloBoundary[currentGridX][currentGridY + 1].getTerrain().equals(terrain) ? 1 : 0;
         return result;
     }
-
 }

@@ -8,19 +8,22 @@ public interface CoreAlgorithm {
 	 * Get the new number of Hares in this grid
 	 * 
 	 * */
-	public double getHaresNum(double hareOldNum, double hareOldLeft,
-			double hareOldRight,double hareOldAbove,double hareOldFollowing, 
-			double hareBirthRate, double pumaPredationRate, double pumaOldNum, 
-			double hareDifussionRate, double time, int dryNum);
+	public double getHaresNum(double currentHareNum, double currentHareNumInLeftGrid,
+			double currentHareNumInRightGrid,double currentHareNumInAboveGrid,
+			double currentHareNumInFollowingGrid, 
+			double hareBirthRate, double pumaPredationRate, double currentPumaNum, 
+			double hareDifussionRate, double intervalTime, int dryLandNum);
 		
 	
 	/***
 	 * Get the new number of Pumas in this grid
 	 * 
 	 * */
-	public double getPumaNum(double pumaOldNum, double pumaOldLeft,
-			double pumaOldRight,double pumaOldAbove,double pumaOldFollowing,
-		   double pumaBirthRate, double hareOldNum, double pumaDeathRate,
-		   double pumaDifussionRate, double time, int dryNum);
+	public double getPumaNum(double currentPumaNum, double currentPumaNumInLeftGrid,
+			double currentPumaNumInRightGrid, double currentPumaNumInAboveGrid,
+			double currentPumaNumInFollowingGrid,
+		    double pumaBirthRate, double currentHareNum, 
+		    double pumaDeathRate, double pumaDifussionRate, 
+		    double intervalTime, int dryLandNum);
 }
  

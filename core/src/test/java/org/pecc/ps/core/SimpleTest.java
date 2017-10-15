@@ -3,7 +3,7 @@ package org.pecc.ps.core;
 
 
 import org.epcc.ps.core.algorithm.CoreAlgorithm;
-import org.epcc.ps.core.algorithm.implement.CoreAlgorithmImp;
+import org.epcc.ps.core.algorithm.implement.CoreAlgorithmImpl;
 import org.epcc.ps.core.config.CoreConfig;
 import org.epcc.ps.core.config.DefaultCoreConfig;
 import org.epcc.ps.core.entity.creature.Creature;
@@ -22,8 +22,6 @@ import org.junit.Test;
  * Created on 12/10/2017
  */
 public class SimpleTest extends AbstractTest {
-	private CoreConfig config = new DefaultCoreConfig();
-	private CoreAlgorithm ca=new CoreAlgorithmImp();
     @Test
     public void testArrayCopyToUnmatchedSizeArray() {
         int[][] origin = {
