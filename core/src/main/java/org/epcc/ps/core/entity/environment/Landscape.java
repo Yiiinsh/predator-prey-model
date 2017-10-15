@@ -1,8 +1,11 @@
 package org.epcc.ps.core.entity.environment;
 
 import com.google.common.base.Preconditions;
+
 import org.epcc.ps.core.config.CoreConfig;
 import org.epcc.ps.core.config.DefaultCoreConfig;
+import org.epcc.ps.core.util.GridUtil;
+import org.epcc.ps.core.util.implement.GridUtilImpl;
 
 /**
  * @author shaohan.yin
@@ -12,6 +15,7 @@ public class Landscape {
     private final static int EXTRA_BORDER = 2;
 
     private CoreConfig config = new DefaultCoreConfig();
+    private GridUtil gridutil=new GridUtilImpl();
     private int length;
     private int width;
     private Grid grids[][];
@@ -62,7 +66,7 @@ public class Landscape {
         for(int xIdx = 0; xIdx != length; ++xIdx) {
             for(int yIdx = 0; yIdx != width; ++yIdx) {
                 grids[xIdx][yIdx].setLandNeighborCnt(
-                        getNeighborCntWithType(xIdx + 1, yIdx + 1, gridsWithHaloBoundary, Terrain.LAND));
+                gridutil.getNeighborCntWithType(xIdx + 1, yIdx + 1, gridsWithHaloBoundary, Terrain.LAND));
             }
         }
     }
@@ -87,15 +91,6 @@ public class Landscape {
         return gridsWithHaloBoundary;
     }
 
-    private int getNeighborCntWithType(int x, int y, Grid[][] gridsWithHaloBoundary, Terrain terrain) {
-        int result = 0;
-
-        result += gridsWithHaloBoundary[x - 1][y].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[x + 1][y].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[x][y - 1].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[x][y + 1].getTerrain().equals(terrain) ? 1 : 0;
-
-        return result;
-    }
+    
 
 }
