@@ -63,8 +63,8 @@ public class GridUtilImpl implements GridUtil{
 	public Grid setGridCreatureNum(Grid grid,double hareDensity,Species specie)
 	{
 		Creature creature= CreatureFactory.getInstance().create(specie);
-		creature.updateDensity(hareDensity);;
-		grid.getCreatures().put(specie, creature);
+		creature.updateDensity(hareDensity);
+        grid.getCreatures().put(specie, creature);
 		return grid;
 	}
 	

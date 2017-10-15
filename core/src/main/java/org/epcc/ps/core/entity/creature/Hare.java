@@ -13,6 +13,6 @@ public class Hare extends AbstractCreature {
 
     @Override
     public boolean isHabitable(Terrain terrain) {
-        return terrain.equals(Terrain.LAND) ? true : false ;
+        return terrain.equals(Terrain.LAND);
     }
 }

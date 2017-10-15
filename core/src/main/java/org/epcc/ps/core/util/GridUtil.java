@@ -14,18 +14,18 @@ public interface GridUtil {
 	 * Initialize grid with halo
 	 * 
 	 * */
-	public Grid[][] generateGridWithHaloBoundary(int length, int width, int land[][]);
+    Grid[][] generateGridWithHaloBoundary(int length, int width, int land[][]);
 	/***
 	 * set grid's density number of each creature
 	 * 
 	 * */
-	
-	public Grid setGridCreatureNum(Grid grid,double hareDensity,Species specie);
+
+    Grid setGridCreatureNum(Grid grid, double hareDensity, Species specie);
 	
 	/***
 	 * get grid's dry land number 
 	 * 
 	 * */
-	public int getNeighborCntWithType(int currentGridX, int currentGridY, 
-			Grid[][] gridsWithHaloBoundary, Terrain terrain);
+    int getNeighborCntWithType(int currentGridX, int currentGridY,
+                               Grid[][] gridsWithHaloBoundary, Terrain terrain);
 }
