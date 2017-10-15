@@ -10,16 +10,13 @@ import org.epcc.ps.core.entity.environment.Terrain;
 import org.epcc.ps.core.util.GridUtil;
 import org.junit.Assert;
 import org.junit.Test;
-import org.pecc.ps.core.AbstractTest;
-
-import static org.pecc.ps.core.util.TestGridUtil.createGridWithLand;
-import static org.pecc.ps.core.util.TestGridUtil.createGridWithWater;
+import org.pecc.ps.core.AbstractGridTest;
 
 /**
  * @author jiahao.cao
  * Created on 10/13/2017
  */
-public class AlgorithmTest extends AbstractTest {
+public class AlgorithmTest extends AbstractGridTest {
 	private CoreAlgorithm coreAlgorithm = new CoreAlgorithmImpl();
 
 	@Test

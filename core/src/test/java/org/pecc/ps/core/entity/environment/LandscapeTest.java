@@ -4,16 +4,13 @@ import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.Landscape;
 import org.junit.Assert;
 import org.junit.Test;
-import org.pecc.ps.core.AbstractTest;
-
-import static org.pecc.ps.core.util.TestGridUtil.createGridWithLand;
-import static org.pecc.ps.core.util.TestGridUtil.createGridWithWater;
+import org.pecc.ps.core.AbstractGridTest;
 
 /**
  * @author shaohan.yin
  * Created on 12/10/2017
  */
-public class LandscapeTest extends AbstractTest {
+public class LandscapeTest extends AbstractGridTest {
     @Test
     public void testLandscapeArgumentChecking() {
         Landscape landscape;

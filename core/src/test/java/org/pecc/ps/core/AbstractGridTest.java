@@ -1,4 +1,4 @@
-package org.pecc.ps.core.util;
+package org.pecc.ps.core;
 
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.GridFactory;
@@ -6,17 +6,14 @@ import org.epcc.ps.core.entity.environment.Terrain;
 
 /**
  * @author shaohan.yin
- * Created on 15/10/2017
+ * Created on 16/10/2017
  */
-public class TestGridUtil {
-    private TestGridUtil() {
-    }
-
-    public static Grid createGridWithWater() {
+public class AbstractGridTest extends AbstractTest {
+    protected Grid createGridWithWater() {
         return GridFactory.create(Terrain.WATER);
     }
 
-    public static Grid createGridWithLand() {
+    protected Grid createGridWithLand() {
         return GridFactory.create(Terrain.LAND);
     }
 }

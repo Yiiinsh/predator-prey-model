@@ -54,9 +54,9 @@ public class GridUtil {
     public static int getNeighborCntWithType(int xIdx, int yIdx, Grid[][] gridsWithHaloBoundary, Terrain terrain) {
         checkNotNull(gridsWithHaloBoundary, "Grids cannot be null");
         checkArgument(xIdx >= 1 && xIdx <= gridsWithHaloBoundary.length - 2,
-                "Index x must within boundary of grids");
+                "Index x must within halo boundary of grids");
         checkArgument(yIdx >= 1 && yIdx <= gridsWithHaloBoundary[0].length - 2,
-                "Index y must within boundary of grids");
+                "Index y must within halo boundary of grids");
 
         int result = 0;
 
