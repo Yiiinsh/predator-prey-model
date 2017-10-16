@@ -15,11 +15,11 @@ public class CoreConfigTest extends AbstractTest {
 
     @Test
     public void testCoreConfig() {
-        Assert.assertEquals(config.getHareBirthRate(), 0.08, 0);
-        Assert.assertEquals(config.getHareDiffutionRate(), 0.2, 0);
-        Assert.assertEquals(config.getPumaBirthRate(), 0.02, 0);
-        Assert.assertEquals(config.getPumaDiffusionRate(), 0.2, 0);
-        Assert.assertEquals(config.getPumaMortalityRate(), 0.06, 0);
-        Assert.assertEquals(config.getPumaPredationRate(), 0.04, 0);
+        Assert.assertEquals(0.08, config.getHareBirthRate(), 0);
+        Assert.assertEquals(0.2, config.getHareDiffutionRate(), 0);
+        Assert.assertEquals(0.02, config.getPumaBirthRate(), 0);
+        Assert.assertEquals(0.2, config.getPumaDiffusionRate(), 0);
+        Assert.assertEquals(0.06, config.getPumaMortalityRate(),  0);
+        Assert.assertEquals(0.04, config.getPumaPredationRate(), 0);
     }
 }

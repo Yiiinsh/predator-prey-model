@@ -16,19 +16,19 @@ public class SpeciesTest extends AbstractTest {
 
     @Test
     public void testPuma() {
-        Assert.assertEquals(Species.PUMA.getBirthRate(), config.getPumaBirthRate(), 0);
-        Assert.assertEquals(Species.PUMA.getDiffusionRate(), config.getPumaDiffusionRate(), 0);
-        Assert.assertEquals(Species.PUMA.getMortalityRate(), config.getPumaMortalityRate(), 0);
-        Assert.assertEquals(Species.PUMA.getPredationRate(), config.getPumaPredationRate(), 0);
-        Assert.assertEquals(Species.PUMA.toString(), "Species[" + Species.PUMA.getSpeciesName() + "]");
+        Assert.assertEquals(config.getPumaBirthRate(), Species.PUMA.getBirthRate(), 0);
+        Assert.assertEquals(config.getPumaDiffusionRate(), Species.PUMA.getDiffusionRate(), 0);
+        Assert.assertEquals(config.getPumaMortalityRate(), Species.PUMA.getMortalityRate(), 0);
+        Assert.assertEquals(config.getPumaPredationRate(), Species.PUMA.getPredationRate(), 0);
+        Assert.assertEquals("Species[" + Species.PUMA.getSpeciesName() + "]", Species.PUMA.toString());
     }
 
     @Test
     public void testHare() {
-        Assert.assertEquals(Species.HARE.getBirthRate(), config.getHareBirthRate(), 0);
-        Assert.assertEquals(Species.HARE.getDiffusionRate(), config.getHareDiffutionRate(), 0);
-        Assert.assertEquals(Species.HARE.getPredationRate(), Species.NON_EXIST_DATA, 0);
-        Assert.assertEquals(Species.HARE.getMortalityRate(), Species.NON_EXIST_DATA, 0);
-        Assert.assertEquals(Species.HARE.toString(), "Species[" + Species.HARE.getSpeciesName() + "]");
+        Assert.assertEquals(config.getHareBirthRate(), Species.HARE.getBirthRate(), 0);
+        Assert.assertEquals(config.getHareDiffutionRate(), Species.HARE.getDiffusionRate(), 0);
+        Assert.assertEquals(Species.NON_EXIST_DATA, Species.HARE.getPredationRate(), 0);
+        Assert.assertEquals(Species.NON_EXIST_DATA, Species.HARE.getMortalityRate(), 0);
+        Assert.assertEquals("Species[" + Species.HARE.getSpeciesName() + "]", Species.HARE.toString());
     }
 }

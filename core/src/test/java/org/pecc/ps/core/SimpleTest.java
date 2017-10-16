@@ -25,7 +25,7 @@ public class SimpleTest extends AbstractTest {
 
         for(int xIdx = 0; xIdx != origin.length; ++xIdx) {
             for(int yIdx = 0; yIdx != origin[xIdx].length; ++yIdx) {
-                Assert.assertEquals(origin[xIdx][yIdx], target[xIdx + 1][yIdx + 1]);
+                Assert.assertEquals(target[xIdx + 1][yIdx + 1], origin[xIdx][yIdx]);
             }
         }
     }   

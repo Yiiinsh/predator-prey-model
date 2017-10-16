@@ -22,8 +22,8 @@ public class GridUtilTest extends AbstractGridTest {
 
         Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
 
-        Assert.assertEquals(gridsWithHaloBoundary.length , 5);
-        Assert.assertEquals(gridsWithHaloBoundary[0].length , 5);
+        Assert.assertEquals(5, gridsWithHaloBoundary.length);
+        Assert.assertEquals(5, gridsWithHaloBoundary[0].length);
 
         for(int xIdx = 0; xIdx != 5; ++xIdx) {
             Assert.assertTrue(gridsWithHaloBoundary[xIdx][0].getTerrain().equals(Terrain.WATER));

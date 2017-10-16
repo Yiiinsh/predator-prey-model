@@ -95,8 +95,8 @@ public class AlgorithmTest extends AbstractGridTest {
 			}
 		}
 
-		Assert.assertEquals(grids[0][0].getCreatures().get(Species.HARE).getDensity(), 8.824,0);
-		Assert.assertEquals(grids[0][0].getCreatures().get(Species.PUMA).getDensity(), 1.368,0);
+		Assert.assertEquals(8.824, grids[0][0].getCreatures().get(Species.HARE).getDensity(), 0);
+		Assert.assertEquals(1.368, grids[0][0].getCreatures().get(Species.PUMA).getDensity(), 0);
 	}
 
 	private void initGridWithCreate(Grid grid, Species species, double density) {

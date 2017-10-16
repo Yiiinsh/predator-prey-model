@@ -80,7 +80,7 @@ public class LandscapeTest extends AbstractGridTest {
 
         for(int x = 0; x != 3; ++x) {
             for(int y = 0; y != 3; ++y) {
-                Assert.assertEquals(landscape.getGrids()[x][y].getLandNeighborCnt(), landNeighborCnt[x][y]);
+                Assert.assertEquals(landNeighborCnt[x][y], landscape.getGrids()[x][y].getLandNeighborCnt());
             }
         }
 

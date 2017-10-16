@@ -26,18 +26,18 @@ public class ConfigTest extends AbstractTest {
 
     @Test
     public void testDefaultConfigGet() {
-        Assert.assertEquals(config.getInt(TEST_KEY_DEFAULT_CONFIG_INT), TEST_VALUE_DEFAULT_CONFIG_INT);
-        Assert.assertEquals(config.getString(TEST_KEY_DEFAULT_CONFIG_STRING), TEST_VALUE_DEFAULT_CONFIG_STRING);
+        Assert.assertEquals(TEST_VALUE_DEFAULT_CONFIG_INT, config.getInt(TEST_KEY_DEFAULT_CONFIG_INT));
+        Assert.assertEquals(TEST_VALUE_DEFAULT_CONFIG_STRING, config.getString(TEST_KEY_DEFAULT_CONFIG_STRING));
         Assert.assertNull(config.getString(TEST_KEY_NO_EXIST));
-        Assert.assertEquals(config.getString(TEST_KEY_NO_EXIST, "no"), "no");
+        Assert.assertEquals("no", config.getString(TEST_KEY_NO_EXIST, "no"));
     }
 
     @Test
     public void testSpecifiedFileConfig() {
-        Assert.assertEquals(specifiedConfig.getInt(TEST_KEY_SPECIFIED_FILE_CONFIG_INT), TEST_VALUE_SPECIFIED_FILE_CONFIG_INT);
-        Assert.assertEquals(specifiedConfig.getString(TEST_KEY_SPECIFIED_FILE_CONFIG_STRING), TEST_VALUE_SPECIFIED_FILE_CONFIG_STRING);
+        Assert.assertEquals(TEST_VALUE_SPECIFIED_FILE_CONFIG_INT, specifiedConfig.getInt(TEST_KEY_SPECIFIED_FILE_CONFIG_INT));
+        Assert.assertEquals(TEST_VALUE_SPECIFIED_FILE_CONFIG_STRING, specifiedConfig.getString(TEST_KEY_SPECIFIED_FILE_CONFIG_STRING));
         Assert.assertNull(specifiedConfig.getString(TEST_KEY_NO_EXIST));
-        Assert.assertEquals(specifiedConfig.getString(TEST_KEY_NO_EXIST, "no"), "no");
+        Assert.assertEquals("no", specifiedConfig.getString(TEST_KEY_NO_EXIST, "no"));
     }
 
     @Test

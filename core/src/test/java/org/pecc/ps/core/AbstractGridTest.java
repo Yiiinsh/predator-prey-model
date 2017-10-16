@@ -8,7 +8,7 @@ import org.epcc.ps.core.entity.environment.Terrain;
  * @author shaohan.yin
  * Created on 16/10/2017
  */
-public class AbstractGridTest extends AbstractTest {
+public abstract class AbstractGridTest extends AbstractTest {
     protected Grid createGridWithWater() {
         return GridFactory.create(Terrain.WATER);
     }

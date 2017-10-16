@@ -19,18 +19,18 @@ public class CreatureTest extends AbstractTest {
     @Test
     public void testCreatureMembers() {
         Creature puma = CreatureFactory.create(Species.PUMA);
-        Assert.assertEquals(puma.getName(), Species.PUMA.getSpeciesName());
-        Assert.assertEquals(puma.getBirthRate(), config.getPumaBirthRate(), 0);
-        Assert.assertEquals(puma.getDiffusionRate(), config.getPumaDiffusionRate(), 0);
-        Assert.assertEquals(puma.getPredationRate(), config.getPumaPredationRate(), 0);
-        Assert.assertEquals(puma.getMortalityRate(), config.getPumaMortalityRate(), 0);
-        Assert.assertEquals(puma.getDensity(), 0.0, 0);
+        Assert.assertEquals(Species.PUMA.getSpeciesName(), puma.getName());
+        Assert.assertEquals(config.getPumaBirthRate(), puma.getBirthRate(), 0);
+        Assert.assertEquals(config.getPumaDiffusionRate(), puma.getDiffusionRate(), 0);
+        Assert.assertEquals(config.getPumaPredationRate(), puma.getPredationRate(), 0);
+        Assert.assertEquals(config.getPumaMortalityRate(), puma.getMortalityRate(), 0);
+        Assert.assertEquals(0.0, puma.getDensity(), 0);
 
         Creature hare = CreatureFactory.create(Species.HARE);
-        Assert.assertEquals(hare.getName(), Species.HARE.getSpeciesName());
-        Assert.assertEquals(hare.getBirthRate(), config.getHareBirthRate(), 0);
-        Assert.assertEquals(hare.getDiffusionRate(), config.getHareDiffutionRate(), 0);
-        Assert.assertEquals(hare.getPredationRate(), Species.NON_EXIST_DATA, 0);
-        Assert.assertEquals(hare.getMortalityRate(), Species.NON_EXIST_DATA, 0);
+        Assert.assertEquals(Species.HARE.getSpeciesName(), hare.getName());
+        Assert.assertEquals(config.getHareBirthRate(), hare.getBirthRate(), 0);
+        Assert.assertEquals(config.getHareDiffutionRate(), hare.getDiffusionRate(), 0);
+        Assert.assertEquals(Species.NON_EXIST_DATA, hare.getPredationRate(), 0);
+        Assert.assertEquals(Species.NON_EXIST_DATA, hare.getMortalityRate(), 0);
     }
 }
