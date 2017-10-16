@@ -1,7 +1,6 @@
 package org.epcc.ps.core.entity.creature;
 
 import org.epcc.ps.core.config.CoreConfig;
-import org.epcc.ps.core.config.DefaultCoreConfig;
 
 /**
  * @author shaohan.yin
@@ -15,7 +14,7 @@ public enum  Species {
     private final static String PUMA_NAME = "puma";
     private final static String HARE_NAME = "hare";
 
-    private CoreConfig config = new DefaultCoreConfig();
+    private CoreConfig config = CoreConfig.DEFAULT;
 
     private String speciesName;
     private double birthRate;

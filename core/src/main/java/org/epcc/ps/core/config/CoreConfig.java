@@ -5,6 +5,8 @@ package org.epcc.ps.core.config;
  * Created on 10/10/2017
  */
 public interface CoreConfig {
+    CoreConfig DEFAULT = new DefaultCoreConfig();
+
     /** Landscape Config **/
     int getLandscapeLengthLimit();
     int getLandscapeWidthLimit();

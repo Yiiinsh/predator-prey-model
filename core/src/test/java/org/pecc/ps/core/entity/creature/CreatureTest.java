@@ -1,7 +1,6 @@
 package org.pecc.ps.core.entity.creature;
 
 import org.epcc.ps.core.config.CoreConfig;
-import org.epcc.ps.core.config.DefaultCoreConfig;
 import org.epcc.ps.core.entity.creature.Creature;
 import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
@@ -14,7 +13,7 @@ import org.pecc.ps.core.AbstractTest;
  * Created on 12/10/2017
  */
 public class CreatureTest extends AbstractTest {
-    private CoreConfig config = new DefaultCoreConfig();
+    private CoreConfig config = CoreConfig.DEFAULT;
 
     @Test
     public void testCreatureMembers() {
