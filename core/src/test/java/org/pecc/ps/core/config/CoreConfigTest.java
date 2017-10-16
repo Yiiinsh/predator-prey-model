@@ -14,6 +14,12 @@ public class CoreConfigTest extends AbstractTest {
 
     @Test
     public void testCoreConfig() {
+        Assert.assertEquals(0.4, config.getLandscapeEvolutionTimeStep(), 0);
+        Assert.assertEquals(0, config.getLandscapeEvolutionTimeStart(), 0);
+        Assert.assertEquals(500, config.getLandscapeEvolutionTimeEnd(), 0);
+        Assert.assertEquals(5, config.getLandscapeEvolutionTimeOutput());
+        Assert.assertEquals(2000, config.getLandscapeLengthLimit());
+        Assert.assertEquals(2000, config.getLandscapeWidthLimit());
         Assert.assertEquals(0.08, config.getHareBirthRate(), 0);
         Assert.assertEquals(0.2, config.getHareDiffutionRate(), 0);
         Assert.assertEquals(0.02, config.getPumaBirthRate(), 0);

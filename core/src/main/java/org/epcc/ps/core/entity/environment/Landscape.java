@@ -4,6 +4,8 @@ import org.epcc.ps.core.config.CoreConfig;
 import org.epcc.ps.core.config.DefaultCoreConfig;
 import org.epcc.ps.core.util.GridUtil;
 
+import java.io.Serializable;
+
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -11,8 +13,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @author shaohan.yin
  * Created on 11/10/2017
  */
-public class Landscape {
-    private CoreConfig config = new DefaultCoreConfig();
+public class Landscape implements Serializable {
+    private static CoreConfig config = new DefaultCoreConfig();
+
     private int length;
     private int width;
     private Grid grids[][];

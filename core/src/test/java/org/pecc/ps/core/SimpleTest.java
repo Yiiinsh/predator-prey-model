@@ -1,7 +1,8 @@
 package org.pecc.ps.core;
 
 
-
+import org.apache.commons.lang3.SerializationUtils;
+import org.epcc.ps.core.entity.environment.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -28,5 +29,23 @@ public class SimpleTest extends AbstractTest {
                 Assert.assertEquals(target[xIdx + 1][yIdx + 1], origin[xIdx][yIdx]);
             }
         }
-    }   
+    }
+
+    @Test
+    public void testDeepCloneUsingSerializationUtil() {
+        Grid[][] grids = {
+                {GridFactory.create(Terrain.LAND), GridFactory.create(Terrain.WATER)},
+                {GridFactory.create(Terrain.LAND), GridFactory.create(Terrain.LAND)}
+        };
+        Landscape landscape = LandscapeFactory.create(2, 2, grids);
+
+        Landscape clonedLandscape = SerializationUtils.clone(landscape);
+
+        Assert.assertNotEquals(landscape, clonedLandscape);
+        for(int xIdx = 0; xIdx != 2; ++xIdx) {
+            for(int yIdx = 0; yIdx != 2; ++yIdx) {
+                Assert.assertNotEquals(landscape.getGrids()[xIdx][yIdx], clonedLandscape.getGrids()[xIdx][yIdx]);
+            }
+        }
+    }
 }

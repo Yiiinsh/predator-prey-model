@@ -7,6 +7,10 @@ import org.epcc.ps.common.config.Config;
  * Created on 10/10/2017
  */
 public class DefaultCoreConfig implements CoreConfig {
+    private final static String KEY_EVOLUTION_TIME_STEP = "evolution.time.step";
+    private final static String KEY_EVOLUTION_TIME_START = "evolution.time.start";
+    private final static String KEY_EVOLUTION_TIME_END = "evolution.time.end";
+    private final static String KEY_EVOLUTION_TIME_OUTPUT = "evolution.time.output";
     private final static String KEY_LANDSCAPE_LENGTH_LIMIT = "landscape.length.limit";
     private final static String KEY_LANDSCAPE_WIDTH_LIMIT = "landscape.width.limit";
     private final static String KEY_PUMA_BIRTH_RATE = "puma.birth_rate";
@@ -17,6 +21,26 @@ public class DefaultCoreConfig implements CoreConfig {
     private final static String KEY_HARE_DIFFUSION_RATE = "hare.diffusion_rate";
 
     private Config config = Config.DEFAULT;
+
+    @Override
+    public double getLandscapeEvolutionTimeStep() {
+        return config.getDouble(KEY_EVOLUTION_TIME_STEP);
+    }
+
+    @Override
+    public double getLandscapeEvolutionTimeStart() {
+        return config.getDouble(KEY_EVOLUTION_TIME_START);
+    }
+
+    @Override
+    public double getLandscapeEvolutionTimeEnd() {
+        return config.getDouble(KEY_EVOLUTION_TIME_END);
+    }
+
+    @Override
+    public int getLandscapeEvolutionTimeOutput() {
+        return config.getInt(KEY_EVOLUTION_TIME_OUTPUT);
+    }
 
     @Override
     public int getLandscapeLengthLimit() {

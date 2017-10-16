@@ -15,6 +15,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class GridUtil {
     public static final int EXTRA_BORDER = 2;
+    public static final int EXTRA_BORDER_OFFSET = 1;
 
     private GridUtil() {
     }

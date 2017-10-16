@@ -1,9 +1,6 @@
 package org.pecc.ps.core.algorithm;
 
 import org.epcc.ps.core.algorithm.CoreAlgorithm;
-import org.epcc.ps.core.algorithm.impl.CoreAlgorithmImpl;
-import org.epcc.ps.core.entity.creature.Creature;
-import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.Terrain;
@@ -17,7 +14,7 @@ import org.pecc.ps.core.AbstractGridTest;
  * Created on 10/13/2017
  */
 public class AlgorithmTest extends AbstractGridTest {
-	private CoreAlgorithm coreAlgorithm = new CoreAlgorithmImpl();
+	private CoreAlgorithm coreAlgorithm = CoreAlgorithm.DEFAULT;
 
 	@Test
 	public void testSingleIterationAlgorithm()
@@ -65,6 +62,7 @@ public class AlgorithmTest extends AbstractGridTest {
 		for(int i = 0; i < grids.length; ++i) {
 			for(int j = 0; j < grids[0].length; ++j) {
 				newHareDensity= coreAlgorithm.getHaresNum(
+						grids[i][j].getTerrain(),
 						gridsWithHaloBoundary[i + 1][j + 1].getCreatures().get(Species.HARE).getDensity(),
 						gridsWithHaloBoundary[i + 1][j].getDensity(Species.HARE),
 						gridsWithHaloBoundary[i + 1][j + 2].getDensity(Species.HARE),
@@ -78,6 +76,7 @@ public class AlgorithmTest extends AbstractGridTest {
 						gridsWithHaloBoundary[i + 1][j + 1].getLandNeighborCnt());
 				
 				newPumaDensity= coreAlgorithm.getPumaNum(
+						grids[i][j].getTerrain(),
 						gridsWithHaloBoundary[i + 1][j + 1].getDensity(Species.PUMA),
 						gridsWithHaloBoundary[i + 1][j].getDensity(Species.PUMA),
 						gridsWithHaloBoundary[i + 1][j + 2].getDensity(Species.PUMA),
@@ -99,9 +98,4 @@ public class AlgorithmTest extends AbstractGridTest {
 		Assert.assertEquals(1.368, grids[0][0].getCreatures().get(Species.PUMA).getDensity(), 0);
 	}
 
-	private void initGridWithCreate(Grid grid, Species species, double density) {
-		Creature creature = CreatureFactory.create(species);
-		creature.updateDensity(density);
-		grid.getCreatures().put(species, creature);
-	}
 }

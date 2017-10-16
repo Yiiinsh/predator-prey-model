@@ -1,14 +1,12 @@
 package org.epcc.ps.core.entity.creature;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.Serializable;
 
 /**
  * @author shaohan.yin
  * Created on 11/10/2017
  */
-public abstract class AbstractCreature implements Creature {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+public abstract class AbstractCreature implements Creature, Serializable {
     protected Species species;
     protected double density;
 

@@ -3,6 +3,7 @@ package org.epcc.ps.core.entity.environment;
 import org.epcc.ps.core.entity.creature.Creature;
 import org.epcc.ps.core.entity.creature.Species;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  * @author shaohan.yin
  * Created on 11/10/2017
  */
-public class Grid {
+public class Grid implements Serializable {
     private Terrain terrain;
     private Map<Species, Creature> creatures;
     private int landNeighborCnt;
@@ -64,4 +65,5 @@ public class Grid {
     public String toString() {
         return String.format("Grid[%s]", terrain);
     }
+
 }

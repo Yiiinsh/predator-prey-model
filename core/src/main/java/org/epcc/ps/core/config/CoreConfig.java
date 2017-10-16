@@ -7,6 +7,12 @@ package org.epcc.ps.core.config;
 public interface CoreConfig {
     CoreConfig DEFAULT = new DefaultCoreConfig();
 
+    /** Evolution Config **/
+    double getLandscapeEvolutionTimeStep();
+    double getLandscapeEvolutionTimeStart();
+    double getLandscapeEvolutionTimeEnd();
+    int getLandscapeEvolutionTimeOutput();
+
     /** Landscape Config **/
     int getLandscapeLengthLimit();
     int getLandscapeWidthLimit();
