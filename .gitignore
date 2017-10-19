@@ -22,3 +22,6 @@ target
 .idea
 *.iml
 
+client/shell/spring-shell.log
+client/shell/src/test/java/org/epcc/ps/client/shell/AbstractClientUtilTest.java
+client/shell/src/test/java/org/epcc/ps/client/shell/AbstractTest.java
