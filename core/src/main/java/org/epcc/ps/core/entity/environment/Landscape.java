@@ -18,7 +18,7 @@ public class Landscape implements Serializable {
 
     private int length;
     private int width;
-    private Grid grids[][];
+    private Grid[][] grids;
 
     public Landscape(int length, int width, Grid[][] grids) {
         checkArguments(length, width, grids);
