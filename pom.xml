@@ -71,11 +71,6 @@
             </dependency>
             <dependency>
                 <groupId>epcc-ps.client</groupId>
-                <artifactId>web</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>epcc-ps.client</groupId>
                 <artifactId>shell</artifactId>
                 <version>${project.version}</version>
             </dependency>

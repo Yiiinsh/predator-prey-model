@@ -12,7 +12,6 @@
     <artifactId>client</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>web</module>
         <module>shell</module>
     </modules>
 
