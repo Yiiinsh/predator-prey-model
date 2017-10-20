@@ -1,28 +1,43 @@
-package org.epcc.ps.client.util;
+package org.epcc.ps.client.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import org.epcc.ps.core.config.CoreConfig;
+import org.epcc.ps.core.config.DefaultCoreConfig;
 import org.epcc.ps.core.entity.creature.Creature;
 import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.GridFactory;
+import org.epcc.ps.core.entity.environment.Landscape;
+import org.epcc.ps.core.entity.environment.LandscapeFactory;
 import org.epcc.ps.core.entity.environment.Terrain;
 
 /**
  * @author jiahao.cao
  * Created on 18/10/2017
  */
-public class DefaultClienGridUtil implements ClientGridUtil{
-		
+public class DefaultClienGridService implements ClientGridService{
+		    
+	    /***
+		 * Get landscape
+		 * 
+		 * */
+	    public Landscape getLandScape(String fileSource)
+	    {
+	    	int[][] land=generatelandByMap(fileSource);      
+		    Grid[][] grids=generateGridByLand(land);
+	    	Landscape landscape=LandscapeFactory.create(grids.length, grids[0].length, grids);
+			return landscape;
+	    }
+	    
 		/***
 		 * Get land by reading map file
 		 * 
 		 * */
-		@Override
-		public int[][] generatelandByMap(String fileName) {
+		private int[][] generatelandByMap(String fileName) {
 			File file = new File(fileName);
 	        Scanner s;
 			try {
@@ -50,8 +65,7 @@ public class DefaultClienGridUtil implements ClientGridUtil{
 		 * Initialize the grid by map
 		 * 
 		 * */
-		@Override
-		public Grid[][] generateGridByLand(int[][] land)
+		private Grid[][] generateGridByLand(int[][] land)
 		{
 			Grid[][] grid=new Grid[land[0].length][land.length];
 			int pnum=1;
