@@ -1,11 +1,12 @@
 package org.epcc.ps.client.shell.command;
 
-import java.util.Scanner;
-
-import org.epcc.ps.client.service.DefaultClienGridService;
+import org.epcc.ps.client.shell.exception.ConvertException;
+import org.epcc.ps.client.shell.service.DefaultConvertService;
 import org.epcc.ps.core.entity.environment.Landscape;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+
+import java.util.Scanner;
 
 /**
  * @author shaohan.yin
@@ -14,7 +15,7 @@ import org.springframework.shell.standard.ShellMethod;
 @ShellComponent
 public class FirstCommand {
 	
-	DefaultClienGridService clientGridService=new DefaultClienGridService();
+	DefaultConvertService clientGridService=new DefaultConvertService();
 	
     @ShellMethod("Add tow integers")
     public int add(int a, int b) {
@@ -40,8 +41,7 @@ public class FirstCommand {
     }
     
     @ShellMethod("Read mapfile")
-    public void readMapFile(String fileName) 
-    {
-    	Landscape lanscape=clientGridService.getLandScape(fileName);
+    public void readMapFile(String fileName) throws ConvertException {
+    	Landscape lanscape=clientGridService.convertLandscapeFromFile(fileName);
     }
 }
