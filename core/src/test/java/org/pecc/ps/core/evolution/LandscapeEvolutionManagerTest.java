@@ -29,7 +29,7 @@ public class LandscapeEvolutionManagerTest extends AbstractGridTest {
         target[1][0].getCreatures().get(Species.PUMA).updateDensity(2.92);
 
         Landscape landscape = LandscapeFactory.create(2, 2, grids);
-        LandscapeEvolutionManager landscapeEvolutionManager = new LandscapeEvolutionManager(landscape);
+        LandscapeEvolutionManager landscapeEvolutionManager = LandscapeEvolutionManager.create(landscape);
 
         landscapeEvolutionManager.evolutionPerTimeStep();
 
@@ -48,7 +48,7 @@ public class LandscapeEvolutionManagerTest extends AbstractGridTest {
     public void testEvolution() {
         Grid[][] grids = initTestGrid();
         Landscape landscape = LandscapeFactory.create(2, 2, grids);
-        LandscapeEvolutionManager landscapeEvolutionManager = new LandscapeEvolutionManager(landscape);
+        LandscapeEvolutionManager landscapeEvolutionManager = LandscapeEvolutionManager.create(landscape);
         landscapeEvolutionManager.evolution();
 
         Assert.assertEquals(EVOLUTION_CNT, landscapeEvolutionManager.getSnapshots().size(), 0);

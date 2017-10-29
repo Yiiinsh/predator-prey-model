@@ -9,4 +9,7 @@ public interface ShellConfig {
 
     double getDensityLowerBound();
     double getDensityUpperBound();
+
+    int getHareDensityMaxVal();
+    int getPumaDensityMaxVal();
 }

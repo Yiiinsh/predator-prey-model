@@ -23,7 +23,11 @@ public class LandscapeEvolutionManager {
     private Landscape landscape;
     private ArrayList<Landscape> snapshots;
 
-    public LandscapeEvolutionManager(Landscape landscape) {
+    public static LandscapeEvolutionManager create(Landscape landscape) {
+        return new LandscapeEvolutionManager(landscape);
+    }
+
+    private LandscapeEvolutionManager(Landscape landscape) {
         this.landscape = landscape;
         snapshots = new ArrayList<>();
         takeSnapshot();

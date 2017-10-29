@@ -1,6 +1,8 @@
 package org.epcc.ps.client.shell.service;
 
 import org.epcc.ps.client.shell.exception.ConvertException;
+import org.epcc.ps.client.shell.exception.PPMFileException;
+import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Landscape;
 
 /**
@@ -14,4 +16,6 @@ public interface ConvertService {
 	 * 
 	 * */
 	Landscape convertLandscapeFromFile(String fileSource) throws ConvertException;
+
+	void convertLandscapeWithSpeciesToPPM(String fileName, Landscape landscape, Species species) throws PPMFileException;
 }

@@ -10,6 +10,8 @@ import org.epcc.ps.common.config.Config;
 public class DefaultShellConfig extends AbstractConfig implements ShellConfig {
     public static final String KEY_DENSITY_LOWER_BOUND = "density.lower.bound";
     public static final String KEY_DENSITY_UPPER_BOUND = "density.upper.bound";
+    public static final String KEY_DENSITY_HARE_MAX_VAL = "density.hare.max.val";
+    public static final String KEY_DENSITY_PUMA_MAX_VAL = "density.puma.max.val";
 
     private Config config = Config.DEFAULT;
 
@@ -22,4 +24,16 @@ public class DefaultShellConfig extends AbstractConfig implements ShellConfig {
     public double getDensityUpperBound() {
         return config.getDouble(KEY_DENSITY_UPPER_BOUND, 5.0);
     }
+
+    @Override
+    public int getHareDensityMaxVal() {
+        return config.getInt(KEY_DENSITY_HARE_MAX_VAL, 8);
+    }
+
+    @Override
+    public int getPumaDensityMaxVal() {
+        return config.getInt(KEY_DENSITY_PUMA_MAX_VAL, 5);
+    }
+
+
 }

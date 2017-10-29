@@ -1,11 +1,15 @@
 package org.epcc.ps.client.shell.service;
 
+import org.epcc.ps.client.shell.config.ShellConfig;
 import org.epcc.ps.client.shell.exception.ConvertException;
+import org.epcc.ps.client.shell.exception.PPMFileException;
+import org.epcc.ps.client.shell.util.PPMUtil;
 import org.epcc.ps.client.shell.util.SpeciesDensityGenerator;
 import org.epcc.ps.core.entity.creature.Creature;
 import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.*;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +19,9 @@ import java.util.Scanner;
  * @author jiahao.cao
  * Created on 18/10/2017
  */
+@Service
 public class DefaultConvertService extends AbstractService implements ConvertService {
+        private static ShellConfig config = ShellConfig.DEFAULT;
 
 	    @Override
 		public Landscape convertLandscapeFromFile(String fileSource) throws ConvertException {
@@ -23,17 +29,32 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
 	    	Landscape landscape = LandscapeFactory.create(grids.length, grids[0].length, grids);
 			return landscape;
 	    }
-	    
+
+		@Override
+		public void convertLandscapeWithSpeciesToPPM(String fileName, Landscape landscape, Species species)
+                throws PPMFileException {
+	        switch (species) {
+                case PUMA:
+                    PPMUtil.generateRedBasedPPMFile(fileName, landscape.getLength(), landscape.getWidth(),
+                            config.getPumaDensityMaxVal(), readDensityFromLandscape(landscape, species));
+                    break;
+                case HARE:
+                    PPMUtil.generateRedBasedPPMFile(fileName, landscape.getLength(), landscape.getWidth(),
+                            config.getHareDensityMaxVal(), readDensityFromLandscape(landscape, species));
+                    break;
+                default:
+                    break;
+            }
+		}
+
 		/***
 		 * Get land by reading map file
 		 * 
 		 * */
 		private int[][] readMapFromFile(String fileSource) throws ConvertException {
 			File file = new File(fileSource);
-	        Scanner scanner = null;
 
-			try {
-				scanner = new Scanner(file);
+			try (Scanner scanner = new Scanner(file)){
 				int height = scanner.nextInt();
 			    int width = scanner.nextInt();
 			    int[][] land = new int[height][width];
@@ -47,10 +68,6 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
 			} catch (FileNotFoundException e) {
 				logger.error("Load file failed.", e);
 				throw new ConvertException(e.getMessage());
-			} finally {
-				if(null != scanner) {
-					scanner.close();
-				}
 			}
 		}
 
@@ -87,5 +104,17 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
 	        creature.updateDensity(density);
 	        grid.getCreatures().put(species, creature);
 	    }
+
+	    private double[][] readDensityFromLandscape(Landscape landscape, Species species) {
+		    double[][] res = new double[landscape.getLength()][landscape.getWidth()];
+
+		    for(int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
+                for(int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
+                    res[xIdx][yIdx] = landscape.getGrids()[xIdx][yIdx].getDensity(species);
+                }
+            }
+
+		    return res;
+        }
 }
 		
