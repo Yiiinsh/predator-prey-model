@@ -22,5 +22,3 @@ target
 .idea
 *.iml
 
-# Spring
-spring-shell.log

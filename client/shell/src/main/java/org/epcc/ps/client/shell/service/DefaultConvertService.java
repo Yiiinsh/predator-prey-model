@@ -9,7 +9,6 @@ import org.epcc.ps.core.entity.creature.Creature;
 import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.*;
-import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +18,6 @@ import java.util.Scanner;
  * @author jiahao.cao
  * Created on 18/10/2017
  */
-@Service
 public class DefaultConvertService extends AbstractService implements ConvertService {
         private static ShellConfig config = ShellConfig.DEFAULT;
 

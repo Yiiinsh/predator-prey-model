@@ -8,12 +8,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.7.RELEASE</version>
-    </parent>
-
     <developers>
         <developer>
             <id>Yiiinsh</id>
@@ -45,7 +39,8 @@
         <guava.version>23.1-jre</guava.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <log4j2.version>2.9.1</log4j2.version>
-        <spring.shell.version>2.0.0.M2</spring.shell.version>
+        <commons-cli.version>1.4</commons-cli.version>
+        <mockito.version>2.11.0</mockito.version>
         <!-- Test Dependencies Version -->
         <junit.version>4.11</junit.version>
     </properties>
@@ -111,15 +106,20 @@
                 <version>${log4j2.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.springframework.shell</groupId>
-                <artifactId>spring-shell-starter</artifactId>
-                <version>${spring.shell.version}</version>
+                <groupId>commons-cli</groupId>
+                <artifactId>commons-cli</artifactId>
+                <version>${commons-cli.version}</version>
             </dependency>
             <!-- Test Dependencies -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>${mockito.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
