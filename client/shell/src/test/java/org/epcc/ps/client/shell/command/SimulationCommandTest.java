@@ -29,7 +29,7 @@ import static org.mockito.Mockito.when;
  * @author shaohan.yin
  * Created on 29/10/2017
  */
-public class TestSimulationCommand extends AbstractTest {
+public class SimulationCommandTest extends AbstractTest {
     private static final String FILE_FLAG = "-f";
     private static final String NON_EXISTS = "non-exists";
 
@@ -39,7 +39,7 @@ public class TestSimulationCommand extends AbstractTest {
     @Before
     public void setUp() throws ConvertException {
         convertService = Mockito.mock(ConvertService.class);
-        simulationCommand = new SimulationCommand(convertService);
+        simulationCommand = new DefaultSimulationCommand(convertService);
 
 
         Map<Species, Creature> creatures = new HashMap<>();

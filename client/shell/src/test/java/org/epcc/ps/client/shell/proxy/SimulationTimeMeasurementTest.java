@@ -1,7 +1,6 @@
-package org.epcc.ps.client.shell;
+package org.epcc.ps.client.shell.proxy;
 
 import org.epcc.ps.client.shell.command.SimulationCommand;
-import org.epcc.ps.client.shell.proxy.SimulationTimeMeasurementProxyHandler;
 
 import java.lang.reflect.Proxy;
 
@@ -9,11 +8,13 @@ import java.lang.reflect.Proxy;
  * @author shaohan.yin
  * Created on 29/10/2017
  */
-public class Simulation {
-
+public class SimulationTimeMeasurementTest {
     public static void main(String[] args) throws Exception {
         ((SimulationCommand) Proxy.newProxyInstance(SimulationCommand.class.getClassLoader(),
                 new Class[]{SimulationCommand.class},
-                new SimulationTimeMeasurementProxyHandler())).simulate(args);
+                new SimulationTimeMeasurementProxyHandler())).simulate(new String[]{
+                        "-f", "src/test/resources/file3.dat", "-i", "500"
+        });
     }
+
 }
