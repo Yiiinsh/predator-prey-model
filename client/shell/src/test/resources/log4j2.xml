@@ -5,18 +5,10 @@
             <PatternLayout pattern="%msg%n"/>
         </Console>
     </Appenders>
-    <Appenders>
-        <File name="File" fileName="simulation.log">
-            <PatternLayout>
-                <Pattern>%m%n</Pattern>
-            </PatternLayout>
-        </File>
-    </Appenders>
 
     <Loggers>
         <Root level="INFO">
             <AppenderRef ref="Console"/>
-            <AppenderRef ref="File"/>
         </Root>
     </Loggers>
 </Configuration>

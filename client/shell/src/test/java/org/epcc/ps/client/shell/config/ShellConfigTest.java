@@ -15,7 +15,7 @@ public class ShellConfigTest extends AbstractTest {
     public void testShellConfig() {
         Assert.assertEquals(0.0, config.getDensityLowerBound(), 0);
         Assert.assertEquals(5.0, config.getDensityUpperBound(), 0);
-        Assert.assertEquals(8, config.getHareDensityMaxVal());
+        Assert.assertEquals(5, config.getHareDensityMaxVal());
         Assert.assertEquals(5, config.getPumaDensityMaxVal());
     }
 }

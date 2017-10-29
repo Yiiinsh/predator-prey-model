@@ -1,6 +1,7 @@
 package org.epcc.ps.client.shell.command;
 
 import org.apache.commons.cli.*;
+import org.epcc.ps.client.shell.exception.PPMFileException;
 import org.epcc.ps.client.shell.exception.SimulationSourceNotFoundException;
 import org.epcc.ps.client.shell.service.ConvertService;
 import org.epcc.ps.client.shell.service.DefaultConvertService;
@@ -57,23 +58,14 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
             landscapeEvolutionManager.evolution();
 
             for(int idx = 0; idx <= landscapeEvolutionManager.getSnapshots().size(); idx += interval){
-                convertService.convertLandscapeWithSpeciesToPPM(
-                        String.format("%d-hare.ppm", idx),
-                        landscapeEvolutionManager.getSnapshots().get(idx),
-                        Species.HARE
-                );
-                convertService.convertLandscapeWithSpeciesToPPM(
-                        String.format("%d-puma.ppm", idx),
-                        landscapeEvolutionManager.getSnapshots().get(idx),
-                        Species.PUMA
-                );
+                outputSnapshotsAsPPM(idx, landscapeEvolutionManager.getSnapshots().get(idx));
 
-                // TODO: Average Density
+                calculateAverageDensity(idx, landscapeEvolutionManager.getSnapshots().get(idx));
             }
 
 
         } catch (Exception e) {
-            logger.error("Simulation failed.", e);
+            logger.error("Simulation failed.", e.getMessage());
             formatter.printHelp(COMMAND_NAME, options);
             throw e;
         }
@@ -83,6 +75,32 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         if(!commandLine.hasOption(SIMULATION_SOURCE_FLAG)) {
             throw new SimulationSourceNotFoundException("Simulation source file must be specified with -f flag.");
         }
+    }
+
+    private void outputSnapshotsAsPPM(int idx, Landscape landscape) throws PPMFileException {
+        convertService.convertLandscapeWithSpeciesToPPM(
+                String.format("%d-hare.ppm", idx),
+                landscape,
+                Species.HARE
+        );
+        convertService.convertLandscapeWithSpeciesToPPM(
+                String.format("%d-puma.ppm", idx),
+                landscape,
+                Species.PUMA
+        );
+    }
+
+    private void calculateAverageDensity(int idx, Landscape landscape) {
+        double hare = 0, puma = 0;
+        for(int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
+            for(int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
+                hare += landscape.getGrids()[xIdx][yIdx].getDensity(Species.HARE);
+                puma += landscape.getGrids()[xIdx][yIdx].getDensity(Species.PUMA);
+            }
+        }
+        int landscapeSize = landscape.getLength() * landscape.getWidth();
+        logger.info(String.format("Average Density %d: PUMA %.3f HARE %.3f", idx,
+                puma / landscapeSize, hare / landscapeSize));
     }
 
 }
