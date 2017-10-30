@@ -43,6 +43,8 @@
         <log4j2.version>2.9.1</log4j2.version>
         <commons-cli.version>1.4</commons-cli.version>
         <mockito.version>2.11.0</mockito.version>
+        <velocity.version>1.7</velocity.version>
+        <velocity.tools.version>2.0</velocity.tools.version>
         <!-- Test Dependencies Version -->
         <junit.version>4.11</junit.version>
     </properties>
@@ -111,6 +113,16 @@
                 <groupId>commons-cli</groupId>
                 <artifactId>commons-cli</artifactId>
                 <version>${commons-cli.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity-tools</artifactId>
+                <version>${velocity.tools.version}</version>
             </dependency>
             <!-- Test Dependencies -->
             <dependency>
