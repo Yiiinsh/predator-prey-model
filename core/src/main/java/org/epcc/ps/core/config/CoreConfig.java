@@ -7,23 +7,39 @@ package org.epcc.ps.core.config;
 public interface CoreConfig {
     CoreConfig DEFAULT = new DefaultCoreConfig();
 
-    /** Evolution Config **/
+    /**
+     * Evolution Config
+     **/
     double getLandscapeEvolutionTimeStep();
+
     double getLandscapeEvolutionTimeStart();
+
     double getLandscapeEvolutionTimeEnd();
+
     int getLandscapeEvolutionTimeOutput();
 
-    /** Landscape Config **/
+    /**
+     * Landscape Config
+     **/
     int getLandscapeLengthLimit();
+
     int getLandscapeWidthLimit();
 
-    /** PUMA Config **/
+    /**
+     * PUMA Config
+     **/
     double getPumaBirthRate();
+
     double getPumaPredationRate();
+
     double getPumaMortalityRate();
+
     double getPumaDiffusionRate();
 
-    /** HARE Config **/
+    /**
+     * HARE Config
+     **/
     double getHareBirthRate();
+
     double getHareDiffutionRate();
 }

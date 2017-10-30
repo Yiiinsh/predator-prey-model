@@ -13,22 +13,21 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractTest {
 
-        protected Logger logger = LoggerFactory.getLogger(getClass());
+    @Rule
+    public TestName testName = new TestName();
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
-        @Rule
-        public TestName testName = new TestName();
+    @Before
+    public void beforeAbstractTest() {
+        logger.info(remarkableMessage("[begin test][{}]"), testName.getMethodName());
+    }
 
-        @Before
-        public void beforeAbstractTest() {
-            logger.info(remarkableMessage("[begin test][{}]"), testName.getMethodName());
-        }
+    @After
+    public void afterAbstractTest() {
+        logger.info(remarkableMessage("[end   test][{}]"), testName.getMethodName());
+    }
 
-        @After
-        public void afterAbstractTest() {
-            logger.info(remarkableMessage("[end   test][{}]"), testName.getMethodName());
-        }
-
-        protected String remarkableMessage(String msg) {
-            return String.format("------------%s------------\n",msg);
-        }
+    protected String remarkableMessage(String msg) {
+        return String.format("------------%s------------\n", msg);
+    }
 }

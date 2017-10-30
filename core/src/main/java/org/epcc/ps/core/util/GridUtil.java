@@ -29,7 +29,7 @@ public class GridUtil {
 
         Grid[][] gridsWithHaloBoundary = new Grid[length + EXTRA_BORDER][width + EXTRA_BORDER];
 
-        for(int xIdx = 0; xIdx != length + EXTRA_BORDER ; ++xIdx) {
+        for (int xIdx = 0; xIdx != length + EXTRA_BORDER; ++xIdx) {
             gridsWithHaloBoundary[xIdx][0] = GridFactory.create(Terrain.WATER);
             initGridCreatures(gridsWithHaloBoundary[xIdx][0]);
 
@@ -37,7 +37,7 @@ public class GridUtil {
             initGridCreatures(gridsWithHaloBoundary[xIdx][width + EXTRA_BORDER - 1]);
         }
 
-        for(int yIdx = 0; yIdx != width + EXTRA_BORDER ; ++yIdx) {
+        for (int yIdx = 0; yIdx != width + EXTRA_BORDER; ++yIdx) {
             gridsWithHaloBoundary[0][yIdx] = GridFactory.create(Terrain.WATER);
             initGridCreatures(gridsWithHaloBoundary[0][yIdx]);
 
@@ -45,8 +45,8 @@ public class GridUtil {
             initGridCreatures(gridsWithHaloBoundary[0][yIdx]);
         }
 
-        for(int xIdx = 0; xIdx != length; ++xIdx) {
-            System.arraycopy(grids[xIdx],0,gridsWithHaloBoundary[xIdx + 1], 1, grids[xIdx].length);
+        for (int xIdx = 0; xIdx != length; ++xIdx) {
+            System.arraycopy(grids[xIdx], 0, gridsWithHaloBoundary[xIdx + 1], 1, grids[xIdx].length);
         }
 
         return gridsWithHaloBoundary;

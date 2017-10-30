@@ -14,10 +14,10 @@ import org.pecc.ps.core.AbstractGridTest;
 public class GridUtilTest extends AbstractGridTest {
     @Test
     public void testGenerateGridWithHaloBoundary() {
-        Grid grids[][]={
-                {createGridWithLand(),createGridWithLand(),createGridWithLand()},
-                {createGridWithLand(),createGridWithWater(),createGridWithLand()},
-                {createGridWithLand(),createGridWithLand(),createGridWithWater()}
+        Grid grids[][] = {
+                {createGridWithLand(), createGridWithLand(), createGridWithLand()},
+                {createGridWithLand(), createGridWithWater(), createGridWithLand()},
+                {createGridWithLand(), createGridWithLand(), createGridWithWater()}
         };
 
         Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
@@ -25,11 +25,11 @@ public class GridUtilTest extends AbstractGridTest {
         Assert.assertEquals(5, gridsWithHaloBoundary.length);
         Assert.assertEquals(5, gridsWithHaloBoundary[0].length);
 
-        for(int xIdx = 0; xIdx != 5; ++xIdx) {
+        for (int xIdx = 0; xIdx != 5; ++xIdx) {
             Assert.assertTrue(gridsWithHaloBoundary[xIdx][0].getTerrain().equals(Terrain.WATER));
             Assert.assertTrue(gridsWithHaloBoundary[xIdx][4].getTerrain().equals(Terrain.WATER));
         }
-        for(int yIdx = 0; yIdx != 5; ++yIdx) {
+        for (int yIdx = 0; yIdx != 5; ++yIdx) {
             Assert.assertTrue(gridsWithHaloBoundary[0][yIdx].getTerrain().equals(Terrain.WATER));
             Assert.assertTrue(gridsWithHaloBoundary[4][yIdx].getTerrain().equals(Terrain.WATER));
         }
@@ -37,10 +37,10 @@ public class GridUtilTest extends AbstractGridTest {
 
     @Test
     public void testGetNeighborCntWithType() {
-        Grid grids[][]={
-                {createGridWithLand(),createGridWithLand(),createGridWithLand()},
-                {createGridWithLand(),createGridWithWater(),createGridWithLand()},
-                {createGridWithLand(),createGridWithLand(),createGridWithWater()}
+        Grid grids[][] = {
+                {createGridWithLand(), createGridWithLand(), createGridWithLand()},
+                {createGridWithLand(), createGridWithWater(), createGridWithLand()},
+                {createGridWithLand(), createGridWithLand(), createGridWithWater()}
         };
 
         Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(3, 3, grids);

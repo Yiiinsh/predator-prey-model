@@ -61,10 +61,10 @@ public class Landscape implements Serializable {
     private void updateLandNeighborCnt() {
         Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(length, width, grids);
 
-        for(int xIdx = 0; xIdx != length; ++xIdx) {
-            for(int yIdx = 0; yIdx != width; ++yIdx) {
+        for (int xIdx = 0; xIdx != length; ++xIdx) {
+            for (int yIdx = 0; yIdx != width; ++yIdx) {
                 grids[xIdx][yIdx].setLandNeighborCnt(
-                GridUtil.getNeighborCntWithType(xIdx + 1, yIdx + 1, gridsWithHaloBoundary, Terrain.LAND));
+                        GridUtil.getNeighborCntWithType(xIdx + 1, yIdx + 1, gridsWithHaloBoundary, Terrain.LAND));
             }
         }
     }

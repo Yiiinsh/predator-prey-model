@@ -17,7 +17,7 @@ public class LandscapeTest extends AbstractGridTest {
 
         try {
             logger.info("Initialize with length -1");
-            landscape = new Landscape(-1,1, new Grid[1][1]);
+            landscape = new Landscape(-1, 1, new Grid[1][1]);
             Assert.fail();
         } catch (Exception e) {
             Assert.assertEquals("Length of Landscape must between 0 to 2000!", e.getMessage());
@@ -26,7 +26,7 @@ public class LandscapeTest extends AbstractGridTest {
 
         try {
             logger.info("Initialize with width -1");
-            landscape = new Landscape(1,-1, new Grid[1][1]);
+            landscape = new Landscape(1, -1, new Grid[1][1]);
             Assert.fail();
         } catch (Exception e) {
             Assert.assertEquals("Width of Landscape must between 0 to 2000!", e.getMessage());
@@ -35,7 +35,7 @@ public class LandscapeTest extends AbstractGridTest {
 
         try {
             logger.info("Initialize with null grids");
-            landscape = new Landscape(1,1,null);
+            landscape = new Landscape(1, 1, null);
             Assert.fail();
         } catch (Exception e) {
             Assert.assertEquals("Grids on the Landscape cannot be null", e.getMessage());
@@ -44,19 +44,19 @@ public class LandscapeTest extends AbstractGridTest {
 
         try {
             logger.info("Initialize with unmatched grids and length");
-            landscape = new Landscape(1,3,new Grid[3][3]);
+            landscape = new Landscape(1, 3, new Grid[3][3]);
             Assert.fail();
         } catch (Exception e) {
-            Assert.assertEquals("Length of Grids doesn't match!",e.getMessage());
+            Assert.assertEquals("Length of Grids doesn't match!", e.getMessage());
             logger.error(e.getMessage());
         }
 
         try {
             logger.info("Initialize with unmatched grids and width");
-            landscape = new Landscape(3,1,new Grid[3][3]);
+            landscape = new Landscape(3, 1, new Grid[3][3]);
             Assert.fail();
         } catch (Exception e) {
-            Assert.assertEquals("Width of Grids doesn't match!",e.getMessage());
+            Assert.assertEquals("Width of Grids doesn't match!", e.getMessage());
             logger.error(e.getMessage());
         }
 
@@ -65,21 +65,21 @@ public class LandscapeTest extends AbstractGridTest {
     @Test
     public void testLandscapeInit() {
         Grid[][] grids = {
-                {createGridWithLand(),createGridWithWater(),createGridWithWater()},
-                {createGridWithLand(),createGridWithLand(),createGridWithWater()},
-                {createGridWithLand(),createGridWithWater(),createGridWithWater()}
+                {createGridWithLand(), createGridWithWater(), createGridWithWater()},
+                {createGridWithLand(), createGridWithLand(), createGridWithWater()},
+                {createGridWithLand(), createGridWithWater(), createGridWithWater()}
         };
 
         int[][] landNeighborCnt = {
-                {1,2,0},
-                {3,1,1},
-                {1,2,0}
+                {1, 2, 0},
+                {3, 1, 1},
+                {1, 2, 0}
         };
 
-        Landscape landscape = new Landscape(3,3,grids);
+        Landscape landscape = new Landscape(3, 3, grids);
 
-        for(int x = 0; x != 3; ++x) {
-            for(int y = 0; y != 3; ++y) {
+        for (int x = 0; x != 3; ++x) {
+            for (int y = 0; y != 3; ++y) {
                 Assert.assertEquals(landNeighborCnt[x][y], landscape.getGrids()[x][y].getLandNeighborCnt());
             }
         }

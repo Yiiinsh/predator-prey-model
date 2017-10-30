@@ -8,16 +8,26 @@ import org.epcc.ps.core.entity.environment.Terrain;
  */
 public interface Creature {
     String getName();
+
     Species getSpecies();
+
     boolean isHabitable(Terrain terrain);
 
-    /** Rates **/
+    /**
+     * Rates
+     **/
     double getBirthRate();
+
     double getMortalityRate();
+
     double getPredationRate();
+
     double getDiffusionRate();
 
-    /** Statistics **/
+    /**
+     * Statistics
+     **/
     double getDensity();
+
     void updateDensity(double newDensity);
 }

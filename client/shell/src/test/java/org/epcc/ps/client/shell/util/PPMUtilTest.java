@@ -23,8 +23,8 @@ public class PPMUtilTest {
     public void testPPMUtil() throws PPMFileException {
         PPMUtil.generateRedBasedPPMFile(TEST_FILE_NAME, 2, 2, 5,
                 new double[][]{
-                        {3,5},
-                        {0,2}
+                        {3, 5},
+                        {0, 2}
                 });
     }
 }

@@ -12,10 +12,9 @@ import org.slf4j.LoggerFactory;
  * Created on 23/10/2017
  */
 public class AbstractTest {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-
     @Rule
     public TestName testName = new TestName();
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Before
     public void beforeAbstractTest() {
@@ -28,6 +27,6 @@ public class AbstractTest {
     }
 
     protected String remarkableMessage(String msg) {
-        return String.format("------------%s------------\n",msg);
+        return String.format("------------%s------------\n", msg);
     }
 }

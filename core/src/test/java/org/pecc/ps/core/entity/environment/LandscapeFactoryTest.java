@@ -18,7 +18,7 @@ public class LandscapeFactoryTest extends AbstractTest {
         Grid[][] grids = {
                 {GridFactory.create(Terrain.LAND),}
         };
-        Assert.assertNotNull(LandscapeFactory.create(1,1, grids));
+        Assert.assertNotNull(LandscapeFactory.create(1, 1, grids));
     }
 
 }

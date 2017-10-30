@@ -24,7 +24,7 @@ public class CoreConfigTest extends AbstractTest {
         Assert.assertEquals(0.2, config.getHareDiffutionRate(), 0);
         Assert.assertEquals(0.02, config.getPumaBirthRate(), 0);
         Assert.assertEquals(0.2, config.getPumaDiffusionRate(), 0);
-        Assert.assertEquals(0.06, config.getPumaMortalityRate(),  0);
+        Assert.assertEquals(0.06, config.getPumaMortalityRate(), 0);
         Assert.assertEquals(0.04, config.getPumaPredationRate(), 0);
     }
 }

@@ -8,8 +8,10 @@ public interface ShellConfig {
     ShellConfig DEFAULT = new DefaultShellConfig();
 
     double getDensityLowerBound();
+
     double getDensityUpperBound();
 
     int getHareDensityMaxVal();
+
     int getPumaDensityMaxVal();
 }

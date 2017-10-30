@@ -23,14 +23,14 @@ public class LandscapeEvolutionManager {
     private Landscape landscape;
     private ArrayList<Landscape> snapshots;
 
-    public static LandscapeEvolutionManager create(Landscape landscape) {
-        return new LandscapeEvolutionManager(landscape);
-    }
-
     private LandscapeEvolutionManager(Landscape landscape) {
         this.landscape = landscape;
         snapshots = new ArrayList<>();
         takeSnapshot();
+    }
+
+    public static LandscapeEvolutionManager create(Landscape landscape) {
+        return new LandscapeEvolutionManager(landscape);
     }
 
     public Landscape getLandscape() {
@@ -54,7 +54,7 @@ public class LandscapeEvolutionManager {
         double end = config.getLandscapeEvolutionTimeEnd();
         double timeStep = config.getLandscapeEvolutionTimeStep();
 
-        for(double idx = start; idx <= end; idx += timeStep) {
+        for (double idx = start; idx <= end; idx += timeStep) {
             evolutionPerTimeStep();
             takeSnapshot();
         }
@@ -71,8 +71,8 @@ public class LandscapeEvolutionManager {
         );
 
 
-        for(int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
-            for(int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
+        for (int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
+            for (int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
                 xIdxWithExtraOffset = xIdx + EXTRA_BORDER_OFFSET;
                 yIdxWithExtraOffset = yIdx + EXTRA_BORDER_OFFSET;
 

@@ -23,7 +23,7 @@ public class DefaultConfig extends AbstractConfig implements Config {
         Parameters params = new Parameters();
         FileBasedConfigurationBuilder<FileBasedConfiguration> builder =
                 new FileBasedConfigurationBuilder<FileBasedConfiguration>(PropertiesConfiguration.class)
-                .configure(params.properties().setFileName(source));
+                        .configure(params.properties().setFileName(source));
 
         try {
             Configuration configSource = builder.getConfiguration();

@@ -6,7 +6,7 @@ import org.epcc.ps.core.config.CoreConfig;
  * @author shaohan.yin
  * Created on 11/10/2017
  */
-public enum  Species {
+public enum Species {
     PUMA("puma"),
     HARE("hare");
 
@@ -26,19 +26,19 @@ public enum  Species {
         this.speciesName = speciesName;
 
         switch (speciesName) {
-            case PUMA_NAME :
+            case PUMA_NAME:
                 birthRate = config.getPumaBirthRate();
                 predationRate = config.getPumaPredationRate();
                 mortalityRate = config.getPumaMortalityRate();
                 diffusionRate = config.getPumaDiffusionRate();
                 break;
-            case HARE_NAME :
+            case HARE_NAME:
                 birthRate = config.getHareBirthRate();
                 predationRate = NON_EXIST_DATA;
                 mortalityRate = NON_EXIST_DATA;
                 diffusionRate = config.getHareDiffutionRate();
                 break;
-            default :
+            default:
                 birthRate = NON_EXIST_DATA;
                 predationRate = NON_EXIST_DATA;
                 mortalityRate = NON_EXIST_DATA;

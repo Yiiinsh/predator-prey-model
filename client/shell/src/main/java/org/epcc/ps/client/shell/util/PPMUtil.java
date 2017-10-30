@@ -30,16 +30,16 @@ public class PPMUtil {
         Preconditions.checkArgument(width == source[0].length, "Width not match!");
 
 
-        try(PrintWriter printWriter = new PrintWriter(fileName, DEFAULT_ENCODING)) {
+        try (PrintWriter printWriter = new PrintWriter(fileName, DEFAULT_ENCODING)) {
             printWriter.println(PLAIN_PPM_MAGIC_NUMBER);
             printWriter.printf("%d %d\n", width, height);
             printWriter.println(RGB_MAX_VAL);
 
-            for(int xIdx = 0; xIdx != height; ++xIdx) {
-                for(int yIdx = 0; yIdx != width; ++yIdx) {
+            for (int xIdx = 0; xIdx != height; ++xIdx) {
+                for (int yIdx = 0; yIdx != width; ++yIdx) {
                     double portion = source[xIdx][yIdx] / maxVal;
                     printWriter.printf(" %d  %d  %d ", RGB_MAX_VAL,
-                            RGB_MAX_VAL - (int)(RGB_MAX_VAL * portion) ,0);
+                            RGB_MAX_VAL - (int) (RGB_MAX_VAL * portion), 0);
                 }
                 printWriter.printf("\n");
             }

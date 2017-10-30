@@ -15,7 +15,9 @@ import org.epcc.ps.core.entity.environment.Landscape;
 import org.epcc.ps.core.evolution.LandscapeEvolutionManager;
 
 import java.io.StringWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author shaohan.yin
@@ -30,11 +32,10 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
     private static final String SIMULATION_REPORT_FLAG = "r";
     private static final String SIMULATION_REPORT_FLAG_LONG = "report";
     private static final String VELOCITY_TEMPLATE_FILE = "report-template.vm";
-
+    HelpFormatter formatter;
     private ConvertService convertService = new DefaultConvertService();
     private CommandLineParser parser;
     private Options options;
-    HelpFormatter formatter;
 
     public DefaultSimulationCommand() {
         super();
@@ -72,7 +73,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
 
             generateResult(landscapeEvolutionManager.getSnapshots(), interval);
 
-            if(commandLine.hasOption(SIMULATION_REPORT_FLAG)) {
+            if (commandLine.hasOption(SIMULATION_REPORT_FLAG)) {
                 generateReport(landscapeEvolutionManager.getSnapshots());
             }
 
@@ -83,13 +84,13 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
     }
 
     private void check(CommandLine commandLine) throws SimulationSourceNotFoundException {
-        if(!commandLine.hasOption(SIMULATION_SOURCE_FLAG)) {
+        if (!commandLine.hasOption(SIMULATION_SOURCE_FLAG)) {
             throw new SimulationSourceNotFoundException("Simulation source file must be specified with -f flag.");
         }
     }
 
     private void generateResult(List<Landscape> landscapes, int interval) throws PPMFileException {
-        for(int idx = 0; idx <= landscapes.size(); idx += interval) {
+        for (int idx = 0; idx <= landscapes.size(); idx += interval) {
             outputSnapshotsAsPPM(String.format("%d-hare.ppm", idx), landscapes.get(idx), Species.HARE);
             outputSnapshotsAsPPM(String.format("%d-puma.ppm", idx), landscapes.get(idx), Species.PUMA);
 
@@ -109,8 +110,8 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
 
     private double calculateAverageDensity(Landscape landscape, Species species) {
         double result = 0;
-        for(int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
-            for(int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
+        for (int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
+            for (int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
                 result += landscape.getGrids()[xIdx][yIdx].getDensity(species);
             }
         }
@@ -124,6 +125,9 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         velocityEngine.init();
 
         Template template = velocityEngine.getTemplate(VELOCITY_TEMPLATE_FILE);
+
+        // TODO : datasource for density and heatmap
+        Map<Species, Double> averageDensities = new HashMap<>();
 
         VelocityContext context = new VelocityContext();
         context.put("landscapes", landscapes);

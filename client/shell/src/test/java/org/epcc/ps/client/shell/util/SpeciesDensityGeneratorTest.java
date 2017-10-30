@@ -12,7 +12,7 @@ public class SpeciesDensityGeneratorTest extends AbstractTest {
     @Test
     public void testSpeciesDensityGenerator() {
         double density;
-        for(int i = 0; i != 1000; ++i) {
+        for (int i = 0; i != 1000; ++i) {
             density = SpeciesDensityGenerator.generateDensity();
             Assert.assertTrue(density > 0.0 && density < 5.0);
         }

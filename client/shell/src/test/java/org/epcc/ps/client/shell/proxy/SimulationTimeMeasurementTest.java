@@ -13,7 +13,7 @@ public class SimulationTimeMeasurementTest {
         ((SimulationCommand) Proxy.newProxyInstance(SimulationCommand.class.getClassLoader(),
                 new Class[]{SimulationCommand.class},
                 new SimulationTimeMeasurementProxyHandler())).simulate(new String[]{
-                        "-f", "src/test/resources/file3.dat", "-i", "500"
+                "-f", "src/test/resources/file3.dat", "-i", "500"
         });
     }
 

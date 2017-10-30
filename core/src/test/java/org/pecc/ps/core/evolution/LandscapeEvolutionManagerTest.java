@@ -34,8 +34,8 @@ public class LandscapeEvolutionManagerTest extends AbstractGridTest {
         landscapeEvolutionManager.evolutionPerTimeStep();
 
         Landscape landscapeAfterEvolutionOneTime = landscapeEvolutionManager.getLandscape();
-        for(int xIdx = 0; xIdx != 2; ++xIdx) {
-            for( int yIdx = 0; yIdx != 2; ++yIdx) {
+        for (int xIdx = 0; xIdx != 2; ++xIdx) {
+            for (int yIdx = 0; yIdx != 2; ++yIdx) {
                 Assert.assertEquals(target[xIdx][yIdx].getDensity(Species.PUMA),
                         landscapeAfterEvolutionOneTime.getGrids()[xIdx][yIdx].getDensity(Species.PUMA), 0);
                 Assert.assertEquals(target[xIdx][yIdx].getDensity(Species.HARE),
