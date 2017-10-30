@@ -11,7 +11,7 @@ import java.lang.reflect.Proxy;
  */
 public class Simulation {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         ((SimulationCommand) Proxy.newProxyInstance(SimulationCommand.class.getClassLoader(),
                 new Class[]{SimulationCommand.class},
                 new SimulationTimeMeasurementProxyHandler())).simulate(args);

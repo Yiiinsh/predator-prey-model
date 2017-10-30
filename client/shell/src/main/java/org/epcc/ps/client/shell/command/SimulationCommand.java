@@ -7,5 +7,5 @@ package org.epcc.ps.client.shell.command;
 public interface SimulationCommand {
     SimulationCommand DEFAULT = new DefaultSimulationCommand();
 
-    void simulate(String[] args) throws Exception;
+    void simulate(String[] args);
 }

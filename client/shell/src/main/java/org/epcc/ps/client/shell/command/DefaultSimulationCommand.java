@@ -44,7 +44,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
     }
 
     @Override
-    public void simulate(String[] args) throws Exception {
+    public void simulate(String[] args) {
         try {
             CommandLine commandLine = parser.parse(options, args);
             check(commandLine);
@@ -67,7 +67,6 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         } catch (Exception e) {
             logger.error("Simulation failed.", e.getMessage());
             formatter.printHelp(COMMAND_NAME, options);
-            throw e;
         }
     }
 

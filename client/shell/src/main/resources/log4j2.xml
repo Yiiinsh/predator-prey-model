@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
     <Appenders>
-        <Console name="Console" target="SYSTEM_OUT">
+        <Console name="Console">
             <PatternLayout pattern="%msg%n"/>
         </Console>
-    </Appenders>
-    <Appenders>
         <File name="File" fileName="simulation.log">
             <PatternLayout>
                 <Pattern>%m%n</Pattern>
