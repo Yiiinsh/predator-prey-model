@@ -2,7 +2,6 @@ package org.epcc.ps.client.shell.command;
 
 import org.epcc.ps.client.shell.AbstractTest;
 import org.epcc.ps.client.shell.exception.ConvertException;
-import org.epcc.ps.client.shell.exception.SimulationSourceNotFoundException;
 import org.epcc.ps.client.shell.service.ConvertService;
 import org.epcc.ps.core.entity.creature.Creature;
 import org.epcc.ps.core.entity.creature.CreatureFactory;
@@ -11,7 +10,6 @@ import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.GridFactory;
 import org.epcc.ps.core.entity.environment.Landscape;
 import org.epcc.ps.core.entity.environment.Terrain;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -21,9 +19,7 @@ import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * @author shaohan.yin
@@ -61,12 +57,6 @@ public class SimulationCommandTest extends AbstractTest {
 
     @Test
     public void testSimulationCommandWithWrongFlag() {
-        try {
-            simulationCommand.simulate(null);
-            Assert.fail();
-        } catch (Exception e) {
-            Assert.assertTrue(e instanceof SimulationSourceNotFoundException);
-            logger.error("Expected error:",e);
-        }
+        simulationCommand.simulate(null);
     }
 }
