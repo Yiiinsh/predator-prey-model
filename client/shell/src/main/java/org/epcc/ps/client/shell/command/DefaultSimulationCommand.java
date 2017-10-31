@@ -1,5 +1,6 @@
 package org.epcc.ps.client.shell.command;
 
+import com.google.gson.Gson;
 import org.apache.commons.cli.*;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -9,13 +10,15 @@ import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 import org.epcc.ps.client.shell.exception.PPMFileException;
 import org.epcc.ps.client.shell.exception.SimulationSourceNotFoundException;
 import org.epcc.ps.client.shell.service.ConvertService;
-import org.epcc.ps.client.shell.service.DefaultConvertService;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Landscape;
 import org.epcc.ps.core.evolution.LandscapeEvolutionManager;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,10 +35,13 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
     private static final String SIMULATION_REPORT_FLAG = "r";
     private static final String SIMULATION_REPORT_FLAG_LONG = "report";
     private static final String VELOCITY_TEMPLATE_FILE = "report-template.vm";
-    HelpFormatter formatter;
-    private ConvertService convertService = new DefaultConvertService();
+
+    private ConvertService convertService = ConvertService.DEFAULT;
+    private Gson gson = new Gson();
+
     private CommandLineParser parser;
     private Options options;
+    private HelpFormatter formatter;
 
     public DefaultSimulationCommand() {
         super();
@@ -91,21 +97,15 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
 
     private void generateResult(List<Landscape> landscapes, int interval) throws PPMFileException {
         for (int idx = 0; idx <= landscapes.size(); idx += interval) {
-            outputSnapshotsAsPPM(String.format("%d-hare.ppm", idx), landscapes.get(idx), Species.HARE);
-            outputSnapshotsAsPPM(String.format("%d-puma.ppm", idx), landscapes.get(idx), Species.PUMA);
+            convertService.convertLandscapeWithSpeciesToPPM(String.format("%d-hare.ppm", idx),
+                    landscapes.get(idx), Species.HARE);
+            convertService.convertLandscapeWithSpeciesToPPM(String.format("%d-puma.ppm", idx),
+                    landscapes.get(idx), Species.PUMA);
 
             logger.info(String.format("Average Density %d: PUMA %.3f HARE %.3f", idx,
                     calculateAverageDensity(landscapes.get(idx), Species.PUMA),
                     calculateAverageDensity(landscapes.get(idx), Species.HARE)));
         }
-    }
-
-    private void outputSnapshotsAsPPM(String fileName, Landscape landscape, Species species) throws PPMFileException {
-        convertService.convertLandscapeWithSpeciesToPPM(
-                fileName,
-                landscape,
-                species
-        );
     }
 
     private double calculateAverageDensity(Landscape landscape, Species species) {
@@ -124,17 +124,51 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
         velocityEngine.init();
 
-        Template template = velocityEngine.getTemplate(VELOCITY_TEMPLATE_FILE);
-
-        // TODO : datasource for density and heatmap
-        Map<Species, Double> averageDensities = new HashMap<>();
+        Template template = velocityEngine.getTemplate(VELOCITY_TEMPLATE_FILE, "UTF-8");
 
         VelocityContext context = new VelocityContext();
-        context.put("landscapes", landscapes);
+        context.put("densities", gson.toJson(generateDensityDataForReport(landscapes)));
+        context.put("hares", gson.toJson(generateSpeciesDataForReport(landscapes, Species.HARE)));
+        context.put("pumas", gson.toJson(generateSpeciesDataForReport(landscapes, Species.PUMA)));
 
-        StringWriter stringWriter = new StringWriter();
-        template.merge(context, stringWriter);
-        System.out.println(stringWriter.toString());
+        try (FileWriter fileWriter = new FileWriter("report.html")) {
+            StringWriter stringWriter = new StringWriter();
+            template.merge(context, stringWriter);
+            fileWriter.write(stringWriter.toString());
+        } catch (IOException e) {
+            logger.error("Cannot write report to file.", e);
+        }
     }
 
+    private Map<String, List<Double>> generateDensityDataForReport(List<Landscape> landscapes) {
+        Map<String, List<Double>> averageDensities = new HashMap<>(2);
+        List<Double> hares = new LinkedList<>();
+        List<Double> pumas = new LinkedList<>();
+        averageDensities.put(Species.HARE.getSpeciesName(), hares);
+        averageDensities.put(Species.PUMA.getSpeciesName(), pumas);
+        landscapes.forEach((landscape) -> {
+            hares.add(calculateAverageDensity(landscape, Species.HARE));
+            pumas.add(calculateAverageDensity(landscape, Species.PUMA));
+        });
+        return averageDensities;
+    }
+
+    private List<Double>[][] generateSpeciesDataForReport(List<Landscape> landscapes, Species species) {
+        int length = landscapes.get(0).getLength();
+        int width = landscapes.get(0).getWidth();
+        List<Double>[][] data = new List[length][width];
+
+        for (Landscape landscape : landscapes) {
+            for (int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
+                for (int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
+                    if (null == data[xIdx][yIdx]) {
+                        data[xIdx][yIdx] = new LinkedList<>();
+                    }
+                    data[xIdx][yIdx].add(landscape.getGrids()[xIdx][yIdx].getDensity(species));
+                }
+            }
+        }
+
+        return data;
+    }
 }

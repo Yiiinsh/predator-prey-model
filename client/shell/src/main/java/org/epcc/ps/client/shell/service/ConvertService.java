@@ -10,6 +10,7 @@ import org.epcc.ps.core.entity.environment.Landscape;
  * Created on 20/10/2017
  */
 public interface ConvertService {
+    ConvertService DEFAULT = new DefaultConvertService();
 
     /***
      * Convert Landscape from ASCII bitmask file

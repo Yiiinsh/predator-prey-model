@@ -1,11 +1,182 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages': ['corechart']});
+        google.charts.setOnLoadCallback(drawLineChart);
+        google.charts.setOnLoadCallback(drawScatterChart);
 
+        function drawLineChart() {
+            var arr = [];
+            var densities =; $densities
+            var haresDensity = densities.hare;
+            var pumasDensity = densities.puma;
+
+            arr.push(['Iter', 'Hare', 'Puma']);
+            for (var idx = 0; idx != haresDensity.length; ++idx) {
+                arr.push([
+                    idx + 1,
+                    haresDensity[idx],
+                    pumasDensity[idx]
+                ]);
+            }
+
+            var data = google.visualization.arrayToDataTable(arr);
+
+            var options = {
+                title: 'Average Density',
+                curveType: 'function',
+                legend: {position: 'bottom'}
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('density'));
+
+            chart.draw(data, options);
+        }
+
+        function drawScatterChart() {
+            var base = 5;
+            var basePoints = 20;
+
+            var arr = [];
+            arr.push(['X', 'hare', 'puma']);
+            var hares = $hares;
+            var pumas = $pumas;
+
+            for (var xIdx = 0; xIdx != hares.length; ++xIdx) {
+                for (var yIdx = 0; yIdx != hares[0].length; ++yIdx) {
+                    var harePointCount = parseInt(basePoints * (hares[xIdx][yIdx].pop() / base));
+                    var pumaPointCount = parseInt(basePoints * (pumas[xIdx][yIdx].pop() / base));
+                    for (var idx = 0; idx != harePointCount; ++idx) {
+                        arr.push([xIdx + Math.random(), yIdx + Math.random(), null]);
+                    }
+                    for (var idx = 0; idx != pumaPointCount; ++idx) {
+                        arr.push([xIdx + Math.random(), null, yIdx + Math.random()]);
+                    }
+                }
+            }
+
+            var data = google.visualization.arrayToDataTable(arr);
+
+            var options = {
+                title: 'Distribution',
+                width: 600,
+                height: 600,
+                hAxis: {
+                    minValue: 0, maxValue: hares.length - 1,
+                    gridlines: {count: hares.length + 1}
+                },
+                vAxis: {
+                    minValue: 0, maxValue: hares[0].length - 1,
+                    gridlines: {count: hares[0].length + 1}
+                },
+                legend: {
+                    position: 'bottom'
+                },
+                animation: {
+                    duration: 200,
+                    easing: 'inAndOut',
+                }
+            };
+
+            var chart = new google.visualization.ScatterChart(document.getElementById('species'));
+
+            chart.draw(data, options);
+
+            var button = document.getElementById("toggle");
+            var text = document.getElementById("iter");
+            var iterCnt = 0;
+            button.onclick = function () {
+                if (button.innerHTML == "Simulate") {
+                    google.visualization.events.addOneTimeListener(chart, 'ready', nextIter);
+                    var listener = google.visualization.events.addListener(chart, 'animationfinish', nextIter);
+                    chart.draw(data, options);
+
+                    button.innerHTML = "Stop";
+                    button.classList.add("disabled");
+                } else {
+                    google.visualization.events.removeAllListeners(chart);
+
+                    button.innerHTML = "Simulate";
+                    button.classList.remove("disabled");
+                }
+
+                function nextIter() {
+                    ++iterCnt;
+                    text.innerHTML = iterCnt;
+
+                    var arr = [];
+                    arr.push(['X', 'hare', 'puma']);
+                    for (var xIdx = 0; xIdx != hares.length; ++xIdx) {
+                        for (var yIdx = 0; yIdx != hares[0].length; ++yIdx) {
+                            if (hares[xIdx][yIdx].length != 0) {
+                                var harePointCount = parseInt(basePoints * (hares[xIdx][yIdx].pop() / base));
+                                var pumaPointCount = parseInt(basePoints * (pumas[xIdx][yIdx].pop() / base));
+                                for (var idx = 0; idx != harePointCount; ++idx) {
+                                    arr.push([xIdx + Math.random(), yIdx + Math.random(), null]);
+                                }
+                                for (var idx = 0; idx != pumaPointCount; ++idx) {
+                                    arr.push([xIdx + Math.random(), null, yIdx + Math.random()]);
+                                }
+                            } else {
+                                google.visualization.events.removeListener(listener);
+                                button.disabled = true;
+                                button.innerHTML = "Done";
+                                button.classList.add("disabled");
+                            }
+                        }
+                    }
+                    var data = google.visualization.arrayToDataTable(arr);
+                    chart.draw(data, options);
+                }
+            }
+        }
+    </script>
+    <style>
+        header {
+            font-family: courier, verdana;
+            font-size: 300%;
+            text-align: center;
+        }
+
+        .button {
+            background-color: white;
+            color: black;
+            border: 2px solid #555555;
+            padding: 16px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            -webkit-transition-duration: 0.4s; /* Safari */
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #555555;
+            color: white;
+        }
+
+        .disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
 <body>
-Hello $name
+<header>Predator-Prey Model Simulation Report</header>
+<hr/>
+<div id="density"></div>
+<hr/>
+<div>
+    <button class="button" id="toggle">Simulate</button>
+    <div id="iter">0</div>
+</div>
+<div id="species" style="align: center;"></div>
 </body>
 
 </html>
