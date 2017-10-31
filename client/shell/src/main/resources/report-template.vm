@@ -9,7 +9,7 @@
 
         function drawLineChart() {
             var arr = [];
-            var densities =; $densities
+            var densities = $densities;
             var haresDensity = densities.hare;
             var pumasDensity = densities.puma;
 
@@ -124,6 +124,7 @@
                                 button.disabled = true;
                                 button.innerHTML = "Done";
                                 button.classList.add("disabled");
+                                return;
                             }
                         }
                     }
