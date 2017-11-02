@@ -3,7 +3,7 @@ package org.epcc.ps.client.shell.service;
 import org.epcc.ps.client.shell.config.ShellConfig;
 import org.epcc.ps.client.shell.exception.ConvertException;
 import org.epcc.ps.client.shell.exception.PPMFileException;
-import org.epcc.ps.client.shell.util.PPMUtil;
+import org.epcc.ps.client.shell.util.PpmUtil;
 import org.epcc.ps.client.shell.util.SpeciesDensityGenerator;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.*;
@@ -17,7 +17,14 @@ import java.util.Scanner;
  * Created on 18/10/2017
  */
 public class DefaultConvertService extends AbstractService implements ConvertService {
-    private static ShellConfig config = ShellConfig.DEFAULT;
+    private static int pumaDensityMaxVal;
+    private static int hareDensityMaxVal;
+
+    static {
+        ShellConfig config = ShellConfig.DEFAULT;
+        pumaDensityMaxVal = config.getPumaDensityMaxVal();
+        hareDensityMaxVal = config.getHareDensityMaxVal();
+    }
 
     @Override
     public Landscape convertLandscapeFromFile(String fileSource) throws ConvertException {
@@ -31,12 +38,12 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
             throws PPMFileException {
         switch (species) {
             case PUMA:
-                PPMUtil.generateRedBasedPPMFile(fileName, landscape.getLength(), landscape.getWidth(),
-                        config.getPumaDensityMaxVal(), readDensityFromLandscape(landscape, species));
+                PpmUtil.generateRedBasedPPMFileFromLandscape(fileName, landscape.getLength(), landscape.getWidth(),
+                        pumaDensityMaxVal, landscape, species);
                 break;
             case HARE:
-                PPMUtil.generateRedBasedPPMFile(fileName, landscape.getLength(), landscape.getWidth(),
-                        config.getHareDensityMaxVal(), readDensityFromLandscape(landscape, species));
+                PpmUtil.generateRedBasedPPMFileFromLandscape(fileName, landscape.getLength(), landscape.getWidth(),
+                        hareDensityMaxVal, landscape, species);
                 break;
             default:
                 break;
@@ -91,18 +98,6 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
     private void initGrid(Grid grid, double hareDensity, double pumaDensity) {
         grid.updateDensity(Species.HARE, hareDensity);
         grid.updateDensity(Species.PUMA, pumaDensity);
-    }
-
-    private double[][] readDensityFromLandscape(Landscape landscape, Species species) {
-        double[][] res = new double[landscape.getLength()][landscape.getWidth()];
-
-        for (int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
-            for (int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
-                res[xIdx][yIdx] = landscape.getGrids()[xIdx][yIdx].getDensity(species);
-            }
-        }
-
-        return res;
     }
 }
 

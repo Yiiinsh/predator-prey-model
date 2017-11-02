@@ -58,7 +58,7 @@ public class LandscapeEvolutionManager {
 
     public void evolution(double timeStep) {
         int xWithExtraOffset, yWithExtraOffset;
-        double hareDensity, pumaDensity;
+        double hareDensity, pumaDensity, hareDensitySum = 0.0, pumaDensitySum = 0.0;
 
         for (int x = 0; x != landscape.getLength(); ++x) {
             for (int y = 0; y != landscape.getWidth(); ++y) {
@@ -97,18 +97,22 @@ public class LandscapeEvolutionManager {
 
                 landscape.getGrids()[x][y].updateDensity(Species.HARE, hareDensity);
                 landscape.getGrids()[x][y].updateDensity(Species.PUMA, pumaDensity);
+                hareDensitySum += hareDensity;
+                pumaDensitySum += pumaDensity;
             }
         }
 
         syncGridWithHalo();
-        updateAverageDensities();
+        updateAverageDensities(hareDensitySum, pumaDensitySum);
     }
 
     private void syncGridWithHalo() {
         for (int x = 0; x != landscape.getLength(); ++x) {
             for (int y = 0; y != landscape.getWidth(); ++y) {
                 gridsWithHalo[x + GridUtil.EXTRA_BORDER_OFFSET][y + GridUtil.EXTRA_BORDER_OFFSET]
-                        = landscape.getGrids()[x][y];
+                        .updateDensity(Species.HARE, landscape.getGrids()[x][y].getDensity(Species.HARE));
+                gridsWithHalo[x + GridUtil.EXTRA_BORDER_OFFSET][y + GridUtil.EXTRA_BORDER_OFFSET]
+                        .updateDensity(Species.PUMA, landscape.getGrids()[x][y].getDensity(Species.PUMA));
             }
         }
     }
@@ -121,9 +125,13 @@ public class LandscapeEvolutionManager {
                 pumaDensity += landscape.getGrids()[x][y].getDensity(Species.PUMA);
             }
         }
-
         averages.get(Species.HARE).add(hareDensity / (landscape.getWidth() * landscape.getLength()));
         averages.get(Species.PUMA).add(pumaDensity / (landscape.getWidth() * landscape.getLength()));
+    }
+
+    private void updateAverageDensities(double hareSum, double pumaSum) {
+        averages.get(Species.HARE).add(hareSum / (landscape.getWidth() * landscape.getLength()));
+        averages.get(Species.PUMA).add(pumaSum / (landscape.getWidth() * landscape.getLength()));
     }
 
 }
