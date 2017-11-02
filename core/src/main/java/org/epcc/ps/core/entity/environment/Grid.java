@@ -1,11 +1,8 @@
 package org.epcc.ps.core.entity.environment;
 
-import org.epcc.ps.core.entity.creature.Creature;
 import org.epcc.ps.core.entity.creature.Species;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author shaohan.yin
@@ -13,24 +10,27 @@ import java.util.Map;
  */
 public class Grid implements Serializable {
     private Terrain terrain;
-    private Map<Species, Creature> creatures;
+    private double[] densities;
     private int landNeighborCnt;
 
     public Grid(Terrain terrain) {
         this.terrain = terrain;
-        creatures = new HashMap<>();
-        landNeighborCnt = 0;
+        densities = new double[Species.values().length];
+        for (Species species : Species.values()) {
+            densities[species.ordinal()] = 0.0;
+        }
+        this.landNeighborCnt = 0;
     }
 
-    public Grid(Terrain terrain, Map<Species, Creature> creatures) {
+    public Grid(Terrain terrain, double[] densities) {
         this.terrain = terrain;
-        this.creatures = creatures;
-        landNeighborCnt = 0;
+        this.densities = densities;
+        this.landNeighborCnt = 0;
     }
 
-    public Grid(Terrain terrain, Map<Species, Creature> creatures, int landNeighborCnt) {
+    public Grid(Terrain terrain, double[] densities, int landNeighborCnt) {
         this.terrain = terrain;
-        this.creatures = creatures;
+        this.densities = densities;
         this.landNeighborCnt = landNeighborCnt;
     }
 
@@ -38,19 +38,12 @@ public class Grid implements Serializable {
         return terrain;
     }
 
+    public void updateDensity(Species species, double density) {
+        densities[species.ordinal()] = density;
+    }
+
     public double getDensity(Species species) {
-        if (creatures.containsKey(species)) {
-            return creatures.get(species).getDensity();
-        }
-        return 0;
-    }
-
-    public Map<Species, Creature> getCreatures() {
-        return creatures;
-    }
-
-    public void updateCreatures(Map<Species, Creature> newCreatures) {
-        this.creatures = newCreatures;
+        return densities[species.ordinal()];
     }
 
     public int getLandNeighborCnt() {
@@ -63,7 +56,7 @@ public class Grid implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Grid[%s]", terrain);
+        return String.format("Grid[%s]", terrain.toString());
     }
 
 }

@@ -1,7 +1,5 @@
 package org.pecc.ps.core.entity.environment;
 
-import org.epcc.ps.core.entity.creature.Creature;
-import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.GridFactory;
@@ -18,9 +16,7 @@ public class GridTest extends AbstractTest {
     @Test
     public void testGetDensity() {
         Grid gridWithCreature = GridFactory.create(Terrain.LAND);
-        Creature creature = CreatureFactory.create(Species.HARE);
-        creature.updateDensity(666);
-        gridWithCreature.getCreatures().put(Species.HARE, creature);
+        gridWithCreature.updateDensity(Species.HARE, 666);
 
         Grid gridWithoutCreature = GridFactory.create(Terrain.LAND);
 

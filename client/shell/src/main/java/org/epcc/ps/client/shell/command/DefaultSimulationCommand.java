@@ -7,9 +7,9 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
-import org.epcc.ps.client.shell.exception.PPMFileException;
 import org.epcc.ps.client.shell.exception.SimulationSourceNotFoundException;
 import org.epcc.ps.client.shell.service.ConvertService;
+import org.epcc.ps.core.config.CoreConfig;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Landscape;
 import org.epcc.ps.core.evolution.LandscapeEvolutionManager;
@@ -37,6 +37,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
     private static final String VELOCITY_TEMPLATE_FILE = "report-template.vm";
 
     private ConvertService convertService = ConvertService.DEFAULT;
+    private CoreConfig config = CoreConfig.DEFAULT;
     private Gson gson = new Gson();
 
     private CommandLineParser parser;
@@ -75,12 +76,27 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
 
             Landscape landscape = convertService.convertLandscapeFromFile(fileSource);
             LandscapeEvolutionManager landscapeEvolutionManager = LandscapeEvolutionManager.create(landscape);
-            landscapeEvolutionManager.evolution();
 
-            generateResult(landscapeEvolutionManager.getSnapshots(), interval);
+            double start = config.getLandscapeEvolutionTimeStart();
+            double end = config.getLandscapeEvolutionTimeEnd();
+            double timeStep = config.getLandscapeEvolutionTimeStep();
+            for (int idx = 1; start <= end; ++idx, start += timeStep) {
+                landscapeEvolutionManager.evolution(timeStep);
+
+                if (0 == idx % interval) {
+                    convertService.convertLandscapeWithSpeciesToPPM(String.format("%d-hare.ppm", idx),
+                            landscape, Species.HARE);
+                    convertService.convertLandscapeWithSpeciesToPPM(String.format("%d-puma.ppm", idx),
+                            landscape, Species.PUMA);
+
+                    logger.info(String.format("Average Density On Evo-%d: PUMA %.3f HARE %.3f", idx,
+                            ((LinkedList)landscapeEvolutionManager.getAverages(Species.PUMA)).getLast(),
+                            ((LinkedList)landscapeEvolutionManager.getAverages(Species.HARE)).getLast()));
+                }
+            }
 
             if (commandLine.hasOption(SIMULATION_REPORT_FLAG)) {
-                generateReport(landscapeEvolutionManager.getSnapshots());
+//                generateReport(landscapeEvolutionManager.getSnapshots());
             }
 
         } catch (Exception e) {
@@ -92,19 +108,6 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
     private void check(CommandLine commandLine) throws SimulationSourceNotFoundException {
         if (!commandLine.hasOption(SIMULATION_SOURCE_FLAG)) {
             throw new SimulationSourceNotFoundException("Simulation source file must be specified with -f flag.");
-        }
-    }
-
-    private void generateResult(List<Landscape> landscapes, int interval) throws PPMFileException {
-        for (int idx = 0; idx <= landscapes.size(); idx += interval) {
-            convertService.convertLandscapeWithSpeciesToPPM(String.format("%d-hare.ppm", idx),
-                    landscapes.get(idx), Species.HARE);
-            convertService.convertLandscapeWithSpeciesToPPM(String.format("%d-puma.ppm", idx),
-                    landscapes.get(idx), Species.PUMA);
-
-            logger.info(String.format("Average Density %d: PUMA %.3f HARE %.3f", idx,
-                    calculateAverageDensity(landscapes.get(idx), Species.PUMA),
-                    calculateAverageDensity(landscapes.get(idx), Species.HARE)));
         }
     }
 

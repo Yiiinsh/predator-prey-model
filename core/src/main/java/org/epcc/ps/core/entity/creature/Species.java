@@ -14,8 +14,6 @@ public enum Species {
     private final static String PUMA_NAME = "puma";
     private final static String HARE_NAME = "hare";
 
-    private CoreConfig config = CoreConfig.DEFAULT;
-
     private String speciesName;
     private double birthRate;
     private double predationRate;
@@ -23,8 +21,8 @@ public enum Species {
     private double diffusionRate;
 
     Species(String speciesName) {
+        CoreConfig config = CoreConfig.DEFAULT;
         this.speciesName = speciesName;
-
         switch (speciesName) {
             case PUMA_NAME:
                 birthRate = config.getPumaBirthRate();
@@ -43,7 +41,7 @@ public enum Species {
                 predationRate = NON_EXIST_DATA;
                 mortalityRate = NON_EXIST_DATA;
                 diffusionRate = NON_EXIST_DATA;
-        }
+            }
     }
 
     public String getSpeciesName() {

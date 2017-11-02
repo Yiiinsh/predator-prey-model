@@ -1,6 +1,5 @@
 package org.epcc.ps.core.util;
 
-import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.GridFactory;
@@ -29,24 +28,25 @@ public class GridUtil {
 
         Grid[][] gridsWithHaloBoundary = new Grid[length + EXTRA_BORDER][width + EXTRA_BORDER];
 
-        for (int xIdx = 0; xIdx != length + EXTRA_BORDER; ++xIdx) {
-            gridsWithHaloBoundary[xIdx][0] = GridFactory.create(Terrain.WATER);
-            initGridCreatures(gridsWithHaloBoundary[xIdx][0]);
-
-            gridsWithHaloBoundary[xIdx][width + EXTRA_BORDER - 1] = GridFactory.create(Terrain.WATER);
-            initGridCreatures(gridsWithHaloBoundary[xIdx][width + EXTRA_BORDER - 1]);
+        for (int x = 0; x != length + EXTRA_BORDER; ++x) {
+            gridsWithHaloBoundary[x][0] = initGridDensities(GridFactory.create(Terrain.WATER));
+            gridsWithHaloBoundary[x][width + EXTRA_BORDER - 1] = initGridDensities(GridFactory.create(Terrain.WATER));
         }
 
-        for (int yIdx = 0; yIdx != width + EXTRA_BORDER; ++yIdx) {
-            gridsWithHaloBoundary[0][yIdx] = GridFactory.create(Terrain.WATER);
-            initGridCreatures(gridsWithHaloBoundary[0][yIdx]);
-
-            gridsWithHaloBoundary[length + EXTRA_BORDER - 1][yIdx] = GridFactory.create(Terrain.WATER);
-            initGridCreatures(gridsWithHaloBoundary[0][yIdx]);
+        for (int y = 0; y != width + EXTRA_BORDER; ++y) {
+            gridsWithHaloBoundary[0][y] = initGridDensities(GridFactory.create(Terrain.WATER));
+            gridsWithHaloBoundary[length + EXTRA_BORDER - 1][y] = initGridDensities(GridFactory.create(Terrain.WATER));
         }
 
-        for (int xIdx = 0; xIdx != length; ++xIdx) {
-            System.arraycopy(grids[xIdx], 0, gridsWithHaloBoundary[xIdx + 1], 1, grids[xIdx].length);
+        for (int x = 0; x != length; ++x) {
+            for (int y = 0; y != width; ++y) {
+                gridsWithHaloBoundary[x + EXTRA_BORDER_OFFSET][y + EXTRA_BORDER_OFFSET]
+                        = initGridDensities(GridFactory.create(grids[x][y].getTerrain()),
+                        grids[x][y].getDensity(Species.HARE),
+                        grids[x][y].getDensity(Species.PUMA));
+                gridsWithHaloBoundary[x + EXTRA_BORDER_OFFSET][y + EXTRA_BORDER_OFFSET]
+                        .setLandNeighborCnt(grids[x][y].getLandNeighborCnt());
+            }
         }
 
         return gridsWithHaloBoundary;
@@ -69,8 +69,15 @@ public class GridUtil {
         return result;
     }
 
-    private static void initGridCreatures(Grid grid) {
-        grid.getCreatures().put(Species.HARE, CreatureFactory.create(Species.HARE));
-        grid.getCreatures().put(Species.PUMA, CreatureFactory.create(Species.PUMA));
+    private static Grid initGridDensities(Grid grid) {
+        grid.updateDensity(Species.HARE, 0.0);
+        grid.updateDensity(Species.PUMA, 0.0);
+        return grid;
+    }
+
+    private static Grid initGridDensities(Grid grid, double hareDensity, double pumaDensity) {
+        grid.updateDensity(Species.HARE, hareDensity);
+        grid.updateDensity(Species.PUMA, pumaDensity);
+        return grid;
     }
 }

@@ -5,8 +5,6 @@ import org.epcc.ps.client.shell.exception.ConvertException;
 import org.epcc.ps.client.shell.exception.PPMFileException;
 import org.epcc.ps.client.shell.util.PPMUtil;
 import org.epcc.ps.client.shell.util.SpeciesDensityGenerator;
-import org.epcc.ps.core.entity.creature.Creature;
-import org.epcc.ps.core.entity.creature.CreatureFactory;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.*;
 
@@ -77,30 +75,22 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
         Grid[][] grids = new Grid[land.length][land[0].length];
         for (int i = 0; i != land.length; ++i) {
             for (int j = 0; j != land[0].length; ++j) {
-                switch (land[i][j]) {
-                    case 1:
-                        grids[i][j] = GridFactory.create(Terrain.LAND);
-                        initGridWithCreate(grids[i][j], Species.HARE, SpeciesDensityGenerator.generateDensity());
-                        initGridWithCreate(grids[i][j], Species.PUMA, SpeciesDensityGenerator.generateDensity());
-                        break;
-                    default:
-                        grids[i][j] = GridFactory.create(Terrain.WATER);
-                        initGridWithCreate(grids[i][j], Species.HARE, 0);
-                        initGridWithCreate(grids[i][j], Species.PUMA, 0);
+                if (1 == land[i][j]) {
+                    grids[i][j] = GridFactory.create(Terrain.LAND);
+                    initGrid(grids[i][j],
+                            SpeciesDensityGenerator.generateDensity(), SpeciesDensityGenerator.generateDensity());
+                } else {
+                    grids[i][j] = GridFactory.create(Terrain.WATER);
+                    initGrid(grids[i][j], 0.0, 0.0);
                 }
             }
         }
         return grids;
     }
 
-    /***
-     * add creature for the grid
-     *
-     * */
-    private void initGridWithCreate(Grid grid, Species species, double density) {
-        Creature creature = CreatureFactory.create(species);
-        creature.updateDensity(density);
-        grid.getCreatures().put(species, creature);
+    private void initGrid(Grid grid, double hareDensity, double pumaDensity) {
+        grid.updateDensity(Species.HARE, hareDensity);
+        grid.updateDensity(Species.PUMA, pumaDensity);
     }
 
     private double[][] readDensityFromLandscape(Landscape landscape, Species species) {

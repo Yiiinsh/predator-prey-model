@@ -12,23 +12,20 @@ public class DefaultCoreAlgorithm implements CoreAlgorithm {
      *
      * */
     @Override
-    public double getHaresNum(Terrain terrain, double currentHareNum, double currentHareNumInLeftGrid,
-                              double currentHareNumInRightGrid, double currentHareNumInAboveGrid,
-                              double currentHareNumInFollowingGrid,
-                              double hareBirthRate, double pumaPredationRate, double currentPumaNum,
-                              double hareDifussionRate, double intervalTime, int dryLandNum) {
-        if (terrain.equals(Terrain.WATER)) {
+    public double getHaresNum(Terrain terrain, double currentHareDensity,
+                              double currentHareDensityInLeftGrid, double currentHareDensityInRightGrid,
+                              double currentHareDensityInUpGrid, double currentHareDensityInDownGrid,
+                              double hareBirthRate, double pumaPredationRate, double currentPumaDensity,
+                              double hareDiffusionRate, double interval, int neighborLandCnt) {
+        if (Terrain.WATER.equals(terrain)) {
             return 0.0;
         }
 
-        double newHareNum, neighborHareNum;
-        neighborHareNum = currentHareNumInLeftGrid + currentHareNumInRightGrid
-                + currentHareNumInAboveGrid + currentHareNumInFollowingGrid;
-        newHareNum = currentHareNum
-                + intervalTime * (hareBirthRate * currentHareNum
-                - pumaPredationRate * currentHareNum * currentPumaNum
-                + hareDifussionRate * (neighborHareNum - dryLandNum * currentHareNum));
-        return newHareNum;
+        return currentHareDensity + interval * (hareBirthRate * currentHareDensity
+                    - pumaPredationRate * currentHareDensity * currentPumaDensity
+                    + hareDiffusionRate * (currentHareDensityInLeftGrid + currentHareDensityInRightGrid
+                        + currentHareDensityInUpGrid + currentHareDensityInDownGrid
+                        - neighborLandCnt * currentHareDensity));
     }
 
     /***
@@ -36,25 +33,22 @@ public class DefaultCoreAlgorithm implements CoreAlgorithm {
      *
      * */
     @Override
-    public double getPumaNum(Terrain terrain, double currentPumaNum, double currentPumaNumInLeftGrid,
-                             double currentPumaNumInRightGrid, double currentPumaNumInAboveGrid,
-                             double currentPumaNumInFollowingGrid,
-                             double pumaBirthRate, double currentHareNum,
-                             double pumaDeathRate, double pumaDifussionRate,
-                             double intervalTime, int dryLandNum) {
+    public double getPumaNum(Terrain terrain, double currentPumaDensity, double currentPumaDensityInLeftGrid,
+                             double currentPumaDensityInRightGrid, double currentPumaDensityInUpGrid,
+                             double currentPumaDensityInDownGrid,
+                             double pumaBirthRate, double currentHareDensity,
+                             double pumaDeathRate, double pumaDiffusionRate,
+                             double interval, int neighborLandCnt) {
 
         if (Terrain.WATER.equals(terrain)) {
             return 0.0;
         }
 
-        double newPumaNum, neighborPumaNum;
-        neighborPumaNum = currentPumaNumInLeftGrid + currentPumaNumInRightGrid
-                + currentPumaNumInAboveGrid + currentPumaNumInFollowingGrid;
-        newPumaNum = currentPumaNum
-                + intervalTime * (pumaBirthRate * currentHareNum * currentPumaNum
-                - pumaDeathRate * currentPumaNum
-                + pumaDifussionRate * (neighborPumaNum - dryLandNum * currentPumaNum));
-        return newPumaNum;
+        return currentPumaDensity + interval * (pumaBirthRate * currentHareDensity * currentPumaDensity
+                    - pumaDeathRate * currentPumaDensity
+                    + pumaDiffusionRate * (currentPumaDensityInLeftGrid + currentPumaDensityInRightGrid
+                        + currentPumaDensityInUpGrid + currentPumaDensityInDownGrid
+                        - neighborLandCnt * currentPumaDensity));
     }
 }
  

@@ -3,9 +3,6 @@ package org.epcc.ps.client.shell.command;
 import org.epcc.ps.client.shell.AbstractTest;
 import org.epcc.ps.client.shell.exception.ConvertException;
 import org.epcc.ps.client.shell.service.ConvertService;
-import org.epcc.ps.core.entity.creature.Creature;
-import org.epcc.ps.core.entity.creature.CreatureFactory;
-import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Grid;
 import org.epcc.ps.core.entity.environment.GridFactory;
 import org.epcc.ps.core.entity.environment.Landscape;
@@ -13,9 +10,6 @@ import org.epcc.ps.core.entity.environment.Terrain;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -37,12 +31,8 @@ public class SimulationCommandTest extends AbstractTest {
         convertService = Mockito.mock(ConvertService.class);
         simulationCommand = new DefaultSimulationCommand(convertService);
 
-
-        Map<Species, Creature> creatures = new HashMap<>();
-        creatures.put(Species.HARE, CreatureFactory.create(Species.HARE));
-        creatures.put(Species.PUMA, CreatureFactory.create(Species.PUMA));
         Landscape landscape = new Landscape(1, 1,
-                new Grid[][]{{GridFactory.create(Terrain.LAND, creatures)}});
+                new Grid[][]{{GridFactory.create(Terrain.LAND)}});
         when(convertService.convertLandscapeFromFile(anyString())).thenReturn(landscape);
     }
 
@@ -52,7 +42,7 @@ public class SimulationCommandTest extends AbstractTest {
 
         verify(convertService, times(1)).convertLandscapeFromFile(anyString());
 
-        verify(convertService, times(26)).convertLandscapeWithSpeciesToPPM(any(), any(), any());
+        verify(convertService, times(24)).convertLandscapeWithSpeciesToPPM(any(), any(), any());
     }
 
     @Test
