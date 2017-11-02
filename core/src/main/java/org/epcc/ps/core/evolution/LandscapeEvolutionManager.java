@@ -19,7 +19,7 @@ import static org.epcc.ps.core.util.GridUtil.EXTRA_BORDER_OFFSET;
  */
 public class LandscapeEvolutionManager {
     private static CoreAlgorithm coreAlgorithm = CoreAlgorithm.DEFAULT;
-    private static final int SNAPSHOT_THRESHOLD = 100;
+    private static final int SNAPSHOT_THRESHOLD = 10;
 
     private Landscape landscape;
     private Grid[][] gridsWithHalo;
