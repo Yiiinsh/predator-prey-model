@@ -1,6 +1,5 @@
 package org.epcc.ps.client.shell.command;
 
-import com.google.gson.Gson;
 import org.apache.commons.cli.*;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -17,10 +16,8 @@ import org.epcc.ps.core.evolution.LandscapeEvolutionManager;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author shaohan.yin
@@ -38,7 +35,6 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
 
     private ConvertService convertService = ConvertService.DEFAULT;
     private CoreConfig config = CoreConfig.DEFAULT;
-    private Gson gson = new Gson();
 
     private CommandLineParser parser;
     private Options options;
@@ -96,7 +92,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
             }
 
             if (commandLine.hasOption(SIMULATION_REPORT_FLAG)) {
-//                generateReport(landscapeEvolutionManager.getSnapshots());
+                generateReport(landscapeEvolutionManager);
             }
 
         } catch (Exception e) {
@@ -111,17 +107,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         }
     }
 
-    private double calculateAverageDensity(Landscape landscape, Species species) {
-        double result = 0;
-        for (int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
-            for (int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
-                result += landscape.getGrids()[xIdx][yIdx].getDensity(species);
-            }
-        }
-        return result / (landscape.getLength() * landscape.getWidth());
-    }
-
-    private void generateReport(List<Landscape> landscapes) {
+    private void generateReport(LandscapeEvolutionManager landscapeEvolutionManager) {
         VelocityEngine velocityEngine = new VelocityEngine();
         velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath");
         velocityEngine.setProperty("classpath.resource.loader.class", ClasspathResourceLoader.class.getName());
@@ -130,9 +116,8 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         Template template = velocityEngine.getTemplate(VELOCITY_TEMPLATE_FILE, "UTF-8");
 
         VelocityContext context = new VelocityContext();
-        context.put("densities", gson.toJson(generateDensityDataForReport(landscapes)));
-        context.put("hares", gson.toJson(generateSpeciesDataForReport(landscapes, Species.HARE)));
-        context.put("pumas", gson.toJson(generateSpeciesDataForReport(landscapes, Species.PUMA)));
+        context.put("hareAverageDensities", landscapeEvolutionManager.getAverages(Species.HARE));
+        context.put("pumaAverageDensities", landscapeEvolutionManager.getAverages(Species.PUMA));
 
         try (FileWriter fileWriter = new FileWriter("report.html")) {
             StringWriter stringWriter = new StringWriter();
@@ -141,19 +126,6 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         } catch (IOException e) {
             logger.error("Cannot write report to file.", e);
         }
-    }
-
-    private Map<String, List<Double>> generateDensityDataForReport(List<Landscape> landscapes) {
-        Map<String, List<Double>> averageDensities = new HashMap<>(2);
-        List<Double> hares = new LinkedList<>();
-        List<Double> pumas = new LinkedList<>();
-        averageDensities.put(Species.HARE.getSpeciesName(), hares);
-        averageDensities.put(Species.PUMA.getSpeciesName(), pumas);
-        landscapes.forEach((landscape) -> {
-            hares.add(calculateAverageDensity(landscape, Species.HARE));
-            pumas.add(calculateAverageDensity(landscape, Species.PUMA));
-        });
-        return averageDensities;
     }
 
     private List<Double>[][] generateSpeciesDataForReport(List<Landscape> landscapes, Species species) {
