@@ -17,14 +17,25 @@
         <fileSet>
             <directory>src/main/resources</directory>
             <outputDirectory>/</outputDirectory>
+            <excludes>
+                <exclude>*.sh</exclude>
+            </excludes>
             <fileMode>0666</fileMode>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources</directory>
+            <outputDirectory>/</outputDirectory>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+            <fileMode>0777</fileMode>
         </fileSet>
 
         <fileSet>
             <directory>target</directory>
             <outputDirectory>/</outputDirectory>
             <includes>
-                <include>${project.artifactId}-${project.version}.jar</include>
+                <include>simulation.jar</include>
             </includes>
             <fileMode>0755</fileMode>
         </fileSet>
