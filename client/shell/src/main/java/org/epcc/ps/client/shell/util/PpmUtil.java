@@ -2,8 +2,6 @@ package org.epcc.ps.client.shell.util;
 
 import com.google.common.base.Preconditions;
 import org.epcc.ps.client.shell.exception.PPMFileException;
-import org.epcc.ps.core.entity.creature.Species;
-import org.epcc.ps.core.entity.environment.Landscape;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,12 +22,12 @@ public class PpmUtil {
 
     }
 
-    public static void generateRedBasedPPMFileFromLandscape(String fileName, int width, int height,
-                                                            int maxVal, Landscape landscape, Species species) throws PPMFileException {
-        Preconditions.checkNotNull(landscape);
-        Preconditions.checkArgument(landscape.getGrids().length > 0);
-        Preconditions.checkArgument(height == landscape.getGrids().length, "Height not match!");
-        Preconditions.checkArgument(width == landscape.getGrids()[0].length, "Width not match!");
+    public static void generateRedBasedPPMFileFromGrids(String fileName, int width, int height,
+                                                        int maxVal, double[][] grids) throws PPMFileException {
+        Preconditions.checkNotNull(grids);
+        Preconditions.checkArgument(grids.length > 0);
+        Preconditions.checkArgument(height == grids.length, "Height not match!");
+        Preconditions.checkArgument(width == grids[0].length, "Width not match!");
 
         try (PrintWriter printWriter = new PrintWriter(fileName, DEFAULT_ENCODING)) {
             printWriter.println(PLAIN_PPM_MAGIC_NUMBER);
@@ -40,9 +38,14 @@ public class PpmUtil {
             for (int x = 0; x != height; ++x) {
                 for (int y = 0; y != width; ++y) {
 
-                    portion = landscape.getGrids()[x][y].getDensity(species) / maxVal;
-                    printWriter.printf(" %d  %d  %d ", RGB_MAX_VAL,
-                            RGB_MAX_VAL - (int) (RGB_MAX_VAL * portion), 0);
+                    if (0 == grids[x][y]) {
+                        printWriter.printf(" %d  %d  %d ", 0, 0, RGB_MAX_VAL);
+                    } else {
+                        portion = grids[x][y] / maxVal;
+                        printWriter.printf(" %d  %d  %d ", RGB_MAX_VAL,
+                                RGB_MAX_VAL - (int) (RGB_MAX_VAL * portion), 0);
+                    }
+
                 }
                 printWriter.printf("\n");
             }

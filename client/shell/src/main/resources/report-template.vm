@@ -5,7 +5,124 @@
     <script type="text/javascript">
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawLineChart);
-//        google.charts.setOnLoadCallback(drawScatterChart);
+
+        var hares = $hareSnapShots;
+        var pumas = $pumaSnapShots;
+
+        var simulationIdx = 0;
+        if (hares.length != 0) {
+            function drawScatterChart() {
+                var base = 5;
+                var basePoints = 10;
+
+                var arr = [];
+                arr.push(['X', 'hare', 'puma']);
+
+                for (var xIdx = 0; xIdx != hares[0].length; ++xIdx) {
+                    for (var yIdx = 0; yIdx != hares[0][0].length; ++yIdx) {
+                        var harePointCount = parseInt(basePoints * (hares[simulationIdx][xIdx][yIdx] / base));
+                        var pumaPointCount = parseInt(basePoints * (pumas[simulationIdx][xIdx][yIdx] / base));
+                        for (var idx = 0; idx != harePointCount; ++idx) {
+                            arr.push([xIdx + Math.random(), yIdx + Math.random(), null]);
+                        }
+                        for (var idx = 0; idx != pumaPointCount; ++idx) {
+                            arr.push([xIdx + Math.random(), null, yIdx + Math.random()]);
+                        }
+                    }
+                }
+                ++simulationIdx;
+
+                var data = google.visualization.arrayToDataTable(arr);
+
+                var options = {
+                    title: 'Distribution',
+                    width: 600,
+                    height: 600,
+                    hAxis: {
+                        minValue: 0, maxValue: hares[0].length - 1,
+                        gridlines: {count: hares[0].length + 1}
+                    },
+                    vAxis: {
+                        minValue: 0, maxValue: hares[0][0].length - 1,
+                        gridlines: {count: hares[0][0].length + 1}
+                    },
+                    legend: {
+                        position: 'bottom'
+                    },
+                    animation: {
+                        duration: 200,
+                        easing: 'inAndOut',
+                    }
+                };
+
+                var chart = new google.visualization.ScatterChart(document.getElementById('species'));
+
+                chart.draw(data, options);
+
+                var button = document.getElementById('toggle');
+                var text = document.getElementById('iter');
+                var iterCnt = 0;
+                button.onclick = function () {
+                    if (button.innerHTML == "Simulate") {
+                        google.visualization.events.addOneTimeListener(chart, 'ready', nextIter);
+                        var listener = google.visualization.events.addListener(chart, 'animationfinish', nextIter);
+                        chart.draw(data, options);
+
+                        button.innerHTML = "Stop";
+                        button.classList.add("disabled");
+                    } else {
+                        google.visualization.events.removeAllListeners(chart);
+
+                        button.innerHTML = "Simulate";
+                        button.classList.remove("disabled");
+                    }
+
+                    function nextIter() {
+                        ++iterCnt;
+                        text.innerHTML = iterCnt;
+
+                        var arr = [];
+                        arr.push(['X', 'hare', 'puma']);
+                        for (var xIdx = 0; xIdx != hares[0].length; ++xIdx) {
+                            for (var yIdx = 0; yIdx != hares[0][0].length; ++yIdx) {
+                                if (hares[xIdx][yIdx].length != 0) {
+                                    var harePointCount = parseInt(basePoints * (hares[simulationIdx][xIdx][yIdx] / base));
+                                    var pumaPointCount = parseInt(basePoints * (pumas[simulationIdx][xIdx][yIdx] / base));
+                                    for (var idx = 0; idx != harePointCount; ++idx) {
+                                        arr.push([xIdx + Math.random(), yIdx + Math.random(), null]);
+                                    }
+                                    for (var idx = 0; idx != pumaPointCount; ++idx) {
+                                        arr.push([xIdx + Math.random(), null, yIdx + Math.random()]);
+                                    }
+                                    ++simulationIdx;
+                                } else {
+                                    google.visualization.events.removeListener(listener);
+                                    button.disabled = true;
+                                    button.innerHTML = "Done";
+                                    button.classList.add("disabled");
+                                    return;
+                                }
+                            }
+                        }
+                        var data = google.visualization.arrayToDataTable(arr);
+                        chart.draw(data, options);
+                    }
+                }
+            }
+
+            google.charts.setOnLoadCallback(drawScatterChart);
+        } else {
+            document.addEventListener("DOMContentLoaded", function(event) {
+                var button = document.getElementById('toggle');
+                var text = document.getElementById('iter');
+                button.onclick = function () {
+                    button.disabled = true;
+                    button.innerHTML = "Simulation";
+                    button.classList.add("disabled");
+                    text.innerHTML = "Dynamic simulation supported under size 100 * 100."
+                }
+            });
+        }
 
         function drawLineChart() {
             var arr = [];
@@ -34,104 +151,6 @@
             chart.draw(data, options);
         }
 
-##        function drawScatterChart() {
-##            var base = 5;
-##            var basePoints = 20;
-##
-##            var arr = [];
-##            arr.push(['X', 'hare', 'puma']);
-##            var hares = $hares;
-##            var pumas = $pumas;
-##
-##            for (var xIdx = 0; xIdx != hares.length; ++xIdx) {
-##                for (var yIdx = 0; yIdx != hares[0].length; ++yIdx) {
-##                    var harePointCount = parseInt(basePoints * (hares[xIdx][yIdx].pop() / base));
-##                    var pumaPointCount = parseInt(basePoints * (pumas[xIdx][yIdx].pop() / base));
-##                    for (var idx = 0; idx != harePointCount; ++idx) {
-##                        arr.push([xIdx + Math.random(), yIdx + Math.random(), null]);
-##                    }
-##                    for (var idx = 0; idx != pumaPointCount; ++idx) {
-##                        arr.push([xIdx + Math.random(), null, yIdx + Math.random()]);
-##                    }
-##                }
-##            }
-##
-##            var data = google.visualization.arrayToDataTable(arr);
-##
-##            var options = {
-##                title: 'Distribution',
-##                width: 600,
-##                height: 600,
-##                hAxis: {
-##                    minValue: 0, maxValue: hares.length - 1,
-##                    gridlines: {count: hares.length + 1}
-##                },
-##                vAxis: {
-##                    minValue: 0, maxValue: hares[0].length - 1,
-##                    gridlines: {count: hares[0].length + 1}
-##                },
-##                legend: {
-##                    position: 'bottom'
-##                },
-##                animation: {
-##                    duration: 200,
-##                    easing: 'inAndOut',
-##                }
-##            };
-##
-##            var chart = new google.visualization.ScatterChart(document.getElementById('species'));
-##
-##            chart.draw(data, options);
-##
-##            var button = document.getElementById("toggle");
-##            var text = document.getElementById("iter");
-##            var iterCnt = 0;
-##            button.onclick = function () {
-##                if (button.innerHTML == "Simulate") {
-##                    google.visualization.events.addOneTimeListener(chart, 'ready', nextIter);
-##                    var listener = google.visualization.events.addListener(chart, 'animationfinish', nextIter);
-##                    chart.draw(data, options);
-##
-##                    button.innerHTML = "Stop";
-##                    button.classList.add("disabled");
-##                } else {
-##                    google.visualization.events.removeAllListeners(chart);
-##
-##                    button.innerHTML = "Simulate";
-##                    button.classList.remove("disabled");
-##                }
-##
-##                function nextIter() {
-##                    ++iterCnt;
-##                    text.innerHTML = iterCnt;
-##
-##                    var arr = [];
-##                    arr.push(['X', 'hare', 'puma']);
-##                    for (var xIdx = 0; xIdx != hares.length; ++xIdx) {
-##                        for (var yIdx = 0; yIdx != hares[0].length; ++yIdx) {
-##                            if (hares[xIdx][yIdx].length != 0) {
-##                                var harePointCount = parseInt(basePoints * (hares[xIdx][yIdx].pop() / base));
-##                                var pumaPointCount = parseInt(basePoints * (pumas[xIdx][yIdx].pop() / base));
-##                                for (var idx = 0; idx != harePointCount; ++idx) {
-##                                    arr.push([xIdx + Math.random(), yIdx + Math.random(), null]);
-##                                }
-##                                for (var idx = 0; idx != pumaPointCount; ++idx) {
-##                                    arr.push([xIdx + Math.random(), null, yIdx + Math.random()]);
-##                                }
-##                            } else {
-##                                google.visualization.events.removeListener(listener);
-##                                button.disabled = true;
-##                                button.innerHTML = "Done";
-##                                button.classList.add("disabled");
-##                                return;
-##                            }
-##                        }
-##                    }
-##                    var data = google.visualization.arrayToDataTable(arr);
-##                    chart.draw(data, options);
-##                }
-##            }
-##        }
     </script>
     <style>
         header {
@@ -172,11 +191,11 @@
 <hr/>
 <div id="density"></div>
 <hr/>
-##<div>
-##    <button class="button" id="toggle">Simulate</button>
-##    <div id="iter">0</div>
-##</div>
-##<div id="species" style="align: center;"></div>
+<div>
+    <button class="button" id="toggle">Simulate</button>
+    <div id="iter">0</div>
+</div>
+<div id="species" style="align: center;"></div>
 </body>
 
 </html>

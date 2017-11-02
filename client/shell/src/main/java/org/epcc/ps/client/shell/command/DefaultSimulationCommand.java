@@ -1,5 +1,6 @@
 package org.epcc.ps.client.shell.command;
 
+import com.google.gson.Gson;
 import org.apache.commons.cli.*;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
@@ -17,7 +18,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * @author shaohan.yin
@@ -35,6 +35,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
 
     private ConvertService convertService = ConvertService.DEFAULT;
     private CoreConfig config = CoreConfig.DEFAULT;
+    private Gson gson = new Gson();
 
     private CommandLineParser parser;
     private Options options;
@@ -95,6 +96,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
                 generateReport(landscapeEvolutionManager);
             }
 
+            convertService.shutdown();
         } catch (Exception e) {
             logger.error("Simulation failed.", e);
             formatter.printHelp(COMMAND_NAME, options);
@@ -118,6 +120,8 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         VelocityContext context = new VelocityContext();
         context.put("hareAverageDensities", landscapeEvolutionManager.getAverages(Species.HARE));
         context.put("pumaAverageDensities", landscapeEvolutionManager.getAverages(Species.PUMA));
+        context.put("hareSnapShots", gson.toJson(landscapeEvolutionManager.getSnapShots(Species.HARE)));
+        context.put("pumaSnapShots", gson.toJson(landscapeEvolutionManager.getSnapShots(Species.PUMA)));
 
         try (FileWriter fileWriter = new FileWriter("report.html")) {
             StringWriter stringWriter = new StringWriter();
@@ -126,24 +130,5 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
         } catch (IOException e) {
             logger.error("Cannot write report to file.", e);
         }
-    }
-
-    private List<Double>[][] generateSpeciesDataForReport(List<Landscape> landscapes, Species species) {
-        int length = landscapes.get(0).getLength();
-        int width = landscapes.get(0).getWidth();
-        List<Double>[][] data = new List[length][width];
-
-        for (Landscape landscape : landscapes) {
-            for (int xIdx = 0; xIdx != landscape.getLength(); ++xIdx) {
-                for (int yIdx = 0; yIdx != landscape.getWidth(); ++yIdx) {
-                    if (null == data[xIdx][yIdx]) {
-                        data[xIdx][yIdx] = new LinkedList<>();
-                    }
-                    data[xIdx][yIdx].add(landscape.getGrids()[xIdx][yIdx].getDensity(species));
-                }
-            }
-        }
-
-        return data;
     }
 }

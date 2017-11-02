@@ -19,4 +19,6 @@ public interface ConvertService {
     Landscape convertLandscapeFromFile(String fileSource) throws ConvertException;
 
     void convertLandscapeWithSpeciesToPPM(String fileName, Landscape landscape, Species species) throws PPMFileException;
+
+    void shutdown();
 }

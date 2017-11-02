@@ -19,10 +19,12 @@ import static org.epcc.ps.core.util.GridUtil.EXTRA_BORDER_OFFSET;
  */
 public class LandscapeEvolutionManager {
     private static CoreAlgorithm coreAlgorithm = CoreAlgorithm.DEFAULT;
+    private static final int SNAPSHOT_THRESHOLD = 100;
 
     private Landscape landscape;
     private Grid[][] gridsWithHalo;
     private Map<Species, List<Double>> averages;
+    private Map<Species, List<Double[][]>> snapShots;
 
     private LandscapeEvolutionManager(Landscape landscape) {
         this.landscape = landscape;
@@ -36,8 +38,13 @@ public class LandscapeEvolutionManager {
         for (Species species : Species.values()) {
             averages.put(species, new LinkedList<>());
         }
-
         updateAverageDensities();
+
+        snapShots = new EnumMap<>(Species.class);
+        for (Species species : Species.values()) {
+            snapShots.put(species, new LinkedList<>());
+            takeSnapShots(species);
+        }
     }
 
     public static LandscapeEvolutionManager create(Landscape landscape) {
@@ -54,6 +61,10 @@ public class LandscapeEvolutionManager {
 
     public List<Double> getAverages(Species species) {
         return averages.get(species);
+    }
+
+    public List<Double[][]> getSnapShots(Species species) {
+        return snapShots.get(species);
     }
 
     public void evolution(double timeStep) {
@@ -104,6 +115,8 @@ public class LandscapeEvolutionManager {
 
         syncGridWithHalo();
         updateAverageDensities(hareDensitySum, pumaDensitySum);
+        takeSnapShots(Species.PUMA);
+        takeSnapShots(Species.HARE);
     }
 
     private void syncGridWithHalo() {
@@ -134,4 +147,16 @@ public class LandscapeEvolutionManager {
         averages.get(Species.PUMA).add(pumaSum / (landscape.getWidth() * landscape.getLength()));
     }
 
+    private void takeSnapShots(Species species) {
+        if (landscape.getLength() <= SNAPSHOT_THRESHOLD &&
+                landscape.getWidth() <= SNAPSHOT_THRESHOLD) {
+            Double[][] snapShot = new Double[landscape.getLength()][landscape.getWidth()];
+            for (int x = 0; x != landscape.getLength(); ++x) {
+                for (int y = 0; y != landscape.getWidth(); ++y) {
+                    snapShot[x][y] = landscape.getGrids()[x][y].getDensity(species);
+                }
+            }
+            snapShots.get(species).add(snapShot);
+        }
+    }
 }

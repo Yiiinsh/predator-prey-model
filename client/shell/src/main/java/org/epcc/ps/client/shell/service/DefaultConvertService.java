@@ -11,6 +11,8 @@ import org.epcc.ps.core.entity.environment.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * @author jiahao.cao
@@ -19,6 +21,8 @@ import java.util.Scanner;
 public class DefaultConvertService extends AbstractService implements ConvertService {
     private static int pumaDensityMaxVal;
     private static int hareDensityMaxVal;
+
+    private ExecutorService fixedThreadPool = Executors.newFixedThreadPool(4);
 
     static {
         ShellConfig config = ShellConfig.DEFAULT;
@@ -38,16 +42,33 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
             throws PPMFileException {
         switch (species) {
             case PUMA:
-                PpmUtil.generateRedBasedPPMFileFromLandscape(fileName, landscape.getLength(), landscape.getWidth(),
-                        pumaDensityMaxVal, landscape, species);
+                fixedThreadPool.submit(() -> {
+                    try {
+                        PpmUtil.generateRedBasedPPMFileFromGrids(fileName, landscape.getLength(), landscape.getWidth(),
+                                pumaDensityMaxVal, getDensitiesFromLandscape(landscape, species));
+                    } catch (PPMFileException e) {
+                        logger.error("PPM output failed.", e);
+                    }
+                });
                 break;
             case HARE:
-                PpmUtil.generateRedBasedPPMFileFromLandscape(fileName, landscape.getLength(), landscape.getWidth(),
-                        hareDensityMaxVal, landscape, species);
+                fixedThreadPool.submit(() -> {
+                    try {
+                        PpmUtil.generateRedBasedPPMFileFromGrids(fileName, landscape.getLength(), landscape.getWidth(),
+                                hareDensityMaxVal, getDensitiesFromLandscape(landscape, species));
+                    } catch (PPMFileException e) {
+                        logger.error("PPM output failed.", e);
+                    }
+                });
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void shutdown() {
+        fixedThreadPool.shutdown();
     }
 
     /***
@@ -98,6 +119,16 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
     private void initGrid(Grid grid, double hareDensity, double pumaDensity) {
         grid.updateDensity(Species.HARE, hareDensity);
         grid.updateDensity(Species.PUMA, pumaDensity);
+    }
+
+    private double[][] getDensitiesFromLandscape(Landscape landscape, Species species) {
+        double[][] densities = new double[landscape.getLength()][landscape.getWidth()];
+        for (int x = 0; x != landscape.getLength(); ++x) {
+            for (int y = 0; y != landscape.getWidth(); ++y) {
+                densities[x][y] = landscape.getGrids()[x][y].getDensity(species);
+            }
+        }
+        return densities;
     }
 }
 
