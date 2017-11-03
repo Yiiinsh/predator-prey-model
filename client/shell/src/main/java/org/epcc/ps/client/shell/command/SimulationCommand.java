@@ -6,7 +6,7 @@ import org.epcc.ps.core.config.DefaultCoreConfig;
  * <p>Simulation command interface</p>
  * <p>This method provides a function to perform a simulations
  * A default implementation of the {@link DefaultCoreConfig} class is available via
- *     @code{ CoreConfig.DEFAULT} for convenience.</p>
+ *     {@code CoreConfig.DEFAULT} for convenience.</p>
  *
  *
  * @author shaohan.yin

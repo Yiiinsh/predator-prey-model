@@ -34,7 +34,7 @@ public class PpmUtil {
      * @param height height of given array
      * @param maxVal max output value for plain PPM file
      * @param grids data source of 2D array
-     * @throws PpmFileException
+     * @throws PpmFileException if fail to write ppm file
      */
     public static void generateRedBasedPPMFileFromGrids(String fileName, int width, int height,
                                                         int maxVal, double[][] grids) throws PpmFileException {

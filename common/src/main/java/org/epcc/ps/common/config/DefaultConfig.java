@@ -10,7 +10,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 /**
  * <p>Default configuration class.</p>
  * <p>This class maintains a list of configuration objects from a given properties file.
- * If no source properties file specified, <dt>params.properties</dt> will be used as configuration source.</p>
+ * If no source properties file specified, params.properties will be used as configuration source.</p>
  *
  * @author shaohan.yin
  * @since 0.0.1

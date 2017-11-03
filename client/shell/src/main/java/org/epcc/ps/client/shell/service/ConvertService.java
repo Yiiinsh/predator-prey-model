@@ -41,6 +41,9 @@ public interface ConvertService {
 
     /**
      * Await termination
+     *
+     * @param timeout timeout for await
+     * @param timeUnit time unit
      */
     void awaitTermination(long timeout, TimeUnit timeUnit);
 }
