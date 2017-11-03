@@ -93,7 +93,7 @@ Further tests have been taken to check the performance of our program using land
 
 Sample output for __simulation.sh -f file2000.dat -i 100__ are shown as:
 
-![Result](img/2000*2000.png)
+![Result](img/2000.png)
 
 ## Source Code Layout
 The predator-prey-model is the root directory of this project.Root directory contains a pom.xml file for maven build. It defines three modules in this project :
