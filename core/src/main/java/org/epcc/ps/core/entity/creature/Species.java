@@ -43,7 +43,7 @@ public enum Species {
                 birthRate = config.getHareBirthRate();
                 predationRate = NON_EXIST_DATA;
                 mortalityRate = NON_EXIST_DATA;
-                diffusionRate = config.getHareDiffutionRate();
+                diffusionRate = config.getHareDiffusionRate();
                 break;
             default:
                 birthRate = NON_EXIST_DATA;

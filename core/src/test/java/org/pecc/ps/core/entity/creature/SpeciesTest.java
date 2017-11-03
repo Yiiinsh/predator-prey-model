@@ -27,7 +27,7 @@ public class SpeciesTest extends AbstractTest {
     public void testHare() {
         Assert.assertEquals("hare", Species.HARE.getSpeciesName());
         Assert.assertEquals(config.getHareBirthRate(), Species.HARE.getBirthRate(), 0);
-        Assert.assertEquals(config.getHareDiffutionRate(), Species.HARE.getDiffusionRate(), 0);
+        Assert.assertEquals(config.getHareDiffusionRate(), Species.HARE.getDiffusionRate(), 0);
         Assert.assertEquals(Species.NON_EXIST_DATA, Species.HARE.getPredationRate(), 0);
         Assert.assertEquals(Species.NON_EXIST_DATA, Species.HARE.getMortalityRate(), 0);
         Assert.assertEquals("Species[" + Species.HARE.getSpeciesName() + "]", Species.HARE.toString());
