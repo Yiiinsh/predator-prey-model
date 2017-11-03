@@ -53,7 +53,7 @@ To build this project, firstly you need to change your current working directory
     mvn clean install
 
 Maven will automatically install all the dependencies and run our test.If you see a success message from your terminal, you have successfully build our project.
-![mvn_build_succ](img/mvn_build_succ.png)
+![mvn_build_succ](doc/img/mvn_build_succ.png)
 
 ### Javadoc
 Javadoc can automatically generate a API documentation for this project in HTML format. To get this API documentation, you can type the following command on your terminal
@@ -61,13 +61,13 @@ Javadoc can automatically generate a API documentation for this project in HTML 
     mvn javadoc:javadoc
 
 After execution, you will be able to find the documentation in __target/site/apidocs/__ under every module directory.Example for documentation got from __client/shell/target/site/apidocs/__ is shown below
-![javadoc](img/javadoc.png)
+![javadoc](doc/img/javadoc.png)
 
 ## Usage
 ### Basic
 After you have successfully build our project, you can find executables in **client/shell/target/shell-1.0.0-simulation/shell-1.0.0/** . We have provided a startup script named simulation.sh which you can find in the same directory.You can either invoke by the shell script __./simulation.sh__ with flags or by __java -jar  client/shell/target/shell-1.0.0-simulation/shell-1.0.0/simulation.jar__ with flags.Command provided by our program is shown below:
 
-![usage](img/usage.png)
+![usage](doc/img/usage.png)
 
 * -f or --file \<arg\> : This is a mandatory argument that specify the source file to generate the landscape for evolution.
 * -i or --interval \<arg\> : This is a optional argument.Value for this flag declare a interval for output of both PPM files and average numbers of hare and puma.Default value for this option is 100.
@@ -99,7 +99,7 @@ Further tests have been taken to check the performance of our program using land
 
 Sample output for __simulation.sh -f file2000.dat -i 100__ are shown as:
 
-![Result](img/2000.png)
+![Result](doc/img/2000.png)
 
 ## Source Code Layout
 The predator-prey-model is the root directory of this project.Root directory contains a pom.xml file for maven build. It defines three modules in this project :
@@ -130,9 +130,9 @@ For the client part, we use a command-service model to implement the CLI.
 
 Class Diagram are presented below:
 
-![Class Diagram1](img/cd1.png)
+![Class Diagram1](doc/img/cd1.png)
 
-![Class Diagram2](img/cd2.png)
+![Class Diagram2](doc/img/cd2.png)
 
 ## More
 Some famous Java thrid-party libraries are used in this project including :
