@@ -9,7 +9,10 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * <p>Grid Utils for computational convenience.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 15/10/2017
  */
 public class GridUtil {
@@ -19,7 +22,15 @@ public class GridUtil {
     private GridUtil() {
     }
 
-    public static Grid[][] generateGridWithHaloBoundary(int length, int width, Grid[][] grids) {
+    /**
+     * <p>Generate a 2-D Grids array with halo(Boundary with water terrain)</p>
+     *
+     * @param length length of grids
+     * @param width width of grids
+     * @param grids current grids
+     * @return grids with halo filled by water terrain
+     */
+    public static Grid[][] generateGridWithHalo(int length, int width, Grid[][] grids) {
         checkArgument(length > 0, "Length must greater than 0!");
         checkArgument(width > 0, "Width must greater than 0!");
         checkNotNull(grids, "Grids cannot be null!");
@@ -52,19 +63,28 @@ public class GridUtil {
         return gridsWithHaloBoundary;
     }
 
-    public static int getNeighborCntWithType(int xIdx, int yIdx, Grid[][] gridsWithHaloBoundary, Terrain terrain) {
-        checkNotNull(gridsWithHaloBoundary, "Grids cannot be null");
-        checkArgument(xIdx >= 1 && xIdx <= gridsWithHaloBoundary.length - 2,
+    /**
+     * <p>Calculate the total count of directory(left, right, up, down) neighbor with given {@link Terrain}</p>
+     *
+     * @param x position x
+     * @param y position y
+     * @param gridsWithHalo grids with halo
+     * @param terrain target terrain
+     * @return total count of neighbor grids with given terrain
+     */
+    public static int getNeighborCntWithType(int x, int y, Grid[][] gridsWithHalo, Terrain terrain) {
+        checkNotNull(gridsWithHalo, "Grids cannot be null");
+        checkArgument(x >= 1 && x <= gridsWithHalo.length - 2,
                 "Index x must within halo boundary of grids");
-        checkArgument(yIdx >= 1 && yIdx <= gridsWithHaloBoundary[0].length - 2,
+        checkArgument(y >= 1 && y <= gridsWithHalo[0].length - 2,
                 "Index y must within halo boundary of grids");
 
         int result = 0;
 
-        result += gridsWithHaloBoundary[xIdx - 1][yIdx].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[xIdx + 1][yIdx].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[xIdx][yIdx - 1].getTerrain().equals(terrain) ? 1 : 0;
-        result += gridsWithHaloBoundary[xIdx][yIdx + 1].getTerrain().equals(terrain) ? 1 : 0;
+        result += gridsWithHalo[x - 1][y].getTerrain().equals(terrain) ? 1 : 0;
+        result += gridsWithHalo[x + 1][y].getTerrain().equals(terrain) ? 1 : 0;
+        result += gridsWithHalo[x][y - 1].getTerrain().equals(terrain) ? 1 : 0;
+        result += gridsWithHalo[x][y + 1].getTerrain().equals(terrain) ? 1 : 0;
 
         return result;
     }

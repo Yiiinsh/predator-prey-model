@@ -10,7 +10,11 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
+ * <p>A class represents landscape for simulation</p>
+ * <p>This class matain a 2-D array for grids.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 11/10/2017
  */
 public class Landscape implements Serializable {
@@ -59,7 +63,7 @@ public class Landscape implements Serializable {
     }
 
     private void updateLandNeighborCnt() {
-        Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(length, width, grids);
+        Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHalo(length, width, grids);
 
         for (int xIdx = 0; xIdx != length; ++xIdx) {
             for (int yIdx = 0; yIdx != width; ++yIdx) {

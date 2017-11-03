@@ -1,14 +1,18 @@
 package org.epcc.ps.client.shell.util;
 
 import com.google.common.base.Preconditions;
-import org.epcc.ps.client.shell.exception.PPMFileException;
+import org.epcc.ps.client.shell.exception.PpmFileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.PrintWriter;
 
 /**
+ * <p>PPM file util class.</p>
+ * <p>This class contains a method which helps generate PPM output form given 2D array.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 28/10/2017
  */
 public class PpmUtil {
@@ -22,8 +26,18 @@ public class PpmUtil {
 
     }
 
+    /**
+     * Generate plain PPM file for given 2D array.
+     *
+     * @param fileName target output file name
+     * @param width width of given array
+     * @param height height of given array
+     * @param maxVal max output value for plain PPM file
+     * @param grids data source of 2D array
+     * @throws PpmFileException
+     */
     public static void generateRedBasedPPMFileFromGrids(String fileName, int width, int height,
-                                                        int maxVal, double[][] grids) throws PPMFileException {
+                                                        int maxVal, double[][] grids) throws PpmFileException {
         Preconditions.checkNotNull(grids);
         Preconditions.checkArgument(grids.length > 0);
         Preconditions.checkArgument(height == grids.length, "Height not match!");
@@ -52,7 +66,7 @@ public class PpmUtil {
 
         } catch (Exception e) {
             logger.error("Cannot generate PPM file.", e);
-            throw new PPMFileException(e);
+            throw new PpmFileException(e);
         }
     }
 }

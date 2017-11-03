@@ -15,6 +15,7 @@ public class SpeciesTest extends AbstractTest {
 
     @Test
     public void testPuma() {
+        Assert.assertEquals("puma", Species.PUMA.getSpeciesName());
         Assert.assertEquals(config.getPumaBirthRate(), Species.PUMA.getBirthRate(), 0);
         Assert.assertEquals(config.getPumaDiffusionRate(), Species.PUMA.getDiffusionRate(), 0);
         Assert.assertEquals(config.getPumaMortalityRate(), Species.PUMA.getMortalityRate(), 0);
@@ -24,6 +25,7 @@ public class SpeciesTest extends AbstractTest {
 
     @Test
     public void testHare() {
+        Assert.assertEquals("hare", Species.HARE.getSpeciesName());
         Assert.assertEquals(config.getHareBirthRate(), Species.HARE.getBirthRate(), 0);
         Assert.assertEquals(config.getHareDiffutionRate(), Species.HARE.getDiffusionRate(), 0);
         Assert.assertEquals(Species.NON_EXIST_DATA, Species.HARE.getPredationRate(), 0);

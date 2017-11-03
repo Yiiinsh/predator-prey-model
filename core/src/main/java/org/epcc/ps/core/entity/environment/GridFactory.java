@@ -1,7 +1,11 @@
 package org.epcc.ps.core.entity.environment;
 
 /**
+ * <p>Factory methods for {@link Grid}.</p>
+ * <p>This class contains three methods with different parameters to create a new grid.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 12/10/2017
  */
 public class GridFactory {

@@ -4,7 +4,10 @@ import org.epcc.ps.common.config.AbstractConfig;
 import org.epcc.ps.common.config.Config;
 
 /**
+ * <p>Default shell configuration class.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 23/10/2017
  */
 public class DefaultShellConfig extends AbstractConfig implements ShellConfig {

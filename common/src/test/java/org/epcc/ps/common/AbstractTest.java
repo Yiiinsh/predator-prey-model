@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
  * Created on 09/10/2017
  */
 public abstract class AbstractTest {
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Rule
     public TestName testName = new TestName();
-    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @Before
     public void beforeAbstractTest() {

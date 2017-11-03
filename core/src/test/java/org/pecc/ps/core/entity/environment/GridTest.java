@@ -20,7 +20,12 @@ public class GridTest extends AbstractTest {
 
         Grid gridWithoutCreature = GridFactory.create(Terrain.LAND);
 
+        Assert.assertEquals(Terrain.LAND, gridWithCreature.getTerrain());
         Assert.assertEquals(666, gridWithCreature.getDensity(Species.HARE), 0);
         Assert.assertEquals(0, gridWithoutCreature.getDensity(Species.HARE), 0);
+
+        Assert.assertEquals(0, gridWithCreature.getLandNeighborCnt());
+        gridWithCreature.setLandNeighborCnt(3);
+        Assert.assertEquals(3, gridWithCreature.getLandNeighborCnt());
     }
 }

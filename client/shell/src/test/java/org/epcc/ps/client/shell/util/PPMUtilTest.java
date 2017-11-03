@@ -1,6 +1,6 @@
 package org.epcc.ps.client.shell.util;
 
-import org.epcc.ps.client.shell.exception.PPMFileException;
+import org.epcc.ps.client.shell.exception.PpmFileException;
 import org.junit.After;
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class PPMUtilTest {
     }
 
     @Test
-    public void testPPMUtil() throws PPMFileException {
+    public void testPPMUtil() throws PpmFileException {
         double[][] grids = new double[][]{
                 {3,5},
                 {0,2}

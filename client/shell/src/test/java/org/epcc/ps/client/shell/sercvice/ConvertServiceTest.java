@@ -4,11 +4,11 @@ import org.epcc.ps.client.shell.exception.ConvertException;
 import org.epcc.ps.client.shell.service.ConvertService;
 import org.epcc.ps.client.shell.service.DefaultConvertService;
 import org.epcc.ps.core.entity.creature.Species;
-import org.epcc.ps.core.entity.environment.Grid;
-import org.epcc.ps.core.entity.environment.Landscape;
-import org.epcc.ps.core.entity.environment.Terrain;
+import org.epcc.ps.core.entity.environment.*;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.io.File;
 
 /**
  * @author jiahao.cao
@@ -19,7 +19,27 @@ public class ConvertServiceTest {
     ConvertService convertService = new DefaultConvertService();
 
     @Test
-    public void testLandscapeGenerate() throws ConvertException {
+    public void testShutdown() {
+        convertService.shutdown();
+    }
+
+    @Test
+    public void testConvertToLandscapeWithPPM() {
+        String test = "test.ppm";
+        Grid[][] grids = new Grid[1][1];
+        grids[0][0] = GridFactory.create(Terrain.LAND);
+        convertService.convertLandscapeWithSpeciesToPPM(test,
+                LandscapeFactory.create(1, 1, grids),
+                Species.HARE);
+
+        convertService.shutdown();
+        File testFile = new File(test);
+        Assert.assertTrue(testFile.exists());
+        testFile.delete();
+    }
+
+    @Test
+    public void testConvertLandscapeFromFile() throws ConvertException {
         Landscape landscape = convertService.convertLandscapeFromFile("src/test/resources/file3.dat");
         Assert.assertEquals(3, landscape.getLength());
         Assert.assertEquals(3, landscape.getWidth());

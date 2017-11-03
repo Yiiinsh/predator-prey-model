@@ -3,11 +3,20 @@ package org.epcc.ps.core.entity.creature;
 import org.epcc.ps.core.config.CoreConfig;
 
 /**
+ * <p>Enumeration of species on landscape.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 11/10/2017
  */
 public enum Species {
+    /**
+     * Species puma
+     */
     PUMA("puma"),
+    /**
+     * Species hare
+     */
     HARE("hare");
 
     public final static double NON_EXIST_DATA = 0.0;
@@ -44,22 +53,37 @@ public enum Species {
             }
     }
 
+    /**
+     * @return name of this species
+     */
     public String getSpeciesName() {
         return speciesName;
     }
 
+    /**
+     * @return birth rate of this species
+     */
     public double getBirthRate() {
         return birthRate;
     }
 
+    /**
+     * @return predation rate of this species
+     */
     public double getPredationRate() {
         return predationRate;
     }
 
+    /**
+     * @return mortality rate of this species
+     */
     public double getMortalityRate() {
         return mortalityRate;
     }
 
+    /**
+     * @return diffusion rate of this species
+     */
     public double getDiffusionRate() {
         return diffusionRate;
     }

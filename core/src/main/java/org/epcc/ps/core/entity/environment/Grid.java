@@ -5,7 +5,13 @@ import org.epcc.ps.core.entity.creature.Species;
 import java.io.Serializable;
 
 /**
+ *  <p>A class represents a single unit of landscape.</p>
+ *  <p>Each grid contains a {@link Terrain} which implies the terrain of this grid.
+ *  Grid also maintains densities for different {@link Species} and count of direct
+ *  neighbors with land terrain.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 11/10/2017
  */
 public class Grid implements Serializable {

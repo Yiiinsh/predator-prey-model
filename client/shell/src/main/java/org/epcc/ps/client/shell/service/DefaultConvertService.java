@@ -2,7 +2,7 @@ package org.epcc.ps.client.shell.service;
 
 import org.epcc.ps.client.shell.config.ShellConfig;
 import org.epcc.ps.client.shell.exception.ConvertException;
-import org.epcc.ps.client.shell.exception.PPMFileException;
+import org.epcc.ps.client.shell.exception.PpmFileException;
 import org.epcc.ps.client.shell.util.PpmUtil;
 import org.epcc.ps.client.shell.util.SpeciesDensityGenerator;
 import org.epcc.ps.core.entity.creature.Species;
@@ -15,7 +15,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
+ * <p>Default convert service class.</p>
+ *
  * @author jiahao.cao
+ * @since 0.0.1
  * Created on 18/10/2017
  */
 public class DefaultConvertService extends AbstractService implements ConvertService {
@@ -38,15 +41,14 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
     }
 
     @Override
-    public void convertLandscapeWithSpeciesToPPM(String fileName, Landscape landscape, Species species)
-            throws PPMFileException {
+    public void convertLandscapeWithSpeciesToPPM(String fileName, Landscape landscape, Species species) {
         switch (species) {
             case PUMA:
                 fixedThreadPool.submit(() -> {
                     try {
                         PpmUtil.generateRedBasedPPMFileFromGrids(fileName, landscape.getLength(), landscape.getWidth(),
                                 pumaDensityMaxVal, getDensitiesFromLandscape(landscape, species));
-                    } catch (PPMFileException e) {
+                    } catch (PpmFileException e) {
                         logger.error("PPM output failed.", e);
                     }
                 });
@@ -56,7 +58,7 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
                     try {
                         PpmUtil.generateRedBasedPPMFileFromGrids(fileName, landscape.getLength(), landscape.getWidth(),
                                 hareDensityMaxVal, getDensitiesFromLandscape(landscape, species));
-                    } catch (PPMFileException e) {
+                    } catch (PpmFileException e) {
                         logger.error("PPM output failed.", e);
                     }
                 });
@@ -71,10 +73,6 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
         fixedThreadPool.shutdown();
     }
 
-    /***
-     * Get land by reading map file
-     *
-     * */
     private int[][] readMapFromFile(String fileSource) throws ConvertException {
         File file = new File(fileSource);
 
@@ -95,10 +93,6 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
         }
     }
 
-    /***
-     * Initialize grids by map
-     *
-     * */
     private Grid[][] generateGridByMap(int[][] land) {
         Grid[][] grids = new Grid[land.length][land[0].length];
         for (int i = 0; i != land.length; ++i) {

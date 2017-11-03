@@ -6,8 +6,8 @@
         google.charts.load('current', {'packages': ['corechart']});
         google.charts.setOnLoadCallback(drawLineChart);
 
-        var hares = $hareSnapShots;
-        var pumas = $pumaSnapShots;
+        var hares = ${hareSnapShots};
+        var pumas = ${pumaSnapShots};
 
         var simulationIdx = 0;
         if (hares.length != 0) {
@@ -123,8 +123,8 @@
 
         function drawLineChart() {
             var arr = [];
-            var hareDensity = $hareAverageDensities;
-            var pumaDensity = $pumaAverageDensities;
+            var hareDensity = ${hareAverageDensities};
+            var pumaDensity = ${pumaAverageDensities};
 
             arr.push(['Iter', 'Hare', 'Puma']);
             for (var idx = 0; idx != hareDensity.length; ++idx) {

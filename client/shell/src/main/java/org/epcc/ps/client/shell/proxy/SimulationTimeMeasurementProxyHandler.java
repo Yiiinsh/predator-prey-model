@@ -10,7 +10,10 @@ import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * <p>Dynamic proxy handler for execution time measurement.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 29/10/2017
  */
 public class SimulationTimeMeasurementProxyHandler implements InvocationHandler {

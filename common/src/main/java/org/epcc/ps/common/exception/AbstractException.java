@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * <p> Basic exception class. </p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 10/10/2017
  */
 public abstract class AbstractException extends Exception {

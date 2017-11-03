@@ -23,7 +23,7 @@ public class AlgorithmTest extends AbstractGridTest {
                 {createGridWithLand(), createGridWithWater(), createGridWithLand()},
                 {createGridWithLand(), createGridWithLand(), createGridWithWater()}
         };
-        Grid[][] gridsWithHalo = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
+        Grid[][] gridsWithHalo = GridUtil.generateGridWithHalo(3, 3, grids);
 
         int hareNum = 9;
         int pumaNum = 1;
@@ -54,10 +54,10 @@ public class AlgorithmTest extends AbstractGridTest {
         }
 
         double newHareDensity, newPumaDensity;
-        gridsWithHalo = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
+        gridsWithHalo = GridUtil.generateGridWithHalo(3, 3, grids);
         for (int i = 0; i < grids.length; ++i) {
             for (int j = 0; j < grids[0].length; ++j) {
-                newHareDensity = coreAlgorithm.getHaresNum(
+                newHareDensity = coreAlgorithm.getHaresDensity(
                         grids[i][j].getTerrain(),
                         gridsWithHalo[i + 1][j + 1].getDensity(Species.HARE),
                         gridsWithHalo[i + 1][j].getDensity(Species.HARE),
@@ -71,7 +71,7 @@ public class AlgorithmTest extends AbstractGridTest {
                         0.4,
                         grids[i][j].getLandNeighborCnt());
 
-                newPumaDensity = coreAlgorithm.getPumaNum(
+                newPumaDensity = coreAlgorithm.getPumaDensity(
                         grids[i][j].getTerrain(),
                         gridsWithHalo[i + 1][j + 1].getDensity(Species.PUMA),
                         gridsWithHalo[i + 1][j].getDensity(Species.PUMA),

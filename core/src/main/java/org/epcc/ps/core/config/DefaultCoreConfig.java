@@ -3,7 +3,10 @@ package org.epcc.ps.core.config;
 import org.epcc.ps.common.config.Config;
 
 /**
+ * <p>Default core configration class.</p>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 10/10/2017
  */
 public class DefaultCoreConfig implements CoreConfig {

@@ -20,7 +20,7 @@ public class GridUtilTest extends AbstractGridTest {
                 {createGridWithLand(), createGridWithLand(), createGridWithWater()}
         };
 
-        Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
+        Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHalo(3, 3, grids);
 
         Assert.assertEquals(5, gridsWithHaloBoundary.length);
         Assert.assertEquals(5, gridsWithHaloBoundary[0].length);
@@ -43,7 +43,7 @@ public class GridUtilTest extends AbstractGridTest {
                 {createGridWithLand(), createGridWithLand(), createGridWithWater()}
         };
 
-        Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHaloBoundary(3, 3, grids);
+        Grid[][] gridsWithHaloBoundary = GridUtil.generateGridWithHalo(3, 3, grids);
         Assert.assertEquals(2, GridUtil.getNeighborCntWithType(1, 1,
                 gridsWithHaloBoundary, Terrain.LAND));
         Assert.assertEquals(4, GridUtil.getNeighborCntWithType(2, 2,

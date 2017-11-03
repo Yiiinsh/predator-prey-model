@@ -14,7 +14,18 @@ import java.util.Map;
 import static org.epcc.ps.core.util.GridUtil.EXTRA_BORDER_OFFSET;
 
 /**
+ * <p>A class for better management on landscape evolutions</p>
+ * <p>This class provides method for single evolution on given interval.
+ * It also maintains a list of average densities over evolutions for each {@link Species}.
+ * If the landscape is within a specified size, snap shots for densities of {@link Species}
+ * over evolutions will be recorded.</p>
+ * <p>LandscapeEvolutionManager can be created using static method <code>create(Landscape)</code></p>
+ * <pre>
+ *     LandscapeEvolutionManager landscapeEvolutionManager = LandscapeEvolutionManager.create(landscape);
+ * </pre>
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 16/10/2017
  */
 public class LandscapeEvolutionManager {
@@ -26,9 +37,13 @@ public class LandscapeEvolutionManager {
     private Map<Species, List<Double>> averages;
     private Map<Species, List<Double[][]>> snapShots;
 
+    public static LandscapeEvolutionManager create(Landscape landscape) {
+        return new LandscapeEvolutionManager(landscape);
+    }
+
     private LandscapeEvolutionManager(Landscape landscape) {
         this.landscape = landscape;
-        gridsWithHalo = GridUtil.generateGridWithHaloBoundary(
+        gridsWithHalo = GridUtil.generateGridWithHalo(
                 landscape.getLength(),
                 landscape.getWidth(),
                 landscape.getGrids()
@@ -47,10 +62,6 @@ public class LandscapeEvolutionManager {
         }
     }
 
-    public static LandscapeEvolutionManager create(Landscape landscape) {
-        return new LandscapeEvolutionManager(landscape);
-    }
-
     public Landscape getLandscape() {
         return landscape;
     }
@@ -67,6 +78,11 @@ public class LandscapeEvolutionManager {
         return snapShots.get(species);
     }
 
+    /**
+     * Evolution over a given time step.Densities will be updated on the maintained landscape.
+     *
+     * @param timeStep time step for iteration
+     */
     public void evolution(double timeStep) {
         int xWithExtraOffset, yWithExtraOffset;
         double hareDensity, pumaDensity, hareDensitySum = 0.0, pumaDensitySum = 0.0;
@@ -76,7 +92,7 @@ public class LandscapeEvolutionManager {
                 xWithExtraOffset = x + EXTRA_BORDER_OFFSET;
                 yWithExtraOffset = y + EXTRA_BORDER_OFFSET;
 
-                hareDensity = coreAlgorithm.getHaresNum(
+                hareDensity = coreAlgorithm.getHaresDensity(
                         landscape.getGrids()[x][y].getTerrain(),
                         landscape.getGrids()[x][y].getDensity(Species.HARE),
                         gridsWithHalo[xWithExtraOffset][yWithExtraOffset - 1].getDensity(Species.HARE),
@@ -91,7 +107,7 @@ public class LandscapeEvolutionManager {
                         landscape.getGrids()[x][y].getLandNeighborCnt()
                 );
 
-                pumaDensity = coreAlgorithm.getPumaNum(
+                pumaDensity = coreAlgorithm.getPumaDensity(
                         landscape.getGrids()[x][y].getTerrain(),
                         landscape.getGrids()[x][y].getDensity(Species.PUMA),
                         gridsWithHalo[xWithExtraOffset][yWithExtraOffset - 1].getDensity(Species.PUMA),

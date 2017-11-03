@@ -6,7 +6,10 @@ import org.epcc.ps.client.shell.proxy.SimulationTimeMeasurementProxyHandler;
 import java.lang.reflect.Proxy;
 
 /**
+ * Main entrance.
+ *
  * @author shaohan.yin
+ * @since 0.0.1
  * Created on 29/10/2017
  */
 public class Simulation {
