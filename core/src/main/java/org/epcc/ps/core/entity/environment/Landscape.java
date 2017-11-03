@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * <p>A class represents landscape for simulation</p>
- * <p>This class matain a 2-D array for grids.</p>
+ * <p>This class maintain a 2-D array for grids.</p>
  *
  * @author shaohan.yin
  * @since 0.0.1

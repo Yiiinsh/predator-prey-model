@@ -3,7 +3,7 @@ package org.epcc.ps.core.config;
 import org.epcc.ps.common.config.Config;
 
 /**
- * <p>Default core configration class.</p>
+ * <p>Default core configuration class.</p>
  *
  * @author shaohan.yin
  * @since 0.0.1
@@ -81,7 +81,7 @@ public class DefaultCoreConfig implements CoreConfig {
     }
 
     @Override
-    public double getHareDiffutionRate() {
+    public double getHareDiffusionRate() {
         return config.getDouble(KEY_HARE_DIFFUSION_RATE);
     }
 }

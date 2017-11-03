@@ -37,8 +37,7 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
     @Override
     public Landscape convertLandscapeFromFile(String fileSource) throws ConvertException {
         Grid[][] grids = generateGridByMap(readMapFromFile(fileSource));
-        Landscape landscape = LandscapeFactory.create(grids.length, grids[0].length, grids);
-        return landscape;
+        return LandscapeFactory.create(grids.length, grids[0].length, grids);
     }
 
     @Override

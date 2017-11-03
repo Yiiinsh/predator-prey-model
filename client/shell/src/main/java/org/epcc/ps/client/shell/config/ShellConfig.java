@@ -1,7 +1,7 @@
 package org.epcc.ps.client.shell.config;
 
 /**
- * <p>Shell configuraiton interface.</p>
+ * <p>Shell configuration interface.</p>
  * <p>
  *     This interface allows accessing to configurations for core module.
  *     A default implementation of the {@link DefaultShellConfig} class is available via

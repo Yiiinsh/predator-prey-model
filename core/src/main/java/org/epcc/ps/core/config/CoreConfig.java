@@ -97,5 +97,5 @@ public interface CoreConfig {
      *
      * @return diffusion rate of hare
      */
-    double getHareDiffutionRate();
+    double getHareDiffusionRate();
 }

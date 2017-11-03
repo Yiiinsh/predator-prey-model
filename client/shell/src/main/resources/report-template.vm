@@ -85,7 +85,7 @@
                             button.disabled = true;
                             button.innerHTML = "Done";
                             button.classList.add("disabled");
-                            return;
+
                         } else {
                             for (var xIdx = 0; xIdx != hares[0].length; ++xIdx) {
                                 for (var yIdx = 0; yIdx != hares[0][0].length; ++yIdx) {
