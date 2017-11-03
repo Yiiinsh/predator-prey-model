@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>Default convert service class.</p>
@@ -69,8 +70,13 @@ public class DefaultConvertService extends AbstractService implements ConvertSer
     }
 
     @Override
-    public void shutdown() {
-        fixedThreadPool.shutdown();
+    public void awaitTermination(long timeout, TimeUnit timeUnit) {
+        try {
+            fixedThreadPool.shutdown();
+            fixedThreadPool.awaitTermination(timeout, timeUnit);
+        } catch (InterruptedException e) {
+            logger.error("Interrupted", e);
+        }
     }
 
     private int[][] readMapFromFile(String fileSource) throws ConvertException {

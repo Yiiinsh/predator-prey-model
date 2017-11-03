@@ -18,6 +18,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.LinkedList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * <p>Default simulation command class.</p>
@@ -99,7 +100,7 @@ public class DefaultSimulationCommand extends AbstractCommand implements Simulat
                 generateReport(landscapeEvolutionManager);
             }
 
-            convertService.shutdown();
+            convertService.awaitTermination(2, TimeUnit.MINUTES);
         } catch (Exception e) {
             logger.error("Simulation failed.", e);
             formatter.printHelp(COMMAND_NAME, options);

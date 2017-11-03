@@ -4,6 +4,8 @@ import org.epcc.ps.client.shell.exception.ConvertException;
 import org.epcc.ps.core.entity.creature.Species;
 import org.epcc.ps.core.entity.environment.Landscape;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * <p>Convert service interface.</p>
  * <p>
@@ -38,7 +40,7 @@ public interface ConvertService {
     void convertLandscapeWithSpeciesToPPM(String fileName, Landscape landscape, Species species);
 
     /**
-     * Try to terminate all the works on this object.
+     * Await termination
      */
-    void shutdown();
+    void awaitTermination(long timeout, TimeUnit timeUnit);
 }

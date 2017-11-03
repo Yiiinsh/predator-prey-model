@@ -9,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author jiahao.cao
@@ -20,11 +21,11 @@ public class ConvertServiceTest {
 
     @Test
     public void testShutdown() {
-        convertService.shutdown();
+        convertService.awaitTermination(1, TimeUnit.SECONDS);
     }
 
     @Test
-    public void testConvertToLandscapeWithPPM() {
+    public void testConvertToLandscapeWithPPM() throws InterruptedException {
         String test = "test.ppm";
         Grid[][] grids = new Grid[1][1];
         grids[0][0] = GridFactory.create(Terrain.LAND);
@@ -32,7 +33,7 @@ public class ConvertServiceTest {
                 LandscapeFactory.create(1, 1, grids),
                 Species.HARE);
 
-        convertService.shutdown();
+        convertService.awaitTermination(2, TimeUnit.SECONDS);
         File testFile = new File(test);
         Assert.assertTrue(testFile.exists());
         testFile.delete();
