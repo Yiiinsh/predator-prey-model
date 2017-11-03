@@ -29,15 +29,19 @@ To get, build and install this project,following dependencies is required:
 * __java v1.8.0_73__: Project basic working environment.
 * __maven v3.5.2__: Build tools.
 
-You can get these dependencies by the package manager on your local machine. For instance, __apt__ for Ubuntu, __brew__ for MacOS and __yum__ for Scientific Linux.Note that previous version of these depenencies may also work fine, but we are not guaranteed about that.
+You can get these dependencies by the package manager on your local machine. For instance, __apt__ for Ubuntu, __brew__ for MacOS and __yum__ for Scientific Linux.Note that previous version of these depenencies may also work fine, but we are not sure about that.
 
 ## Build
 ### Get Source
-Before we take to next step, you need to set up a Github account first.We assume that you have already obtained a Github account. To get the source code of this project, you need to open your terminal and using:
+If you have already got the source code, you can skip this step.
+
+Before we take to next step, you need to set up a Github account first.We assume that you have already obtained a Github account. To get the source code of this project, you need to open your terminal and type:
         
         git clone https://github.com/Yiiinsh/predator-prey-model.git
 
-Normally, a directory named "predator-pery-model" that contains the source code will appear under your current working directory. Or you can also fetch the source code by download it from our repository.
+Normally, a directory named "predator-prey-model" that contains the source code will appear under your current working directory. Then you can type the following command to get into the directory:
+
+		cd predator-prey-model/
 
 ### Build
 To build this project, firstly you need to change your current working directory to the directory you just cloned ("predator-prey-model"). Open your terminal and type :
@@ -52,12 +56,16 @@ Javadoc can automatically generate a API documentation for this project in HTML 
 
     mvn javadoc:javadoc
 
-After execution, you will be able to find the documentation in __target/site/apidocs/__ under every module directory.Example for documentation got from __client/shell/target/site/apidocs/__ is shown below
+After execution, you will be able to find the documentation in __target/site/apidocs/__ under every module directory.Example for documentation got from __client/shell/target/site/apidocs/index.html__ is shown below
 ![javadoc](img/javadoc.png)
 
 ## Usage
 ### Basic
-After you have successfully build our project, you can find executables in **client/shell/target/shell-1.0.0-simulation/shell-1.0.0/** . We have provided a startup script named __simulation.sh__ which you can find in the same directory.You can either invoke by the shell script __./simulation.sh__ with flags or by __java -jar  client/shell/target/shell-1.0.0-simulation/shell-1.0.0/simulation.jar__ with flags. For instance, you can run the program with __./simulation.sh -f file.dat -i 100 -r__ inside the directory __client/shell/target/shell-1.0.0-simulation/shell-1.0.0/__ where __file.dat__ is the path to your landscape file. Command provided by our program is shown below:
+After you have successfully build our project, you can find executables in **client/shell/target/shell-1.0.0-simulation/shell-1.0.0/** . We have provided a startup script named __simulation.sh__ which you can find in the same directory.You should change your directory to the project packaged directory from project base directory by
+
+	cd client/shell/target/shell-1.0.0-simulation/shell-1.0.0/
+
+Then you can either invoke by the shell script __./simulation.sh__ with flags or by __java -jar  client/shell/target/shell-1.0.0-simulation/shell-1.0.0/simulation.jar__ with flags. For instance, you can run the program with __./simulation.sh -f file.dat -i 100 -r__ inside the directory __client/shell/target/shell-1.0.0-simulation/shell-1.0.0/__ where __file.dat__ is the path to your landscape file. Command provided by our program is shown below:
 
 ![usage](img/usage.png)
 
@@ -157,4 +165,4 @@ We implemented our CLI module by command-service pattern where command arranges 
 [@Jiahao Cao](https://github.com/JasonCao666)
 
 ## License
-This project is licensed under the [Apache 2 License](https://github.com/Yiiinsh/predator-prey-model/blob/master/LICENSE)
+ This project is licensed under the [Apache 2 License](https://github.com/Yiiinsh/predator-prey-model/blob/master/LICENSE)
