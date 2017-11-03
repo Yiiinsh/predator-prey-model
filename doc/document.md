@@ -57,7 +57,7 @@ After execution, you will be able to find the documentation in __target/site/api
 
 ## Usage
 ### Basic
-After you have successfully build our project, you can find executables in **client/shell/target/shell-1.0.0-simulation/shell-1.0.0/** . We have provided a startup script named __simulation.sh__ which you can find in the same directory.You can either invoke by the shell script __./simulation.sh__ with flags or by __java -jar  client/shell/target/shell-1.0.0-simulation/shell-1.0.0/simulation.jar__ with flags.Command provided by our program is shown below:
+After you have successfully build our project, you can find executables in **client/shell/target/shell-1.0.0-simulation/shell-1.0.0/** . We have provided a startup script named __simulation.sh__ which you can find in the same directory.You can either invoke by the shell script __./simulation.sh__ with flags or by __java -jar  client/shell/target/shell-1.0.0-simulation/shell-1.0.0/simulation.jar__ with flags. For instance, you can run the program with __./simulation.sh -f file.dat -i 100 -r__ inside the directory __client/shell/target/shell-1.0.0-simulation/shell-1.0.0/__ where __file.dat__ is the path to your landscape file. Command provided by our program is shown below:
 
 ![usage](img/usage.png)
 
