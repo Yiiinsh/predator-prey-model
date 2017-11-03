@@ -124,9 +124,9 @@ For the client part, we use a command-service model to implement the CLI.
 
 Class Diagram are presented below:
 
-![Class Diagram1](img/cd1.png)
+![Class Diagram1](img/classGraph1.png)
 
-![Class Diagram2](img/cd2.png)
+![Class Diagram2](img/classGraph1.png)
 
 ## More
 Some famous Java thrid-party libraries are used in this project including :
