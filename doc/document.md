@@ -1,5 +1,5 @@
 <center>Predator-Prey Model Documentation</center>
-======
+
 ## Introduction
 This project implements a sequential version of a two-dimensional predator-prey model with spatial diffusion.
 
